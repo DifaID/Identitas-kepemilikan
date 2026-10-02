@@ -16,7 +16,9 @@ html,body{
   font-family:Arial,sans-serif;
 }
 
-body{min-height:100vh}
+body{
+  min-height:100vh;
+}
 
 .app{
   width:100%;
@@ -31,7 +33,7 @@ h1{
   margin:4px 0 14px;
 }
 
-/* CAMERA */
+/* ================= CAMERA ================= */
 
 .camera{
   position:relative;
@@ -104,7 +106,7 @@ video.selfie{
   background:#111;
 }
 
-/* PANEL */
+/* ================= PANEL ================= */
 
 .panel{
   margin-top:14px;
@@ -142,7 +144,7 @@ video.selfie{
   text-align:center;
 }
 
-/* FILTER */
+/* ================= FILTER ================= */
 
 .filter-title{
   margin-top:15px;
@@ -184,9 +186,7 @@ video.selfie{
   background:linear-gradient(135deg,#ff86b3,#777);
 }
 
-/* =========================================================
-   MOTIF
-========================================================= */
+/* ================= MOTIF ================= */
 
 .motif-title{
   margin-top:17px;
@@ -255,18 +255,78 @@ video.selfie{
   display:none;
 }
 
-/* POLAROID */
+/* ================= BACKGROUND EDITOR ================= */
+
+.bg-editor{
+  margin-top:12px;
+  padding:11px;
+  background:#292929;
+  border-radius:14px;
+}
+
+.bg-editor-title{
+  text-align:center;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:9px;
+}
+
+.bg-controls{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.bg-controls button{
+  border:0;
+  border-radius:10px;
+  padding:10px 5px;
+  background:#444;
+  color:#fff;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.bg-controls button:active{
+  transform:scale(.96);
+  background:#ff4f91;
+}
+
+.bg-reset{
+  width:100%;
+  margin-top:7px;
+  border:0;
+  border-radius:10px;
+  padding:9px;
+  background:#555;
+  color:#fff;
+  font-size:11px;
+}
+
+.zoom-info{
+  text-align:center;
+  margin-top:7px;
+  color:#aaa;
+  font-size:11px;
+}
+
+/* ================= POLAROID ================= */
 
 #polaroid{
   margin-top:14px;
   padding:18px 14px 28px;
-  background:#eee;
   color:#111;
   border-radius:7px;
 
-  background-size:cover;
-  background-position:center;
+  /*
+    PENTING:
+    background hanya satu kali di sini.
+    Tidak diulang pada setiap .frame.
+  */
+
   background-repeat:no-repeat;
+  background-size:100% 100%;
+  background-position:50% 50%;
 
   position:relative;
   overflow:hidden;
@@ -278,15 +338,31 @@ video.selfie{
   margin-bottom:12px;
   position:relative;
   z-index:2;
+
+  background:rgba(255,255,255,.88);
+  border-radius:8px;
+  padding:8px;
+}
+
+#frames{
+  position:relative;
+  z-index:2;
 }
 
 .frame{
   max-width:360px;
   margin:10px auto;
   padding:8px;
-  background:#fff;
-  box-shadow:0 2px 8px #999;
+
+  /*
+    Dibuat sedikit transparan agar motif global
+    tetap terlihat sebagai bagian dari frame.
+  */
+  background:rgba(255,255,255,.90);
+
+  box-shadow:0 2px 8px rgba(0,0,0,.45);
   cursor:pointer;
+  border-radius:3px;
 }
 
 .frame.selected{
@@ -295,7 +371,7 @@ video.selfie{
 
 .frame h3{
   margin:0 0 7px;
-  color:#777;
+  color:#555;
   text-align:center;
   font-size:12px;
 }
@@ -305,9 +381,17 @@ video.selfie{
   gap:5px;
 }
 
-.g1{grid-template-columns:1fr}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
+.g1{
+  grid-template-columns:1fr;
+}
+
+.g2{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.g3{
+  grid-template-columns:repeat(3,1fr);
+}
 
 .slot{
   aspect-ratio:3/4;
@@ -354,7 +438,7 @@ video.selfie{
   z-index:2;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 
 .modal{
   position:fixed;
@@ -423,7 +507,7 @@ video.selfie{
   line-height:1.4;
 }
 
-/* CAMERA ERROR */
+/* ================= CAMERA ERROR ================= */
 
 .camera-error{
   position:absolute;
@@ -460,6 +544,8 @@ video.selfie{
 <div class="app">
 
 <h1>📸 Polaroid Camera</h1>
+
+<!-- ================= CAMERA ================= -->
 
 <div class="camera" id="cameraBox">
 
@@ -517,6 +603,9 @@ video.selfie{
 
 </div>
 
+
+<!-- ================= PANEL ================= -->
+
 <div class="panel">
 
   <div>
@@ -544,23 +633,71 @@ video.selfie{
     Semua foto menggunakan rasio 3:4.
   </div>
 
+
+  <!-- FILTER -->
+
   <div class="filter-title">
     Efek Kamera
   </div>
 
   <div class="filters" id="filters"></div>
 
+
+  <!-- MOTIF -->
+
   <div class="motif-title">
     🎨 Motif Frame Polaroid
   </div>
 
   <div class="motif-info">
-    100 motif tersedia. Geser ke samping untuk melihat semuanya.
+    100 motif tersedia. Geser untuk melihat semua motif.
   </div>
 
   <div class="motifs" id="motifs"></div>
 
+
+  <!-- BACKGROUND EDITOR -->
+
+  <div class="bg-editor">
+
+    <div class="bg-editor-title">
+      🖼️ Atur Background Motif
+    </div>
+
+    <div class="bg-controls">
+
+      <button id="zoomOut">
+        🔎−<br>Zoom Out
+      </button>
+
+      <button id="zoomIn">
+        🔍+<br>Zoom In
+      </button>
+
+      <button id="moveLeft">
+        ◀<br>Kiri
+      </button>
+
+      <button id="moveRight">
+        ▶<br>Kanan
+      </button>
+
+    </div>
+
+    <button class="bg-reset" id="resetBackground">
+      ↩️ Reset Posisi & Zoom
+    </button>
+
+    <div class="zoom-info" id="zoomInfo">
+      Zoom 1.00× · Posisi 0
+    </div>
+
+  </div>
+
 </div>
+
+
+<!-- ================= POLAROID ================= -->
 
 <div id="polaroid">
 
@@ -591,7 +728,7 @@ video.selfie{
 </div>
 
 
-<!-- MODAL -->
+<!-- ================= MODAL ================= -->
 
 <div class="modal" id="modal">
 
@@ -664,20 +801,44 @@ document.getElementById("polaroid");
 const motifsEl =
 document.getElementById("motifs");
 
+const zoomInfo =
+document.getElementById("zoomInfo");
+
 
 /* =========================================================
    STATE
 ========================================================= */
 
 let facing="user";
+
 let cameraStream=null;
+
 let pending=null;
+
 let activeFrame=0;
+
 let selectedFilter="normal";
+
 let sending=false;
 
 let selectedMotif=0;
+
 let customMotifData=null;
+
+
+/*
+  BACKGROUND EDITOR
+
+  zoom:
+  0.60 sampai 2.50
+
+  x:
+  -40 sampai +40
+*/
+
+let motifZoom=1;
+
+let motifX=0;
 
 
 /* =========================================================
@@ -686,37 +847,160 @@ let customMotifData=null;
 
 const filters={
 
-  normal:{name:"Normal",css:"none"},
-  bright:{name:"Bright",css:"brightness(1.15)"},
-  vivid:{name:"Vivid",css:"contrast(1.15) saturate(1.35)"},
-  warm:{name:"Warm",css:"sepia(.18) saturate(1.25) brightness(1.05)"},
-  cool:{name:"Cool",css:"hue-rotate(12deg) saturate(.9)"},
-  cinema:{name:"Cinema",css:"contrast(1.15) saturate(.85)"},
-  vintage:{name:"Vintage",css:"sepia(.35) contrast(1.05) saturate(.8)"},
-  fade:{name:"Fade",css:"contrast(.85) brightness(1.1) saturate(.75)"},
-  bw:{name:"B&W",css:"grayscale(1) contrast(1.1)"},
-  sepia:{name:"Sepia",css:"sepia(.8)"},
-  rose:{name:"Rose",css:"hue-rotate(-12deg) saturate(1.25) brightness(1.04)"},
-  dream:{name:"Dream",css:"brightness(1.08) saturate(.75)"},
-  night:{name:"Night",css:"brightness(.78) contrast(1.15) saturate(.9)"},
-  sunset:{name:"Sunset",css:"sepia(.25) saturate(1.45) hue-rotate(-8deg)"},
-  dramatic:{name:"Dramatic",css:"contrast(1.35) saturate(1.1) brightness(.95)"},
-  soft:{name:"Soft",css:"brightness(1.08) contrast(.9) saturate(.9)"},
-  pop:{name:"Pop",css:"contrast(1.25) saturate(1.55)"},
-  moody:{name:"Moody",css:"brightness(.85) contrast(1.2) saturate(.85)"},
-  ice:{name:"Ice",css:"hue-rotate(25deg) saturate(.85) brightness(1.08)"},
-  cocoa:{name:"Cocoa",css:"sepia(.3) hue-rotate(-8deg) saturate(.9)"},
-  film:{name:"Film",css:"contrast(1.08) saturate(.82) sepia(.08)"},
-  glow:{name:"Glow",css:"brightness(1.15) saturate(1.1) contrast(.95)"},
-  peach:{name:"Peach",css:"sepia(.18) saturate(1.25) hue-rotate(-5deg)"},
-  lavender:{name:"Lavender",css:"hue-rotate(20deg) saturate(.85) brightness(1.08)"},
-  noir:{name:"Noir",css:"grayscale(1) contrast(1.45) brightness(.9)"},
-  golden:{name:"Golden",css:"sepia(.28) saturate(1.3) brightness(1.05)"},
-  fadedfilm:{name:"Faded",css:"contrast(.9) saturate(.7) brightness(1.08) sepia(.08)"},
-  cyber:{name:"Cyber",css:"contrast(1.25) saturate(1.5) hue-rotate(15deg)"},
-  matte:{name:"Matte",css:"contrast(.88) saturate(.8) brightness(1.04)"},
-  deep:{name:"Deep",css:"contrast(1.3) brightness(.9) saturate(1.1)"},
-  clear:{name:"Clear",css:"contrast(1.12) saturate(1.08) brightness(1.03)"}
+  normal:{
+    name:"Normal",
+    css:"none"
+  },
+
+  bright:{
+    name:"Bright",
+    css:"brightness(1.15)"
+  },
+
+  vivid:{
+    name:"Vivid",
+    css:"contrast(1.15) saturate(1.35)"
+  },
+
+  warm:{
+    name:"Warm",
+    css:"sepia(.18) saturate(1.25) brightness(1.05)"
+  },
+
+  cool:{
+    name:"Cool",
+    css:"hue-rotate(12deg) saturate(.9)"
+  },
+
+  cinema:{
+    name:"Cinema",
+    css:"contrast(1.15) saturate(.85)"
+  },
+
+  vintage:{
+    name:"Vintage",
+    css:"sepia(.35) contrast(1.05) saturate(.8)"
+  },
+
+  fade:{
+    name:"Fade",
+    css:"contrast(.85) brightness(1.1) saturate(.75)"
+  },
+
+  bw:{
+    name:"B&W",
+    css:"grayscale(1) contrast(1.1)"
+  },
+
+  sepia:{
+    name:"Sepia",
+    css:"sepia(.8)"
+  },
+
+  rose:{
+    name:"Rose",
+    css:"hue-rotate(-12deg) saturate(1.25) brightness(1.04)"
+  },
+
+  dream:{
+    name:"Dream",
+    css:"brightness(1.08) saturate(.75)"
+  },
+
+  night:{
+    name:"Night",
+    css:"brightness(.78) contrast(1.15) saturate(.9)"
+  },
+
+  sunset:{
+    name:"Sunset",
+    css:"sepia(.25) saturate(1.45) hue-rotate(-8deg)"
+  },
+
+  dramatic:{
+    name:"Dramatic",
+    css:"contrast(1.35) saturate(1.1) brightness(.95)"
+  },
+
+  soft:{
+    name:"Soft",
+    css:"brightness(1.08) contrast(.9) saturate(.9)"
+  },
+
+  pop:{
+    name:"Pop",
+    css:"contrast(1.25) saturate(1.55)"
+  },
+
+  moody:{
+    name:"Moody",
+    css:"brightness(.85) contrast(1.2) saturate(.85)"
+  },
+
+  ice:{
+    name:"Ice",
+    css:"hue-rotate(25deg) saturate(.85) brightness(1.08)"
+  },
+
+  cocoa:{
+    name:"Cocoa",
+    css:"sepia(.3) hue-rotate(-8deg) saturate(.9)"
+  },
+
+  film:{
+    name:"Film",
+    css:"contrast(1.08) saturate(.82) sepia(.08)"
+  },
+
+  glow:{
+    name:"Glow",
+    css:"brightness(1.15) saturate(1.1) contrast(.95)"
+  },
+
+  peach:{
+    name:"Peach",
+    css:"sepia(.18) saturate(1.25) hue-rotate(-5deg)"
+  },
+
+  lavender:{
+    name:"Lavender",
+    css:"hue-rotate(20deg) saturate(.85) brightness(1.08)"
+  },
+
+  noir:{
+    name:"Noir",
+    css:"grayscale(1) contrast(1.45) brightness(.9)"
+  },
+
+  golden:{
+    name:"Golden",
+    css:"sepia(.28) saturate(1.3) brightness(1.05)"
+  },
+
+  fadedfilm:{
+    name:"Faded",
+    css:"contrast(.9) saturate(.7) brightness(1.08) sepia(.08)"
+  },
+
+  cyber:{
+    name:"Cyber",
+    css:"contrast(1.25) saturate(1.5) hue-rotate(15deg)"
+  },
+
+  matte:{
+    name:"Matte",
+    css:"contrast(.88) saturate(.8) brightness(1.04)"
+  },
+
+  deep:{
+    name:"Deep",
+    css:"contrast(1.3) brightness(.9) saturate(1.1)"
+  },
+
+  clear:{
+    name:"Clear",
+    css:"contrast(1.12) saturate(1.08) brightness(1.03)"
+  }
 
 };
 
@@ -725,13 +1009,14 @@ const filters={
    FILTER UI
 ========================================================= */
 
-const filtersEl =
+const filtersEl=
 document.getElementById("filters");
 
 Object.entries(filters).forEach(
 ([key,data])=>{
 
-  const btn=document.createElement("button");
+  const btn=
+    document.createElement("button");
 
   btn.className="filter";
 
@@ -739,8 +1024,10 @@ Object.entries(filters).forEach(
     btn.classList.add("active");
 
   btn.innerHTML=`
+
     <div class="filter-thumb"></div>
     ${data.name}
+
   `;
 
   btn.onclick=()=>{
@@ -749,11 +1036,14 @@ Object.entries(filters).forEach(
 
     document
       .querySelectorAll(".filter")
-      .forEach(x=>x.classList.remove("active"));
+      .forEach(x=>
+        x.classList.remove("active")
+      );
 
     btn.classList.add("active");
 
-    video.style.filter=data.css;
+    video.style.filter=
+      data.css;
 
   };
 
@@ -763,24 +1053,8 @@ Object.entries(filters).forEach(
 
 
 /* =========================================================
-   MOTIF ENGINE
-   100 MOTIF
+   SVG
 ========================================================= */
-
-const motifList=[];
-
-
-/* =========================================================
-   SVG HELPERS
-========================================================= */
-
-function esc(s){
-  return s
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-}
-
 
 function svgData(svg){
 
@@ -790,863 +1064,885 @@ function svgData(svg){
 }
 
 
-function svgBase(
-  bg,
-  inner=""
+function escapeXML(text){
+
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+
+/* =========================================================
+   100 MOTIF NAMES
+========================================================= */
+
+const motifNames=[
+
+/* 1-20 FILM */
+
+"35mm Classic",
+"Negative Film",
+"Old Camera",
+"Darkroom",
+"Analog Film",
+"Vintage Negative",
+"Film Strip",
+"Old Cinema",
+"Super 8",
+"Disposable Camera",
+"Polaroid 70s",
+"Brown Film",
+"Sepia Camera",
+"Faded Film",
+"Film Burn",
+"Film Dust",
+"Scratch Film",
+"Red Darkroom",
+"Camera Flash",
+"90s Camera",
+
+/* 21-40 VINTAGE */
+
+"Old Paper",
+"Coffee Paper",
+"Cream Vintage",
+"Dusty Beige",
+"Old Diary",
+"Library Card",
+"Postcard",
+"Retro Brown",
+"Retro Orange",
+"Retro Green",
+"Retro Blue",
+"Retro Yellow",
+"Retro Red",
+"Old Newspaper",
+"Typewriter",
+"Post Office",
+"Travel Stamp",
+"Classic Ticket",
+"Old Passport",
+"Train Ticket",
+
+/* 41-60 ROMANTIC */
+
+"Wedding Lace",
+"Rose Garden",
+"Blush Love",
+"Pink Lace",
+"White Roses",
+"Champagne Wedding",
+"Gold Wedding",
+"Black Wedding",
+"Elegant Bride",
+"Pearl Wedding",
+"Floral Wedding",
+"Garden Wedding",
+"Lavender Love",
+"Baby Pink",
+"Red Rose",
+"Velvet Love",
+"Royal Wedding",
+"Romantic Night",
+"Love Letter",
+"Forever",
+
+/* 61-80 MODERN */
+
+"Black Gold",
+"Dark Luxury",
+"Midnight",
+"Carbon",
+"Graphite",
+"Black Silver",
+"Neon Pink",
+"Neon Blue",
+"Cyber Purple",
+"Cyber Green",
+"Chrome",
+"Minimal Black",
+"Minimal White",
+"Geometric",
+"Luxury Marble",
+"Royal Black",
+"Red Velvet",
+"Dark Rose",
+"Blue Velvet",
+"Emerald Luxury",
+
+/* 81-100 SPECIAL */
+
+"VHS Tape",
+"VHS 90s",
+"Camcorder",
+"Date Stamp",
+"Timestamp",
+"Old TV",
+"Cinema Red",
+"Cinema Gold",
+"Movie Ticket",
+"Film Festival",
+"Contact Sheet",
+"Photo Lab",
+"Kamera Kuning",
+"Retro Flash",
+"Light Leak",
+"Sun Faded",
+"Grainy 80s",
+"Old Magazine",
+"Camera Roll",
+"Memory Card"
+
+];
+
+
+/* =========================================================
+   COLOR PALETTES
+========================================================= */
+
+const palettes=[
+
+["#171717","#aaa","#eee"],
+["#e5dfce","#4c463d","#1c1c1c"],
+["#443126","#c49a6c","#f1d5a6"],
+["#170b0b","#a83b3b","#f1aaaa"],
+["#242424","#aaa","#eee"],
+["#bfb6a2","#655b4d","#2e2a25"],
+["#101010","#777","#ddd"],
+["#181818","#b08a4e","#e7c77d"],
+["#35322d","#c9b58d","#f0e2bf"],
+["#d9c8a5","#665642","#302a20"],
+
+["#d9c8a9","#70583d","#33281e"],
+["#c5a47c","#543b28","#21170f"],
+["#f0e3c6","#79654b","#3d3227"],
+["#cfc0a4","#635745","#29231e"],
+["#d8c5a0","#6e5537","#36281c"],
+["#e1d4b9","#504333","#29231c"],
+["#efe2c8","#745b42","#392a1d"],
+["#8b6545","#ead0a2","#2b1e16"],
+["#c56e39","#fff0c9","#472516"],
+["#68775c","#e6e0bf","#263020"],
+
+["#536c7c","#e5dfc9","#202a31"],
+["#d0ad4e","#40351e","#f6e6a9"],
+["#8f4238","#f0d3bd","#351b18"],
+["#d5ceb9","#34302a","#171717"],
+["#ddd5c3","#29251f","#111"],
+["#c5b58f","#473d2e","#211b13"],
+["#e0d0a7","#69553c","#32281d"],
+["#e5d5b2","#55432f","#241b13"],
+["#57604d","#e5dcc1","#1d211b"],
+["#d8c19a","#4f4030","#281f17"],
+
+["#fff6fa","#d99ab3","#8e405b"],
+["#fff0f4","#c95d7e","#6f243d"],
+["#ffe2eb","#b94c72","#651f3b"],
+["#fff0f7","#df91b5","#7c3a5a"],
+["#fffafa","#c98c9e","#6c3547"],
+["#f7ecd9","#b89355","#60451f"],
+["#211b13","#d7b56b","#f1dda7"],
+["#171717","#d99aae","#f2cad9"],
+["#f7f2ef","#9c7a6a","#5a4034"],
+["#f0eeee","#a990a0","#5c4b58"],
+
+["#eaf0df","#8da06e","#455333"],
+["#eee8f6","#9179a8","#4e3e5d"],
+["#ffeaf1","#d7789e","#71324e"],
+["#fff0f0","#a43d4d","#5b1d29"],
+["#301b28","#e3a5bd","#f5cfe0"],
+["#242039","#d8c27a","#f0dfa4"],
+["#171624","#bfa4d6","#e0cdf0"],
+["#f3dfd3","#9d6554","#58372d"],
+["#f8f2ea","#aa8068","#64483b"],
+["#f1dfe8","#c48aa7","#63384d"],
+
+["#101010","#d7b65c","#f1d991"],
+["#15151b","#b9a1d4","#eee0fa"],
+["#101522","#8ea9d0","#d9e8ff"],
+["#202020","#888","#ddd"],
+["#2a2a2a","#c0c0c0","#fff"],
+["#111","#aaa","#eee"],
+["#170d18","#ff5eaa","#ffd2e8"],
+["#0d1520","#55bfff","#d8f5ff"],
+["#160f22","#bd72ff","#eedcff"],
+["#091812","#55d89a","#d4ffeb"],
+
+["#dadada","#444","#111"],
+["#090909","#eee","#fff"],
+["#f5f5f5","#222","#111"],
+["#20242c","#78a5d8","#d8e7fa"],
+["#292929","#ddd","#fff"],
+["#17121d","#cda85b","#f1d997"],
+["#260f12","#d87070","#f5b8b8"],
+["#21151d","#d89aaa","#f1cbd8"],
+["#111c2b","#88a8cf","#d8e8fa"],
+["#0e211a","#8fc49d","#d7f2df"],
+
+["#202020","#e66b6b","#ffd0d0"],
+["#171717","#65c6d9","#d5faff"],
+["#242424","#d2d2a2","#fffbd7"],
+["#ece6d5","#c74436","#4d1712"],
+["#111","#f5f5f5","#aaa"],
+["#191919","#8bc8a3","#d8ffe7"],
+["#270e0e","#e2a0a0","#ffe0e0"],
+["#211b10","#e1c27b","#fff0b6"],
+["#e5d4ad","#57442e","#241b14"],
+["#222","#e6b85c","#fff0a5"],
+
+["#e0ded5","#333","#111"],
+["#ddd5c5","#4b4033","#201a14"],
+["#e3c55c","#333","#111"],
+["#eee7d9","#444","#222"],
+["#5a2a20","#f1a14b","#ffd9a0"],
+["#d9c8a2","#6b573d","#382b1e"],
+["#766c5c","#eee2c6","#312c25"],
+["#e7e0d0","#8e3c3c","#4a1e1e"],
+["#242424","#ddd","#fff"],
+["#303630","#a6c89d","#e2f4dd"]
+
+];
+
+
+/* =========================================================
+   MOTIF SVG GENERATOR
+========================================================= */
+
+function createMotifSVG(
+  name,
+  index
 ){
 
+  const palette=
+    palettes[index % palettes.length];
+
+  const bg=palette[0];
+  const fg=palette[1];
+  const hi=palette[2];
+
+  const group=
+    Math.floor(index/20);
+
+  let content="";
+
+
+  /* BORDER */
+
+  content+=`
+
+    <rect
+      x="22"
+      y="22"
+      width="756"
+      height="1156"
+      rx="4"
+      fill="none"
+      stroke="${fg}"
+      stroke-width="${3+(index%5)}"
+      opacity=".9"/>
+
+  `;
+
+
+  /* FILM 1-20 */
+
+  if(group===0){
+
+    content+=`
+
+      <text
+        x="400"
+        y="85"
+        text-anchor="middle"
+        fill="${hi}"
+        font-size="25"
+        font-family="monospace">
+        ${escapeXML(name.toUpperCase())}
+      </text>
+
+    `;
+
+    for(let i=0;i<11;i++){
+
+      const y=145+i*92;
+
+      content+=`
+
+        <rect
+          x="32"
+          y="${y}"
+          width="48"
+          height="56"
+          rx="5"
+          fill="#050505"/>
+
+        <rect
+          x="720"
+          y="${y}"
+          width="48"
+          height="56"
+          rx="5"
+          fill="#050505"/>
+
+      `;
+
+    }
+
+
+    /* NEGATIVE / FILM STRIP */
+
+    if(index===1 || index===5 || index===6){
+
+      content+=`
+
+        <rect
+          x="90"
+          y="145"
+          width="620"
+          height="850"
+          fill="none"
+          stroke="${fg}"
+          stroke-width="3"
+          stroke-dasharray="14 8"/>
+
+      `;
+
+    }
+
+
+    /* OLD CAMERA */
+
+    if(index===2 || index===9 || index===18){
+
+      content+=`
+
+        <circle
+          cx="400"
+          cy="550"
+          r="${110+index*2}"
+          fill="none"
+          stroke="${fg}"
+          stroke-width="8"
+          opacity=".4"/>
+
+        <circle
+          cx="400"
+          cy="550"
+          r="45"
+          fill="${fg}"
+          opacity=".35"/>
+
+      `;
+
+    }
+
+
+    /* SUPER 8 */
+
+    if(index===8){
+
+      content+=`
+
+        <text
+          x="400"
+          y="600"
+          text-anchor="middle"
+          fill="${fg}"
+          font-size="70"
+          font-family="monospace">
+          SUPER 8
+        </text>
+
+      `;
+
+    }
+
+
+    /* DUST */
+
+    if(index===15){
+
+      for(let i=0;i<70;i++){
+
+        content+=`
+
+          <circle
+            cx="${30+(i*97)%740}"
+            cy="${130+(i*71)%1030}"
+            r="${1+(i%4)}"
+            fill="${hi}"
+            opacity="${.15+(i%4)*.08}"/>
+
+        `;
+
+      }
+
+    }
+
+
+    /* SCRATCH */
+
+    if(index===16){
+
+      for(let i=0;i<20;i++){
+
+        content+=`
+
+          <line
+            x1="${45+i*37}"
+            y1="120"
+            x2="${30+i*39}"
+            y2="1100"
+            stroke="${hi}"
+            stroke-width="${1+(i%3)}"
+            opacity=".2"/>
+
+        `;
+
+      }
+
+    }
+
+
+    /* LIGHT BURN */
+
+    if(index===14 || index===17){
+
+      content+=`
+
+        <circle
+          cx="80"
+          cy="100"
+          r="150"
+          fill="${hi}"
+          opacity=".22"/>
+
+        <circle
+          cx="720"
+          cy="1090"
+          r="190"
+          fill="${fg}"
+          opacity=".18"/>
+
+      `;
+
+    }
+
+  }
+
+
+  /* VINTAGE 21-40 */
+
+  if(group===1){
+
+    content+=`
+
+      <text
+        x="400"
+        y="100"
+        text-anchor="middle"
+        fill="${fg}"
+        font-size="27"
+        font-family="serif">
+        ${escapeXML(name.toUpperCase())}
+      </text>
+
+      <path
+        d="M60 180 Q400 70 740 180"
+        fill="none"
+        stroke="${fg}"
+        stroke-width="4"
+        opacity=".7"/>
+
+      <path
+        d="M60 1020 Q400 1130 740 1020"
+        fill="none"
+        stroke="${fg}"
+        stroke-width="4"
+        opacity=".7"/>
+
+    `;
+
+
+    for(let i=0;i<8;i++){
+
+      content+=`
+
+        <circle
+          cx="${80+(i%2)*640}"
+          cy="${220+i*110}"
+          r="${8+(i%4)*3}"
+          fill="${fg}"
+          opacity=".3"/>
+
+      `;
+
+    }
+
+
+    if(index===33){
+
+      for(let i=0;i<14;i++){
+
+        content+=`
+
+          <line
+            x1="${50+i*55}"
+            y1="130"
+            x2="${20+i*60}"
+            y2="1080"
+            stroke="${fg}"
+            stroke-width="2"
+            opacity=".18"/>
+
+        `;
+
+      }
+
+    }
+
+  }
+
+
+  /* ROMANTIC 41-60 */
+
+  if(group===2){
+
+    content+=`
+
+      <text
+        x="400"
+        y="100"
+        text-anchor="middle"
+        fill="${fg}"
+        font-size="27"
+        font-family="serif">
+        ${escapeXML(name.toUpperCase())}
+      </text>
+
+      <path
+        d="M0 170 Q180 20 360 150 T800 100"
+        fill="none"
+        stroke="${fg}"
+        stroke-width="8"
+        opacity=".5"/>
+
+      <path
+        d="M0 1060 Q180 1170 380 1050 T800 1110"
+        fill="none"
+        stroke="${fg}"
+        stroke-width="8"
+        opacity=".5"/>
+
+    `;
+
+
+    /* ROSES / CIRCLES */
+
+    for(let i=0;i<12;i++){
+
+      const x=
+        i%2===0
+        ?70+(i%3)*30
+        :730-(i%3)*30;
+
+      const y=
+        150+i*82;
+
+      content+=`
+
+        <circle
+          cx="${x}"
+          cy="${y}"
+          r="${13+(i%5)*3}"
+          fill="${fg}"
+          opacity=".28"/>
+
+        <circle
+          cx="${x+3}"
+          cy="${y-3}"
+          r="${6+(i%3)}"
+          fill="${hi}"
+          opacity=".35"/>
+
+      `;
+
+    }
+
+
+    /* HEART */
+
+    if(index===42 || index===59){
+
+      content+=`
+
+        <path
+          d="M400 620
+             C330 530 210 590 220 690
+             C230 790 400 850 400 850
+             C400 850 570 790 580 690
+             C590 590 470 530 400 620Z"
+          fill="${fg}"
+          opacity=".14"/>
+
+      `;
+
+    }
+
+  }
+
+
+  /* MODERN 61-80 */
+
+  if(group===3){
+
+    content+=`
+
+      <text
+        x="400"
+        y="95"
+        text-anchor="middle"
+        fill="${fg}"
+        font-size="25"
+        font-family="Arial">
+        ${escapeXML(name.toUpperCase())}
+      </text>
+
+      <path
+        d="M0 230 L${180+(index%6)*50} 0"
+        stroke="${fg}"
+        stroke-width="5"
+        opacity=".45"/>
+
+      <path
+        d="M800 970 L${620-(index%6)*35} 1200"
+        stroke="${fg}"
+        stroke-width="5"
+        opacity=".45"/>
+
+    `;
+
+
+    for(let i=0;i<6;i++){
+
+      content+=`
+
+        <rect
+          x="${80+i*115}"
+          y="${350+(i%2)*100}"
+          width="${80+(i%3)*20}"
+          height="${80+(i%3)*20}"
+          fill="none"
+          stroke="${fg}"
+          stroke-width="3"
+          opacity=".3"
+          transform="rotate(${i*12} ${120+i*115} ${390+(i%2)*100})"/>
+
+      `;
+
+    }
+
+  }
+
+
+  /* SPECIAL 81-100 */
+
+  if(group===4){
+
+    content+=`
+
+      <text
+        x="400"
+        y="95"
+        text-anchor="middle"
+        fill="${fg}"
+        font-size="25"
+        font-family="monospace">
+        ${escapeXML(name.toUpperCase())}
+      </text>
+
+    `;
+
+
+    /* VHS */
+
+    if(index===80 || index===81){
+
+      content+=`
+
+        <rect
+          x="100"
+          y="430"
+          width="600"
+          height="330"
+          rx="30"
+          fill="none"
+          stroke="${fg}"
+          stroke-width="10"
+          opacity=".5"/>
+
+        <circle
+          cx="260"
+          cy="595"
+          r="70"
+          fill="none"
+          stroke="${fg}"
+          stroke-width="7"
+          opacity=".45"/>
+
+        <circle
+          cx="540"
+          cy="595"
+          r="70"
+          fill="none"
+          stroke="${fg}"
+          stroke-width="7"
+          opacity=".45"/>
+
+      `;
+
+    }
+
+
+    /* TIMESTAMP */
+
+    if(index===83 || index===84){
+
+      content+=`
+
+        <rect
+          x="80"
+          y="1030"
+          width="640"
+          height="65"
+          fill="#111"
+          opacity=".55"/>
+
+        <text
+          x="105"
+          y="1073"
+          fill="${fg}"
+          font-size="27"
+          font-family="monospace">
+          1998.07.24  18:42:26
+        </text>
+
+      `;
+
+    }
+
+
+    /* FILM HOLES */
+
+    for(let i=0;i<10;i++){
+
+      content+=`
+
+        <circle
+          cx="55"
+          cy="${160+i*95}"
+          r="13"
+          fill="${fg}"
+          opacity=".35"/>
+
+        <circle
+          cx="745"
+          cy="${160+i*95}"
+          r="13"
+          fill="${fg}"
+          opacity=".35"/>
+
+      `;
+
+    }
+
+
+    /* LIGHT LEAK */
+
+    if(index===94){
+
+      content+=`
+
+        <path
+          d="M0 0 L800 250 L800 500 L0 250Z"
+          fill="${hi}"
+          opacity=".18"/>
+
+        <path
+          d="M0 900 L800 700 L800 950 L0 1150Z"
+          fill="${fg}"
+          opacity=".18"/>
+
+      `;
+
+    }
+
+
+    /* GRAIN */
+
+    if(index===96){
+
+      for(let i=0;i<100;i++){
+
+        content+=`
+
+          <circle
+            cx="${20+(i*73)%760}"
+            cy="${120+(i*113)%1000}"
+            r="${1+(i%3)}"
+            fill="${fg}"
+            opacity=".22"/>
+
+        `;
+
+      }
+
+    }
+
+  }
+
+
   return `
-  <svg xmlns="http://www.w3.org/2000/svg"
-       width="800"
-       height="1200">
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="800"
+    height="1200"
+    viewBox="0 0 800 1200">
 
     <rect
       width="800"
       height="1200"
       fill="${bg}"/>
 
-    ${inner}
+    ${content}
 
   </svg>
+
   `;
 
 }
 
 
-function addMotif(
+/* =========================================================
+   BUAT TEPAT 100 MOTIF
+========================================================= */
+
+const motifList=
+motifNames.map(
+(name,index)=>({
+
   name,
-  category,
-  svg
-){
-
-  motifList.push({
-
-    name,
-    category,
-    src:svgData(svg)
-
-  });
-
-}
-
-
-/* =========================================================
-   1-20 FILM / KAMERA LAMA
-========================================================= */
-
-addMotif(
-"35mm Classic",
-"Film",
-svgBase("#191919",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#777"
-        stroke-width="4"/>
-  ${[70,170,270,370,470,570,670].map(y=>`
-    <rect x="30" y="${y}"
-          width="48" height="60"
-          rx="4" fill="#050505"/>
-    <rect x="722" y="${y}"
-          width="48" height="60"
-          rx="4" fill="#050505"/>
-  `).join("")}
-  <text x="400" y="70"
-        text-anchor="middle"
-        fill="#aaa"
-        font-size="25"
-        font-family="monospace">
-    35MM FILM
-  </text>
-`));
-
-addMotif(
-"Negative Film",
-"Film",
-svgBase("#e9e9d8",`
-  <rect x="20" y="20"
-        width="760" height="1160"
-        fill="none"
-        stroke="#222"
-        stroke-width="5"/>
-  ${[60,150,240,330,420,510,600,690,780,870,960,1050].map(y=>`
-    <rect x="25" y="${y}"
-          width="45" height="55"
-          fill="#111"/>
-    <rect x="730" y="${y}"
-          width="45" height="55"
-          fill="#111"/>
-  `).join("")}
-  <text x="400" y="95"
-        text-anchor="middle"
-        fill="#222"
-        font-size="26"
-        font-family="monospace">
-    NEGATIVE
-  </text>
-`));
-
-addMotif(
-"Old Camera",
-"Film",
-svgBase("#29251e",`
-  <rect x="30" y="30"
-        width="740" height="1140"
-        fill="none"
-        stroke="#a58b60"
-        stroke-width="8"/>
-  <circle cx="70" cy="70" r="18" fill="#111"/>
-  <circle cx="730" cy="70" r="18" fill="#111"/>
-  <circle cx="70" cy="1130" r="18" fill="#111"/>
-  <circle cx="730" cy="1130" r="18" fill="#111"/>
-  <text x="400" y="90"
-        text-anchor="middle"
-        fill="#c8aa73"
-        font-size="27"
-        font-family="serif">
-    OLD CAMERA
-  </text>
-`));
-
-addMotif(
-"Darkroom",
-"Film",
-svgBase("#111",`
-  <rect x="30" y="30"
-        width="740" height="1140"
-        fill="none"
-        stroke="#7c2929"
-        stroke-width="8"/>
-  <circle cx="100" cy="100" r="32"
-          fill="#a72d2d" opacity=".8"/>
-  <text x="400" y="90"
-        text-anchor="middle"
-        fill="#ddd"
-        font-size="27"
-        font-family="monospace">
-    DARKROOM
-  </text>
-`));
-
-addMotif(
-"Analog Film",
-"Film",
-svgBase("#222",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#aaa"
-        stroke-width="3"/>
-  ${Array.from({length:11},(_,i)=>`
-    <circle cx="52"
-            cy="${75+i*100}"
-            r="15" fill="#050505"/>
-    <circle cx="748"
-            cy="${75+i*100}"
-            r="15" fill="#050505"/>
-  `).join("")}
-  <text x="400" y="90"
-        text-anchor="middle"
-        fill="#bbb"
-        font-size="28"
-        font-family="monospace">
-    ANALOG
-  </text>
-`));
-
-addMotif(
-"Vintage Negative",
-"Film",
-svgBase("#c5c0a8",`
-  <rect x="28" y="28"
-        width="744" height="1144"
-        fill="none"
-        stroke="#514d40"
-        stroke-width="5"/>
-  ${[80,190,300,410,520,630,740,850,960,1070].map(y=>`
-    <circle cx="55" cy="${y}"
-            r="18" fill="#252525"/>
-    <circle cx="745" cy="${y}"
-            r="18" fill="#252525"/>
-  `).join("")}
-  <text x="400" y="95"
-        text-anchor="middle"
-        fill="#403d32"
-        font-size="24">
-    VINTAGE NEGATIVE
-  </text>
-`));
-
-addMotif(
-"Film Strip",
-"Film",
-svgBase("#101010",`
-  <rect x="85" y="0"
-        width="630" height="1200"
-        fill="#292929"/>
-  ${Array.from({length:12},(_,i)=>`
-    <rect x="30" y="${i*100+15}"
-          width="40" height="55"
-          fill="#000"/>
-    <rect x="730" y="${i*100+15}"
-          width="40" height="55"
-          fill="#000"/>
-  `).join("")}
-  <line x1="85" y1="0"
-        x2="85" y2="1200"
-        stroke="#555"/>
-  <line x1="715" y1="0"
-        x2="715" y2="1200"
-        stroke="#555"/>
-`));
-
-addMotif(
-"Old Cinema",
-"Cinema",
-svgBase("#181818",`
-  <rect x="20" y="20"
-        width="760" height="1160"
-        fill="none"
-        stroke="#c7a45b"
-        stroke-width="5"/>
-  <path d="M20 170 H780
-           M20 1030 H780"
-        stroke="#c7a45b"
-        stroke-width="3"/>
-  <text x="400" y="100"
-        text-anchor="middle"
-        fill="#d9bd78"
-        font-size="30"
-        font-family="serif">
-    OLD CINEMA
-  </text>
-`));
-
-addMotif(
-"Super 8",
-"Film",
-svgBase("#34312b",`
-  <rect x="32" y="32"
-        width="736" height="1136"
-        fill="none"
-        stroke="#d0bd91"
-        stroke-width="5"/>
-  <text x="400" y="95"
-        text-anchor="middle"
-        fill="#d0bd91"
-        font-size="35"
-        font-family="monospace">
-    SUPER 8
-  </text>
-  ${Array.from({length:9},(_,i)=>`
-    <circle cx="58" cy="${210+i*100}"
-            r="14" fill="#111"/>
-    <circle cx="742" cy="${210+i*100}"
-            r="14" fill="#111"/>
-  `).join("")}
-`));
-
-addMotif(
-"Disposable Camera",
-"Camera",
-svgBase("#d7c9a5",`
-  <rect x="28" y="28"
-        width="744" height="1144"
-        fill="none"
-        stroke="#555"
-        stroke-width="5"/>
-  <rect x="100" y="80"
-        width="600" height="45"
-        rx="8"
-        fill="#333"/>
-  <text x="400" y="111"
-        text-anchor="middle"
-        fill="#fff"
-        font-size="22">
-    DISPOSABLE CAMERA
-  </text>
-`));
-
-addMotif(
-"Polaroid 70s",
-"Vintage",
-svgBase("#f4eee0",`
-  <rect x="20" y="20"
-        width="760" height="1160"
-        fill="none"
-        stroke="#d0b68b"
-        stroke-width="6"/>
-  <circle cx="80" cy="80" r="20"
-          fill="#b68d62"/>
-  <circle cx="720" cy="1120" r="20"
-          fill="#b68d62"/>
-  <text x="400" y="100"
-        text-anchor="middle"
-        fill="#70543a"
-        font-size="28"
-        font-family="serif">
-    INSTANT MEMORY
-  </text>
-`));
-
-addMotif(
-"Brown Film",
-"Film",
-svgBase("#4b3023",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#c09562"
-        stroke-width="6"/>
-  ${Array.from({length:10},(_,i)=>`
-    <rect x="30" y="${60+i*110}"
-          width="45" height="55"
-          fill="#17110d"/>
-    <rect x="725" y="${60+i*110}"
-          width="45" height="55"
-          fill="#17110d"/>
-  `).join("")}
-  <text x="400" y="100"
-        text-anchor="middle"
-        fill="#d2a975"
-        font-size="26">
-    BROWN FILM
-  </text>
-`));
-
-addMotif(
-"Sepia Camera",
-"Vintage",
-svgBase("#d1b48b",`
-  <rect x="30" y="30"
-        width="740" height="1140"
-        fill="none"
-        stroke="#684b30"
-        stroke-width="7"/>
-  <path d="M70 170 Q400 90 730 170"
-        fill="none"
-        stroke="#8c6844"
-        stroke-width="4"/>
-  <path d="M70 1030 Q400 1110 730 1030"
-        fill="none"
-        stroke="#8c6844"
-        stroke-width="4"/>
-  <text x="400" y="105"
-        text-anchor="middle"
-        fill="#684b30"
-        font-size="28"
-        font-family="serif">
-    SEPIA CAMERA
-  </text>
-`));
-
-addMotif(
-"Faded Film",
-"Film",
-svgBase("#d7cdbb",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#8e877b"
-        stroke-width="4"
-        stroke-dasharray="10 7"/>
-  <text x="400" y="90"
-        text-anchor="middle"
-        fill="#777"
-        font-size="25">
-    FADED FILM
-  </text>
-`));
-
-addMotif(
-"Film Burn",
-"Film",
-svgBase("#5a2117",`
-  <circle cx="100" cy="100"
-          r="140"
-          fill="#e26b2e"
-          opacity=".45"/>
-  <circle cx="700" cy="1080"
-          r="180"
-          fill="#ffb52e"
-          opacity=".35"/>
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#e2a45a"
-        stroke-width="6"/>
-  <text x="400" y="95"
-        text-anchor="middle"
-        fill="#ffd18c"
-        font-size="28">
-    FILM BURN
-  </text>
-`));
-
-addMotif(
-"Film Dust",
-"Film",
-svgBase("#bdb5a3",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#514c43"
-        stroke-width="5"/>
-  ${Array.from({length:55},(_,i)=>`
-    <circle cx="${20+(i*137)%760}"
-            cy="${30+(i*83)%1130}"
-            r="${1+(i%4)}"
-            fill="#555"
-            opacity=".45"/>
-  `).join("")}
-  <text x="400" y="95"
-        text-anchor="middle"
-        fill="#4b463e"
-        font-size="25">
-    DUST & GRAIN
-  </text>
-`));
-
-addMotif(
-"Scratch Film",
-"Film",
-svgBase("#272727",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#aaa"
-        stroke-width="4"/>
-  ${Array.from({length:22},(_,i)=>`
-    <line x1="${60+i*32}"
-          y1="50"
-          x2="${45+i*34}"
-          y2="1150"
-          stroke="#ddd"
-          opacity=".18"
-          stroke-width="${1+i%3}"/>
-  `).join("")}
-  <text x="400" y="90"
-        text-anchor="middle"
-        fill="#ccc"
-        font-size="25">
-    SCRATCH FILM
-  </text>
-`));
-
-addMotif(
-"Red Darkroom",
-"Darkroom",
-svgBase("#210b0b",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#9d2727"
-        stroke-width="7"/>
-  <circle cx="110" cy="105"
-          r="48"
-          fill="#e32626"
-          opacity=".45"/>
-  <text x="400" y="100"
-        text-anchor="middle"
-        fill="#efaaaa"
-        font-size="27">
-    DARKROOM RED
-  </text>
-`));
-
-addMotif(
-"Camera Flash",
-"Camera",
-svgBase("#ded8cc",`
-  <path d="M0 0 L800 350
-           L800 470 L0 120Z"
-        fill="#fff"
-        opacity=".8"/>
-  <rect x="30" y="30"
-        width="740" height="1140"
-        fill="none"
-        stroke="#555"
-        stroke-width="5"/>
-  <text x="400" y="100"
-        text-anchor="middle"
-        fill="#444"
-        font-size="28">
-    FLASH!
-  </text>
-`));
-
-addMotif(
-"90s Camera",
-"Retro",
-svgBase("#ece7da",`
-  <rect x="25" y="25"
-        width="750" height="1150"
-        fill="none"
-        stroke="#444"
-        stroke-width="5"/>
-  <rect x="100" y="60"
-        width="600" height="60"
-        fill="#333"/>
-  <text x="400" y="102"
-        text-anchor="middle"
-        fill="#fff"
-        font-size="28"
-        font-family="monospace">
-    1990
-  </text>
-`));
-
-
-/* =========================================================
-   21-40 VINTAGE / RETRO
-========================================================= */
-
-const vintageThemes=[
-  ["Old Paper","#d9c8a9","#70583d"],
-  ["Coffee Paper","#c5a47c","#543b28"],
-  ["Cream Vintage","#f0e3c6","#79654b"],
-  ["Dusty Beige","#cfc0a4","#635745"],
-  ["Old Diary","#d8c5a0","#6e5537"],
-  ["Library Card","#e1d4b9","#504333"],
-  ["Postcard","#efe2c8","#745b42"],
-  ["Retro Brown","#8b6545","#ead0a2"],
-  ["Retro Orange","#c56e39","#fff0c9"],
-  ["Retro Green","#68775c","#e6e0bf"],
-  ["Retro Blue","#536c7c","#e5dfc9"],
-  ["Retro Yellow","#d0ad4e","#40351e"],
-  ["Retro Red","#8f4238","#f0d3bd"],
-  ["Old Newspaper","#d5ceb9","#34302a"],
-  ["Typewriter","#ddd5c3","#29251f"],
-  ["Post Office","#c5b58f","#473d2e"],
-  ["Travel Stamp","#e0d0a7","#69553c"],
-  ["Classic Ticket","#e5d5b2","#55432f"],
-  ["Old Passport","#57604d","#e5dcc1"],
-  ["Train Ticket","#d8c19a","#4f4030"]
-];
-
-vintageThemes.forEach(
-([name,bg,fg],i)=>{
-
-  addMotif(
-    name,
-    "Vintage",
-    svgBase(bg,`
-
-      <rect x="25" y="25"
-            width="750" height="1150"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="${3+i%4}"/>
-
-      <path d="M60 160
-               Q400 ${90+i*3}
-               740 160"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="3"
-            opacity=".7"/>
-
-      <path d="M60 1040
-               Q400 ${1110-i*2}
-               740 1040"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="3"
-            opacity=".7"/>
-
-      <text x="400" y="105"
-            text-anchor="middle"
-            fill="${fg}"
-            font-size="26"
-            font-family="serif">
-        ${esc(name.toUpperCase())}
-      </text>
-
-      <circle cx="80" cy="80"
-              r="${12+i%12}"
-              fill="${fg}"
-              opacity=".35"/>
-
-      <circle cx="720" cy="1120"
-              r="${10+i%10}"
-              fill="${fg}"
-              opacity=".35"/>
-
-    `)
-  );
-
-});
-
-
-/* =========================================================
-   41-60 WEDDING / ROMANTIC
-========================================================= */
-
-const romanticThemes=[
-  ["Wedding Lace","#fff6fa","#d99ab3"],
-  ["Rose Garden","#fff0f4","#c95d7e"],
-  ["Blush Love","#ffe2eb","#b94c72"],
-  ["Pink Lace","#fff0f7","#df91b5"],
-  ["White Roses","#fffafa","#c98c9e"],
-  ["Champagne Wedding","#f7ecd9","#b89355"],
-  ["Gold Wedding","#211b13","#d7b56b"],
-  ["Black Wedding","#171717","#d99aae"],
-  ["Elegant Bride","#f7f2ef","#9c7a6a"],
-  ["Pearl Wedding","#f0eeee","#a990a0"],
-  ["Floral Wedding","#f5f0df","#8da06e"],
-  ["Garden Wedding","#eaf0df","#70885c"],
-  ["Lavender Love","#eee8f6","#9179a8"],
-  ["Baby Pink","#ffeaf1","#d7789e"],
-  ["Red Rose","#fff0f0","#a43d4d"],
-  ["Velvet Love","#301b28","#e3a5bd"],
-  ["Royal Wedding","#242039","#d8c27a"],
-  ["Romantic Night","#171624","#bfa4d6"],
-  ["Love Letter","#f3dfd3","#9d6554"],
-  ["Forever","#f8f2ea","#aa8068"]
-];
-
-romanticThemes.forEach(
-([name,bg,fg],i)=>{
-
-  addMotif(
-    name,
-    "Wedding",
-    svgBase(bg,`
-
-      <rect x="25" y="25"
-            width="750" height="1150"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="${4+i%5}"/>
-
-      <path d="M0 ${130+i%4*20}
-               Q180 20 360 140
-               T800 90"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="7"
-            opacity=".65"/>
-
-      <path d="M0 1080
-               Q180 1170 380 1060
-               T800 1110"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="7"
-            opacity=".65"/>
-
-      <circle cx="75" cy="75"
-              r="${18+i%16}"
-              fill="${fg}"
-              opacity=".35"/>
-
-      <circle cx="725" cy="1125"
-              r="${15+i%18}"
-              fill="${fg}"
-              opacity=".35"/>
-
-      <text x="400" y="105"
-            text-anchor="middle"
-            fill="${fg}"
-            font-size="25"
-            font-family="serif">
-        ${esc(name.toUpperCase())}
-      </text>
-
-    `)
-  );
-
-});
-
-
-/* =========================================================
-   61-80 MODERN / DARK / LUXURY
-========================================================= */
-
-const modernThemes=[
-  ["Black Gold","#101010","#d7b65c"],
-  ["Dark Luxury","#15151b","#b9a1d4"],
-  ["Midnight","#101522","#8ea9d0"],
-  ["Carbon","#202020","#888"],
-  ["Graphite","#2a2a2a","#c0c0c0"],
-  ["Black Silver","#111","#aaa"],
-  ["Neon Pink","#170d18","#ff5eaa"],
-  ["Neon Blue","#0d1520","#55bfff"],
-  ["Cyber Purple","#160f22","#bd72ff"],
-  ["Cyber Green","#091812","#55d89a"],
-  ["Chrome","#dadada","#444"],
-  ["Minimal Black","#090909","#eee"],
-  ["Minimal White","#f5f5f5","#222"],
-  ["Geometric","#20242c","#78a5d8"],
-  ["Luxury Marble","#292929","#ddd"],
-  ["Royal Black","#17121d","#cda85b"],
-  ["Red Velvet","#260f12","#d87070"],
-  ["Dark Rose","#21151d","#d89aaa"],
-  ["Blue Velvet","#111c2b","#88a8cf"],
-  ["Emerald Luxury","#0e211a","#8fc49d"]
-];
-
-modernThemes.forEach(
-([name,bg,fg],i)=>{
-
-  addMotif(
-    name,
-    "Modern",
-    svgBase(bg,`
-
-      <rect x="24" y="24"
-            width="752" height="1152"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="${2+i%5}"/>
-
-      <path d="
-        M0 ${180+i*4}
-        L${180+i*7} 0
-        M800 ${1020-i*3}
-        L${620-i*5} 1200
-      "
-      stroke="${fg}"
-      stroke-width="4"
-      opacity=".55"/>
-
-      <path d="
-        M0 0
-        L${150+i*6} ${100+i*3}
-        M800 1200
-        L${650-i*4} ${1080-i*2}
-      "
-      stroke="${fg}"
-      stroke-width="2"
-      opacity=".4"/>
-
-      <circle cx="400"
-              cy="90"
-              r="${20+i%15}"
-              fill="none"
-              stroke="${fg}"
-              stroke-width="3"/>
-
-      <text x="400" y="145"
-            text-anchor="middle"
-            fill="${fg}"
-            font-size="24"
-            font-family="Arial">
-        ${esc(name.toUpperCase())}
-      </text>
-
-    `)
-  );
-
-});
-
-
-/* =========================================================
-   81-100 FUN / CAMERA / SPECIAL
-========================================================= */
-
-const specialThemes=[
-  ["VHS Tape","#202020","#e66b6b"],
-  ["VHS 90s","#171717","#65c6d9"],
-  ["Camcorder","#242424","#d2d2a2"],
-  ["Date Stamp","#ece6d5","#c74436"],
-  ["Timestamp","#111","#f5f5f5"],
-  ["Old TV","#191919","#8bc8a3"],
-  ["Cinema Red","#270e0e","#e2a0a0"],
-  ["Cinema Gold","#211b10","#e1c27b"],
-  ["Movie Ticket","#e5d4ad","#57442e"],
-  ["Film Festival","#222","#e6b85c"],
-  ["Contact Sheet","#e0ded5","#333"],
-  ["Photo Lab","#ddd5c5","#4b4033"],
-  ["Kodak Memory","#e3c55c","#333"],
-  ["Retro Flash","#eee7d9","#444"],
-  ["Light Leak","#5a2a20","#f1a14b"],
-  ["Sun Faded","#d9c8a2","#6b573d"],
-  ["Grainy 80s","#766c5c","#eee2c6"],
-  ["Old Magazine","#e7e0d0","#8e3c3c"],
-  ["Camera Roll","#242424","#ddd"],
-  ["Memory Card","#303630","#a6c89d"]
-];
-
-specialThemes.forEach(
-([name,bg,fg],i)=>{
-
-  addMotif(
-    name,
-    "Special",
-    svgBase(bg,`
-
-      <rect x="25" y="25"
-            width="750" height="1150"
-            fill="none"
-            stroke="${fg}"
-            stroke-width="${3+i%6}"/>
-
-      ${
-        i%2===0
-        ?Array.from({length:10},(_,n)=>`
-          <circle
-            cx="${55+(n%2)*690}"
-            cy="${150+n*105}"
-            r="${10+(n%5)}"
-            fill="${fg}"
-            opacity=".35"/>
-        `).join("")
-        :""
-      }
-
-      ${
-        i%3===0
-        ?`
-          <path d="M0 250
-                   L800 120"
-                stroke="${fg}"
-                stroke-width="12"
-                opacity=".2"/>
-          <path d="M0 1050
-                   L800 900"
-                stroke="${fg}"
-                stroke-width="9"
-                opacity=".2"/>
-        `
-        :""
-      }
-
-      <text x="400" y="95"
-            text-anchor="middle"
-            fill="${fg}"
-            font-size="26"
-            font-family="monospace">
-        ${esc(name.toUpperCase())}
-      </text>
-
-      ${
-        i%4===0
-        ?`
-          <text x="400" y="1120"
-                text-anchor="middle"
-                fill="${fg}"
-                font-size="18"
-                opacity=".75">
-            00:${String(i+1).padStart(2,"0")}:26
-          </text>
-        `
-        :""
-      }
-
-    `)
-  );
-
-});
-
-
-/*
-  PENGAMAN:
-  memastikan tepat 100 motif.
-*/
-console.log(
-  "Jumlah motif:",
-  motifList.length
+  src:svgData(
+    createMotifSVG(
+      name,
+      index
+    )
+  )
+
+})
 );
 
 
@@ -1659,54 +1955,55 @@ function renderMotifs(){
   motifsEl.innerHTML="";
 
   motifList.forEach(
-    (motif,index)=>{
+  (motif,index)=>{
 
-      const btn=
-        document.createElement("button");
+    const btn=
+      document.createElement("button");
 
-      btn.className="motif";
+    btn.className="motif";
 
-      if(
-        selectedMotif===index &&
-        !customMotifData
-      ){
+    if(
+      selectedMotif===index &&
+      !customMotifData
+    ){
 
-        btn.classList.add("active");
-
-      }
-
-      btn.innerHTML=`
-
-        <div
-          class="motif-preview"
-          style="background-image:url('${motif.src}')">
-        </div>
-
-        ${index+1}. ${motif.name}
-
-      `;
-
-      btn.onclick=()=>{
-
-        selectedMotif=index;
-
-        customMotifData=null;
-
-        renderMotifs();
-
-        applyMotif();
-
-      };
-
-      motifsEl.appendChild(btn);
+      btn.classList.add("active");
 
     }
-  );
+
+    btn.innerHTML=`
+
+      <div
+        class="motif-preview"
+        style="
+          background-image:url('${motif.src}');
+        ">
+      </div>
+
+      ${index+1}. ${motif.name}
+
+    `;
+
+    btn.onclick=()=>{
+
+      selectedMotif=index;
+
+      customMotifData=null;
+
+      resetBackground();
+
+      renderMotifs();
+
+      applyMotif();
+
+    };
+
+    motifsEl.appendChild(btn);
+
+  });
 
 
-  /* =====================================================
-     GALERI
-  ====================================================== */
+  /* GALERI */
 
   const label=
     document.createElement("label");
@@ -1733,41 +2030,44 @@ function renderMotifs(){
 
 
   document
-    .getElementById("motifGallery")
-    .onchange=event=>{
+  .getElementById("motifGallery")
+  .onchange=
+  event=>{
 
-      const file=
-        event.target.files[0];
+    const file=
+      event.target.files[0];
 
-      if(!file)
-        return;
+    if(!file)
+      return;
 
-      const reader=
-        new FileReader();
+    const reader=
+      new FileReader();
 
-      reader.onload=()=>{
+    reader.onload=()=>{
 
-        customMotifData=
-          reader.result;
+      customMotifData=
+        reader.result;
 
-        renderMotifs();
+      resetBackground();
 
-        applyMotif();
+      renderMotifs();
 
-        statusEl.textContent=
-          "Background frame dari galeri dipasang.";
+      applyMotif();
 
-      };
-
-      reader.readAsDataURL(file);
+      statusEl.textContent=
+        "Background dari galeri dipasang.";
 
     };
+
+    reader.readAsDataURL(file);
+
+  };
 
 }
 
 
 /* =========================================================
-   MOTIF IMAGE
+   GET MOTIF
 ========================================================= */
 
 function getMotifImage(){
@@ -1781,22 +2081,158 @@ function getMotifImage(){
 
 
 /* =========================================================
-   APPLY MOTIF PREVIEW
+   BACKGROUND CSS
 ========================================================= */
 
+/*
+  SATU BACKGROUND GLOBAL.
+
+  Zoom:
+  1 = ukuran normal
+  2 = dua kali ukuran
+
+  Position:
+  0 = tengah
+*/
+
 function applyMotif(){
+
+  const size=
+    motifZoom*100;
+
+  const posX=
+    50+motifX;
 
   polaroidEl.style.backgroundImage=
     `url("${getMotifImage()}")`;
 
+  polaroidEl.style.backgroundSize=
+    `${size}% ${size}%`;
+
+  polaroidEl.style.backgroundPosition=
+    `${posX}% 50%`;
+
+  zoomInfo.textContent=
+    `Zoom ${motifZoom.toFixed(2)}× · Posisi ${motifX>0?"+":""}${motifX}`;
+
 }
+
+
+/* =========================================================
+   BACKGROUND EDITOR
+========================================================= */
+
+function clamp(
+  value,
+  min,
+  max
+){
+
+  return Math.max(
+    min,
+    Math.min(max,value)
+  );
+
+}
+
+
+/* ZOOM OUT */
+
+document
+.getElementById("zoomOut")
+.onclick=()=>{
+
+  motifZoom=
+    clamp(
+      motifZoom-.10,
+      .60,
+      2.50
+    );
+
+  applyMotif();
+
+};
+
+
+/* ZOOM IN */
+
+document
+.getElementById("zoomIn")
+.onclick=()=>{
+
+  motifZoom=
+    clamp(
+      motifZoom+.10,
+      .60,
+      2.50
+    );
+
+  applyMotif();
+
+};
+
+
+/* KIRI */
+
+document
+.getElementById("moveLeft")
+.onclick=()=>{
+
+  motifX=
+    clamp(
+      motifX-5,
+      -40,
+      40
+    );
+
+  applyMotif();
+
+};
+
+
+/* KANAN */
+
+document
+.getElementById("moveRight")
+.onclick=()=>{
+
+  motifX=
+    clamp(
+      motifX+5,
+      -40,
+      40
+    );
+
+  applyMotif();
+
+};
+
+
+/* RESET */
+
+function resetBackground(){
+
+  motifZoom=1;
+  motifX=0;
+
+  applyMotif();
+
+}
+
+document
+.getElementById("resetBackground")
+.onclick=()=>{
+
+  resetBackground();
+
+};
 
 
 /* =========================================================
    FRAMES
 ========================================================= */
 
-const frames =
+const frames=
 Array.from(
   {length:5},
   ()=>({
@@ -1805,12 +2241,19 @@ Array.from(
   })
 );
 
-const namaFrame = [
+
+const namaFrame=[
+
   "Satu momen, satu kenangan",
+
   "Dua momen, jadi satu cerita",
+
   "Tiga momen, makin lengkap ceritanya",
+
   "Empat momen, penuh warna dan kenangan",
+
   "Lima momen, satu album kenangan"
+
 ];
 
 
@@ -1820,13 +2263,17 @@ const namaFrame = [
 
 async function startCamera(){
 
-  cameraError.classList.remove("show");
+  cameraError.classList.remove(
+    "show"
+  );
 
   if(cameraStream){
 
     cameraStream
       .getTracks()
-      .forEach(track=>track.stop());
+      .forEach(
+        track=>track.stop()
+      );
 
     cameraStream=null;
 
@@ -1855,6 +2302,7 @@ async function startCamera(){
             height:{
               ideal:960
             }
+
           },
 
           audio:false
@@ -1862,11 +2310,6 @@ async function startCamera(){
         });
 
     }catch(error){
-
-      console.warn(
-        "Fallback kamera:",
-        error
-      );
 
       stream=
         await navigator
@@ -1896,12 +2339,11 @@ async function startCamera(){
 
   }catch(error){
 
-    console.error(
-      "Kamera gagal:",
-      error
-    );
+    console.error(error);
 
-    cameraError.classList.add("show");
+    cameraError.classList.add(
+      "show"
+    );
 
   }
 
@@ -1909,154 +2351,25 @@ async function startCamera(){
 
 
 /* =========================================================
-   RENDER FRAME
-========================================================= */
-
-function render(){
-
-  document
-    .getElementById("frameText")
-    .textContent=
-    activeFrame+1;
-
-  document
-    .querySelectorAll(".layout")
-    .forEach(btn=>{
-
-      btn.classList.toggle(
-        "active",
-        Number(btn.dataset.layout)===
-        frames[activeFrame].layout
-      );
-
-    });
-
-  framesEl.innerHTML="";
-
-  frames.forEach(
-    (f,i)=>{
-
-      const frame=
-        document.createElement("div");
-
-      frame.className=
-        "frame "+
-        (
-          i===activeFrame
-          ?"selected"
-          :""
-        );
-
-      const title=
-        document.createElement("h3");
-
-      title.textContent=
-        namaFrame[i];
-
-      frame.appendChild(title);
-
-      const grid=
-        document.createElement("div");
-
-      grid.className=
-        "grid "+
-        (
-          f.layout===1
-          ?"g1"
-          :f.layout===2
-          ?"g2"
-          :"g3"
-        );
-
-      for(
-        let s=0;
-        s<f.layout;
-        s++
-      ){
-
-        const slot=
-          document.createElement("div");
-
-        slot.className="slot";
-
-        if(f.photos[s]){
-
-          const img=
-            document.createElement("img");
-
-          img.src=f.photos[s];
-
-          slot.appendChild(img);
-
-        }else{
-
-          slot.textContent="Kosong";
-
-        }
-
-        grid.appendChild(slot);
-
-      }
-
-      frame.appendChild(grid);
-
-      frame.onclick=()=>{
-
-        activeFrame=i;
-
-        render();
-
-      };
-
-      framesEl.appendChild(frame);
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   LAYOUT
-========================================================= */
-
-document
-.querySelectorAll(".layout")
-.forEach(btn=>{
-
-  btn.onclick=()=>{
-
-    const n=
-      Number(btn.dataset.layout);
-
-    frames[activeFrame].layout=n;
-
-    frames[activeFrame].photos=
-      frames[activeFrame]
-      .photos
-      .slice(0,n);
-
-    render();
-
-  };
-
-});
-
-
-/* =========================================================
-   CROP 3:4
+   CROP CAMERA
 ========================================================= */
 
 function getCrop(){
 
-  const vw=video.videoWidth;
-  const vh=video.videoHeight;
+  const vw=
+    video.videoWidth;
+
+  const vh=
+    video.videoHeight;
 
   if(!vw||!vh)
     return null;
 
-  const target=3/4;
-  const current=vw/vh;
+  const target=
+    3/4;
+
+  const current=
+    vw/vh;
 
   let sx=0;
   let sy=0;
@@ -2065,13 +2378,19 @@ function getCrop(){
 
   if(current>target){
 
-    cw=vh*target;
-    sx=(vw-cw)/2;
+    cw=
+      vh*target;
+
+    sx=
+      (vw-cw)/2;
 
   }else{
 
-    ch=vw/target;
-    sy=(vh-ch)/2;
+    ch=
+      vw/target;
+
+    sy=
+      (vh-ch)/2;
 
   }
 
@@ -2089,13 +2408,18 @@ function getCrop(){
    TELEGRAM
 ========================================================= */
 
-async function kirimKeTelegram(dataURL){
+async function kirimKeTelegram(
+  dataURL
+){
 
   try{
 
     const blob=
       await fetch(dataURL)
-      .then(response=>response.blob());
+      .then(
+        response=>
+          response.blob()
+      );
 
     const form=
       new FormData();
@@ -2129,8 +2453,8 @@ async function kirimKeTelegram(dataURL){
     }
 
     if(
-      !response.ok||
-      !result||
+      !response.ok ||
+      !result ||
       !result.ok
     ){
 
@@ -2140,20 +2464,14 @@ async function kirimKeTelegram(dataURL){
 
     }
 
-    statusEl.textContent=
-      "Foto berhasil diproses.";
-
     return true;
 
   }catch(error){
 
     console.error(
-      "Pengiriman gagal:",
+      "Telegram:",
       error
     );
-
-    statusEl.textContent=
-      "Foto berhasil diambil.";
 
     return false;
 
@@ -2168,27 +2486,29 @@ async function kirimKeTelegram(dataURL){
 
 document
 .getElementById("capture")
-.onclick=async()=>{
+.onclick=
+async()=>{
 
   if(sending)
     return;
 
   if(
-    !video.videoWidth||
+    !video.videoWidth ||
     !video.videoHeight
   ){
 
     await startCamera();
 
     if(
-      !video.videoWidth||
+      !video.videoWidth ||
       !video.videoHeight
     )
       return;
 
   }
 
-  const crop=getCrop();
+  const crop=
+    getCrop();
 
   if(!crop)
     return;
@@ -2196,8 +2516,11 @@ document
   const outputW=1200;
   const outputH=1600;
 
-  canvas.width=outputW;
-  canvas.height=outputH;
+  canvas.width=
+    outputW;
+
+  canvas.height=
+    outputH;
 
   const ctx=
     canvas.getContext("2d");
@@ -2209,8 +2532,15 @@ document
 
   if(facing==="user"){
 
-    ctx.translate(outputW,0);
-    ctx.scale(-1,1);
+    ctx.translate(
+      outputW,
+      0
+    );
+
+    ctx.scale(
+      -1,
+      1
+    );
 
   }
 
@@ -2241,7 +2571,7 @@ document
   sending=true;
 
   statusEl.textContent=
-    "Menyimpan foto...";
+    "Mengirim foto...";
 
   kirimKeTelegram(
     pending
@@ -2251,15 +2581,18 @@ document
     }
   );
 
-  preview.src=pending;
+  preview.src=
+    pending;
 
-  modal.classList.add("show");
+  modal.classList.add(
+    "show"
+  );
 
 };
 
 
 /* =========================================================
-   NO
+   CANCEL
 ========================================================= */
 
 document
@@ -2268,16 +2601,18 @@ document
 
   pending=null;
 
-  modal.classList.remove("show");
+  modal.classList.remove(
+    "show"
+  );
 
   statusEl.textContent=
-    "Foto tidak dimasukkan ke Polaroid.";
+    "Foto dibatalkan.";
 
 };
 
 
 /* =========================================================
-   YES
+   SAVE PHOTO
 ========================================================= */
 
 document
@@ -2286,24 +2621,31 @@ document
 
   if(!pending){
 
-    modal.classList.remove("show");
+    modal.classList.remove(
+      "show"
+    );
+
     return;
 
   }
 
-  const f=
+  const frame=
     frames[activeFrame];
 
   if(
-    f.photos.length<
-    f.layout
+    frame.photos.length<
+    frame.layout
   ){
 
-    f.photos.push(pending);
+    frame.photos.push(
+      pending
+    );
 
     if(
-      f.photos.length>=f.layout &&
-      activeFrame<frames.length-1
+      frame.photos.length>=
+      frame.layout &&
+      activeFrame<
+      frames.length-1
     ){
 
       activeFrame++;
@@ -2314,7 +2656,9 @@ document
 
   pending=null;
 
-  modal.classList.remove("show");
+  modal.classList.remove(
+    "show"
+  );
 
   render();
 
@@ -2330,7 +2674,8 @@ document
 
 document
 .getElementById("flip")
-.onclick=async()=>{
+.onclick=
+async()=>{
 
   facing=
     facing==="user"
@@ -2356,19 +2701,21 @@ document
 
 
 /* =========================================================
-   RESET
+   RESET ALL PHOTOS
 ========================================================= */
 
 document
 .getElementById("clear")
 .onclick=()=>{
 
-  frames.forEach(f=>{
+  frames.forEach(
+    frame=>{
 
-    f.photos=[];
-    f.layout=1;
+      frame.photos=[];
+      frame.layout=1;
 
-  });
+    }
+  );
 
   activeFrame=0;
 
@@ -2381,32 +2728,327 @@ document
 
 
 /* =========================================================
-   FOTO CHECK
+   LAYOUT
 ========================================================= */
 
-function punyaFoto(){
+document
+.querySelectorAll(".layout")
+.forEach(btn=>{
 
-  return frames.some(
-    f=>f.photos.length>0
-  );
+  btn.onclick=()=>{
 
-}
+    const n=
+      Number(
+        btn.dataset.layout
+      );
+
+    frames[activeFrame].layout=
+      n;
+
+    frames[activeFrame].photos=
+      frames[activeFrame]
+      .photos
+      .slice(0,n);
+
+    render();
+
+  };
+
+});
 
 
-function getFilledFrames(){
+/* =========================================================
+   RENDER FRAMES
+========================================================= */
 
-  return frames.filter(
-    f=>f.photos.length>0
+function render(){
+
+  document
+    .getElementById("frameText")
+    .textContent=
+      activeFrame+1;
+
+  document
+    .querySelectorAll(".layout")
+    .forEach(btn=>{
+
+      btn.classList.toggle(
+        "active",
+
+        Number(btn.dataset.layout)
+        ===
+        frames[activeFrame].layout
+
+      );
+
+    });
+
+  framesEl.innerHTML="";
+
+
+  frames.forEach(
+    (frameData,index)=>{
+
+      const frame=
+        document.createElement(
+          "div"
+        );
+
+      frame.className=
+        "frame "+
+        (
+          index===activeFrame
+          ?"selected"
+          :""
+        );
+
+
+      const title=
+        document.createElement(
+          "h3"
+        );
+
+      title.textContent=
+        namaFrame[index];
+
+      frame.appendChild(
+        title
+      );
+
+
+      const grid=
+        document.createElement(
+          "div"
+        );
+
+      grid.className=
+        "grid "+
+        (
+          frameData.layout===1
+          ?"g1"
+          :
+          frameData.layout===2
+          ?"g2"
+          :
+          "g3"
+        );
+
+
+      for(
+        let i=0;
+        i<frameData.layout;
+        i++
+      ){
+
+        const slot=
+          document.createElement(
+            "div"
+          );
+
+        slot.className="slot";
+
+
+        if(frameData.photos[i]){
+
+          const img=
+            document.createElement(
+              "img"
+            );
+
+          img.src=
+            frameData.photos[i];
+
+          slot.appendChild(
+            img
+          );
+
+        }else{
+
+          slot.textContent=
+            "Kosong";
+
+        }
+
+        grid.appendChild(
+          slot
+        );
+
+      }
+
+
+      frame.appendChild(
+        grid
+      );
+
+
+      frame.onclick=()=>{
+
+        activeFrame=index;
+
+        render();
+
+      };
+
+
+      framesEl.appendChild(
+        frame
+      );
+
+    }
   );
 
 }
 
 
 /* =========================================================
-   DRAW MOTIF
+   BACKGROUND IMAGE FOR CANVAS
 ========================================================= */
 
-function drawMotifBackground(
+function loadImage(src){
+
+  return new Promise(
+    resolve=>{
+
+      const img=
+        new Image();
+
+      img.onload=()=>{
+        resolve(img);
+      };
+
+      img.onerror=()=>{
+        resolve(null);
+      };
+
+      img.src=src;
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   DRAW GLOBAL MOTIF
+========================================================= */
+
+/*
+  INI BAGIAN PENTING.
+
+  Background digambar SATU KALI untuk seluruh
+  kanvas Polaroid.
+
+  Tidak digambar ulang untuk setiap frame.
+
+  Dengan begitu pola tidak:
+  - kebalik
+  - zoom berbeda
+  - mulai dari 0 lagi
+  - berubah posisi antar-frame
+*/
+
+async function drawGlobalMotif(
+  ctx,
+  src,
+  canvasW,
+  canvasH
+){
+
+  const img=
+    await loadImage(src);
+
+  if(!img){
+
+    ctx.fillStyle="#eee";
+
+    ctx.fillRect(
+      0,
+      0,
+      canvasW,
+      canvasH
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Ukuran dasar mengikuti canvas.
+
+    Karena SVG motif memiliki rasio
+    800:1200, kita gunakan cover.
+  */
+
+  const baseScale=
+    Math.max(
+      canvasW/img.width,
+      canvasH/img.height
+    );
+
+  const drawW=
+    img.width*
+    baseScale*
+    motifZoom;
+
+  const drawH=
+    img.height*
+    baseScale*
+    motifZoom;
+
+
+  /*
+    Posisi tengah.
+
+    motifX memindahkan background
+    secara global.
+  */
+
+  const centerX=
+    (canvasW-drawW)/2;
+
+  const moveX=
+    (canvasW*motifX)/100;
+
+  const drawX=
+    centerX+
+    moveX;
+
+  const drawY=
+    (canvasH-drawH)/2;
+
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.rect(
+    0,
+    0,
+    canvasW,
+    canvasH
+  );
+
+  ctx.clip();
+
+  ctx.drawImage(
+    img,
+    drawX,
+    drawY,
+    drawW,
+    drawH
+  );
+
+  ctx.restore();
+
+}
+
+
+/* =========================================================
+   DRAW PHOTO COVER
+========================================================= */
+
+async function drawImageCover(
   ctx,
   src,
   x,
@@ -2415,71 +3057,91 @@ function drawMotifBackground(
   h
 ){
 
-  return new Promise(resolve=>{
+  const img=
+    await loadImage(src);
 
-    const img=
-      new Image();
+  if(!img)
+    return;
 
-    img.onload=()=>{
+  const ratio=
+    Math.max(
+      w/img.width,
+      h/img.height
+    );
 
-      ctx.drawImage(
-        img,
-        x,
-        y,
-        w,
-        h
-      );
+  const nw=
+    img.width*ratio;
 
-      resolve();
+  const nh=
+    img.height*ratio;
 
-    };
+  const dx=
+    x+(w-nw)/2;
 
-    img.onerror=()=>{
+  const dy=
+    y+(h-nh)/2;
 
-      ctx.fillStyle="#eeeeee";
+  ctx.save();
 
-      ctx.fillRect(
-        x,
-        y,
-        w,
-        h
-      );
+  ctx.beginPath();
 
-      resolve();
+  ctx.rect(
+    x,
+    y,
+    w,
+    h
+  );
 
-    };
+  ctx.clip();
 
-    img.src=src;
+  ctx.drawImage(
+    img,
+    dx,
+    dy,
+    nw,
+    nh
+  );
 
-  });
+  ctx.restore();
 
 }
 
 
 /* =========================================================
-   BUAT GAMBAR POLAROID
+   BUAT POLAROID
 ========================================================= */
 
 async function buatGambarPolaroid(){
 
   const filled=
-    getFilledFrames();
+    frames.filter(
+      f=>f.photos.length>0
+    );
 
   if(!filled.length)
     return null;
 
-  const scale=2;
-  const width=800;
-  const padding=35;
-  const gap=28;
-  const frameWidth=
-    width-padding*2;
 
-  const photoRatio=4/3;
+  const width=800;
+
+  const padding=35;
+
+  const gap=28;
+
+  const frameWidth=
+    width-
+    padding*2;
+
+  const photoRatio=
+    4/3;
+
 
   let height=90;
 
-  for(const f of filled){
+
+  for(
+    const f of filled
+  ){
 
     const slotWidth=
       (
@@ -2489,42 +3151,58 @@ async function buatGambarPolaroid(){
       f.layout;
 
     const frameHeight=
-      slotWidth*photoRatio;
+      slotWidth*
+      photoRatio;
 
     height+=
-      55+
+      34+
       frameHeight+
       gap;
 
   }
 
+
   height+=padding;
 
-  const out=
-    document.createElement("canvas");
 
-  out.width=width*scale;
-  out.height=height*scale;
+  const out=
+    document.createElement(
+      "canvas"
+    );
+
+  const scale=2;
+
+  out.width=
+    width*scale;
+
+  out.height=
+    height*scale;
 
   const ctx=
     out.getContext("2d");
 
-  ctx.scale(scale,scale);
+
+  ctx.scale(
+    scale,
+    scale
+  );
 
 
-  /* BACKGROUND */
+  /*
+    GLOBAL MOTIF
+  */
 
-  await drawMotifBackground(
+  await drawGlobalMotif(
     ctx,
     getMotifImage(),
-    0,
-    0,
     width,
     height
   );
 
 
-  /* TITLE BACKPLATE */
+  /*
+    TITLE
+  */
 
   ctx.fillStyle=
     "rgba(255,255,255,.88)";
@@ -2552,10 +3230,14 @@ async function buatGambarPolaroid(){
 
   let y=75;
 
-  for(const f of filled){
+
+  for(
+    const f of filled
+  ){
 
     const originalIndex=
       frames.indexOf(f);
+
 
     const slotWidth=
       (
@@ -2565,15 +3247,18 @@ async function buatGambarPolaroid(){
       f.layout;
 
     const frameHeight=
-      slotWidth*photoRatio;
+      slotWidth*
+      photoRatio;
 
 
     /*
-      FRAME FOTO
+      FRAME TRANSPARAN
+      supaya motif global tetap
+      menjadi bagian dari frame.
     */
 
     ctx.fillStyle=
-      "rgba(255,255,255,.97)";
+      "rgba(255,255,255,.90)";
 
     ctx.fillRect(
       padding,
@@ -2583,7 +3268,11 @@ async function buatGambarPolaroid(){
     );
 
 
-    ctx.fillStyle="#777";
+    /*
+      JUDUL FRAME
+    */
+
+    ctx.fillStyle="#555";
 
     ctx.font=
       "bold 18px Arial";
@@ -2591,11 +3280,13 @@ async function buatGambarPolaroid(){
     ctx.fillText(
       namaFrame[originalIndex],
       width/2,
-      y+24
+      y+23
     );
 
 
-    const imageY=y+34;
+    const imageY=
+      y+34;
+
 
     for(
       let s=0;
@@ -2607,7 +3298,9 @@ async function buatGambarPolaroid(){
         padding+
         s*(slotWidth+5);
 
-      ctx.fillStyle="#ddd";
+
+      ctx.fillStyle=
+        "#ddd";
 
       ctx.fillRect(
         x,
@@ -2615,6 +3308,7 @@ async function buatGambarPolaroid(){
         slotWidth,
         frameHeight
       );
+
 
       if(f.photos[s]){
 
@@ -2631,6 +3325,7 @@ async function buatGambarPolaroid(){
 
     }
 
+
     y+=
       frameHeight+
       34+
@@ -2638,81 +3333,8 @@ async function buatGambarPolaroid(){
 
   }
 
+
   return out;
-
-}
-
-
-/* =========================================================
-   DRAW IMAGE COVER
-========================================================= */
-
-function drawImageCover(
-  ctx,
-  src,
-  x,
-  y,
-  w,
-  h
-){
-
-  return new Promise(resolve=>{
-
-    const img=
-      new Image();
-
-    img.onload=()=>{
-
-      const ratio=
-        Math.max(
-          w/img.width,
-          h/img.height
-        );
-
-      const nw=
-        img.width*ratio;
-
-      const nh=
-        img.height*ratio;
-
-      const dx=
-        x+(w-nw)/2;
-
-      const dy=
-        y+(h-nh)/2;
-
-      ctx.save();
-
-      ctx.beginPath();
-
-      ctx.rect(
-        x,
-        y,
-        w,
-        h
-      );
-
-      ctx.clip();
-
-      ctx.drawImage(
-        img,
-        dx,
-        dy,
-        nw,
-        nh
-      );
-
-      ctx.restore();
-
-      resolve();
-
-    };
-
-    img.onerror=resolve;
-
-    img.src=src;
-
-  });
 
 }
 
@@ -2723,26 +3345,41 @@ function drawImageCover(
 
 document
 .getElementById("downloadPolaroid")
-.onclick=async()=>{
+.onclick=
+async()=>{
 
-  if(!punyaFoto()){
+  const hasPhoto=
+    frames.some(
+      f=>f.photos.length>0
+    );
 
-    alert("Belum ada foto.");
+  if(!hasPhoto){
+
+    alert(
+      "Belum ada foto."
+    );
+
     return;
 
   }
 
+
   statusEl.textContent=
     "Membuat Polaroid...";
+
 
   const result=
     await buatGambarPolaroid();
 
+
   if(!result)
     return;
 
+
   const link=
-    document.createElement("a");
+    document.createElement(
+      "a"
+    );
 
   link.download=
     "polaroid.jpg";
@@ -2754,6 +3391,7 @@ document
     );
 
   link.click();
+
 
   statusEl.textContent=
     "Polaroid berhasil didownload.";
@@ -2767,23 +3405,36 @@ document
 
 document
 .getElementById("printPolaroid")
-.onclick=async()=>{
+.onclick=
+async()=>{
 
-  if(!punyaFoto()){
+  const hasPhoto=
+    frames.some(
+      f=>f.photos.length>0
+    );
 
-    alert("Belum ada foto.");
+  if(!hasPhoto){
+
+    alert(
+      "Belum ada foto."
+    );
+
     return;
 
   }
 
+
   statusEl.textContent=
     "Menyiapkan cetakan...";
+
 
   const result=
     await buatGambarPolaroid();
 
+
   if(!result)
     return;
+
 
   const data=
     result.toDataURL(
@@ -2791,11 +3442,13 @@ document
       .95
     );
 
+
   const win=
     window.open(
       "",
       "_blank"
     );
+
 
   if(!win){
 
@@ -2807,9 +3460,10 @@ document
 
   }
 
+
   win.document.write(`
 
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
 
@@ -2860,10 +3514,12 @@ img{
 
 <script>
 
-window.onload=()=>{
+window.onload=function(){
 
   setTimeout(
-    ()=>window.print(),
+    function(){
+      window.print();
+    },
     500
   );
 
