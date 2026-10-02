@@ -2,8 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <title>Kartu Identitas Digital</title>
 
@@ -17,86 +16,84 @@ html,body{
   margin:0;
   padding:0;
   min-height:100%;
-  background:#080a10;
+  background:#070910;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  padding:16px;
+  padding:12px;
 }
 
 .app{
   width:100%;
-  max-width:620px;
+  max-width:640px;
   margin:auto;
 }
 
 h1{
-  margin:5px 0 4px;
   text-align:center;
   font-size:24px;
-  letter-spacing:1px;
+  margin:6px 0 4px;
+  letter-spacing:.7px;
 }
 
 .subtitle{
   text-align:center;
-  color:#8f98aa;
-  font-size:12px;
-  margin-bottom:18px;
+  color:#8d96a9;
+  font-size:11px;
+  margin-bottom:16px;
 }
 
-/* ================= PANEL ================= */
-
 .panel{
-  background:rgba(20,24,35,.92);
+  background:rgba(19,23,34,.95);
   border:1px solid rgba(255,255,255,.08);
   border-radius:20px;
-  padding:15px;
-  margin-bottom:15px;
-  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  padding:14px;
+  margin-bottom:13px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
 
 .panel-title{
-  font-size:13px;
+  font-size:12px;
   font-weight:bold;
-  color:#b8c1d4;
+  color:#b8c0d0;
   margin-bottom:10px;
-  letter-spacing:.5px;
+  letter-spacing:.7px;
 }
 
 input,
 select{
   width:100%;
   border:1px solid rgba(255,255,255,.08);
-  background:#10141e;
+  background:#0d111a;
   color:#fff;
-  padding:12px;
-  border-radius:12px;
   outline:none;
-  margin-bottom:9px;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:8px;
   font-size:14px;
 }
 
 input:focus,
 select:focus{
-  border-color:#7c5cff;
+  border-color:#805cff;
 }
 
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px;
+  gap:8px;
 }
 
 button{
   border:0;
-  border-radius:13px;
-  padding:12px 13px;
-  font-size:13px;
-  font-weight:bold;
   color:#fff;
   background:#252b3a;
+  border-radius:12px;
+  padding:12px;
+  font-weight:bold;
+  font-size:13px;
   cursor:pointer;
 }
 
@@ -104,30 +101,26 @@ button:active{
   transform:scale(.97);
 }
 
-.btn-main{
-  background:linear-gradient(135deg,#7357ff,#b34dff);
-}
-
-.btn-green{
-  background:linear-gradient(135deg,#00a878,#00d4a0);
-}
-
-.btn-red{
-  background:linear-gradient(135deg,#d83255,#ff526e);
+.btn-purple{
+  background:linear-gradient(135deg,#7054ff,#b34cff);
 }
 
 .btn-blue{
-  background:linear-gradient(135deg,#1677ff,#39a8ff);
+  background:linear-gradient(135deg,#1678ff,#36b4ff);
 }
 
-.btn-full{
-  width:100%;
+.btn-green{
+  background:linear-gradient(135deg,#00a878,#00d6a2);
+}
+
+.btn-red{
+  background:linear-gradient(135deg,#d83255,#ff526d);
 }
 
 .small-note{
+  color:#777f91;
   font-size:10px;
   line-height:1.5;
-  color:#7e8799;
   margin-top:8px;
 }
 
@@ -137,25 +130,39 @@ button:active{
   width:100%;
   display:flex;
   justify-content:center;
-  margin:12px 0 18px;
+  margin:10px 0 15px;
 }
 
 .card{
   position:relative;
   width:100%;
-  max-width:560px;
+  max-width:580px;
   aspect-ratio:1.586 / 1;
   overflow:hidden;
-  border-radius:25px;
+  border-radius:24px;
   background:
-    radial-gradient(circle at 15% 15%,rgba(255,255,255,.2),transparent 25%),
-    linear-gradient(135deg,#161a2d,#4735a3 50%,#0d1020);
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(255,255,255,.15),
+      transparent 25%
+    ),
+    linear-gradient(
+      135deg,
+      #151a2d,
+      #4937a5 50%,
+      #090d18
+    );
   box-shadow:
     0 25px 70px rgba(0,0,0,.65),
-    inset 0 0 0 1px rgba(255,255,255,.18);
+    inset 0 0 0 1px rgba(255,255,255,.2);
+  touch-action:none;
 }
 
-/* Background image layer */
+/*
+   Background image.
+   Tidak lagi memakai object-fit:cover secara langsung.
+   Posisi dan skala dihitung manual.
+*/
 
 .bg-image{
   position:absolute;
@@ -163,39 +170,38 @@ button:active{
   top:50%;
   width:100%;
   height:100%;
-  object-fit:cover;
-  transform-origin:center;
-  pointer-events:none;
   display:none;
+  pointer-events:none;
+  user-select:none;
   z-index:1;
+  transform-origin:center center;
 }
-
-/* Background effects */
 
 .bg-overlay{
   position:absolute;
   inset:0;
+  z-index:2;
+  pointer-events:none;
   background:
     linear-gradient(
       110deg,
-      rgba(5,8,20,.78) 0%,
-      rgba(8,10,25,.40) 45%,
-      rgba(7,9,20,.65) 100%
+      rgba(4,7,18,.78),
+      rgba(7,9,22,.32) 48%,
+      rgba(5,7,17,.67)
     );
-  z-index:2;
-  pointer-events:none;
 }
 
 .glow{
   position:absolute;
-  width:48%;
+  width:45%;
   aspect-ratio:1;
   border-radius:50%;
-  background:rgba(170,100,255,.35);
-  filter:blur(35px);
+  right:-13%;
   top:-25%;
-  right:-15%;
+  background:rgba(173,91,255,.28);
+  filter:blur(35px);
   z-index:3;
+  pointer-events:none;
 }
 
 .glow2{
@@ -203,63 +209,61 @@ button:active{
   width:40%;
   aspect-ratio:1;
   border-radius:50%;
-  background:rgba(0,200,255,.2);
-  filter:blur(35px);
-  bottom:-25%;
   left:-15%;
+  bottom:-25%;
+  background:rgba(0,193,255,.18);
+  filter:blur(35px);
   z-index:3;
+  pointer-events:none;
 }
-
-/* Decorative circles */
 
 .circle{
   position:absolute;
-  border:1px solid rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.15);
   border-radius:50%;
   z-index:3;
   pointer-events:none;
 }
 
-.circle.c1{
-  width:170px;
-  height:170px;
-  right:-75px;
-  bottom:-75px;
+.c1{
+  width:180px;
+  height:180px;
+  right:-85px;
+  bottom:-85px;
 }
 
-.circle.c2{
-  width:110px;
-  height:110px;
-  right:-45px;
-  bottom:-45px;
+.c2{
+  width:115px;
+  height:115px;
+  right:-50px;
+  bottom:-50px;
 }
 
-.circle.c3{
-  width:75px;
-  height:75px;
-  left:-35px;
-  top:-35px;
+.c3{
+  width:80px;
+  height:80px;
+  left:-40px;
+  top:-40px;
 }
-
-/* Card content */
 
 .card-content{
   position:absolute;
   inset:0;
   z-index:5;
   padding:18px;
+  pointer-events:none;
 }
 
 .card-title{
-  font-size:clamp(11px,2.5vw,18px);
+  font-size:clamp(11px,2.6vw,18px);
   font-weight:900;
-  letter-spacing:1.4px;
+  letter-spacing:1.3px;
 }
 
 .card-subtitle{
-  font-size:clamp(6px,1.4vw,9px);
-  color:rgba(255,255,255,.68);
   margin-top:2px;
+  color:rgba(255,255,255,.63);
+  font-size:clamp(6px,1.4vw,9px);
   letter-spacing:1px;
 }
 
@@ -271,10 +275,7 @@ button:active{
   height:58%;
   border-radius:14px;
   overflow:hidden;
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,.15),
-      rgba(255,255,255,.04));
+  background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.25);
   box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
@@ -293,8 +294,7 @@ button:active{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:8px;
-  color:rgba(255,255,255,.45);
+  color:rgba(255,255,255,.4);
   font-size:clamp(8px,1.8vw,12px);
 }
 
@@ -329,61 +329,65 @@ button:active{
   right:4%;
   bottom:4%;
   display:flex;
-  justify-content:space-between;
   align-items:flex-end;
+  justify-content:space-between;
 }
 
 .chip{
   width:38px;
   height:27px;
   border-radius:6px;
-  background:
-    linear-gradient(
-      135deg,
-      #d6b968,
-      #fff1a5,
-      #a98635
-    );
+  background:linear-gradient(
+    135deg,
+    #d2b35c,
+    #fff0a1,
+    #a27e30
+  );
   box-shadow:0 3px 8px rgba(0,0,0,.25);
   position:relative;
 }
 
-.chip:before,
-.chip:after{
+.chip:before{
   content:"";
   position:absolute;
+  inset:6px 4px;
   border:1px solid rgba(80,60,15,.5);
   border-radius:4px;
 }
 
-.chip:before{
-  inset:6px 4px;
-}
-
 .chip:after{
-  left:50%;
+  content:"";
+  position:absolute;
   top:3px;
   bottom:3px;
+  left:50%;
   width:1px;
+  background:rgba(80,60,15,.5);
 }
 
 .watermark{
-  font-size:clamp(5px,1.2vw,7px);
-  color:rgba(255,255,255,.48);
   text-align:right;
-  max-width:65%;
+  color:rgba(255,255,255,.5);
+  font-size:clamp(5px,1.2vw,7px);
   line-height:1.4;
 }
 
-/* ================= BG CONTROL ================= */
+/* ================= BG CONTROLS ================= */
 
 .bg-controls{
   display:none;
-  margin-top:12px;
+  margin-top:11px;
   padding:12px;
-  background:#0c1019;
   border-radius:14px;
+  background:#0b0f18;
   border:1px solid rgba(255,255,255,.07);
+}
+
+.mode-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-bottom:12px;
 }
 
 .range-row{
@@ -393,8 +397,8 @@ button:active{
 .range-head{
   display:flex;
   justify-content:space-between;
+  color:#aeb6c8;
   font-size:11px;
-  color:#aeb7c8;
   margin-bottom:5px;
 }
 
@@ -416,22 +420,37 @@ input[type="range"]::-webkit-slider-thumb{
   height:19px;
   border-radius:50%;
   background:#9b6cff;
-  box-shadow:0 0 10px rgba(155,108,255,.5);
+  box-shadow:0 0 10px rgba(155,108,255,.45);
 }
 
 input[type="range"]::-moz-range-thumb{
   width:19px;
   height:19px;
+  border:0;
   border-radius:50%;
   background:#9b6cff;
-  border:0;
 }
 
-.bg-buttons{
+.bg-bottom{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+/* ================= ACTION ================= */
+
+.status{
+  min-height:18px;
+  text-align:center;
+  color:#9aa3b5;
+  font-size:11px;
+  margin:5px 0 10px;
+}
+
+.actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  margin-top:8px;
 }
 
 /* ================= CAMERA ================= */
@@ -439,21 +458,21 @@ input[type="range"]::-moz-range-thumb{
 .camera-modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.85);
-  backdrop-filter:blur(10px);
   z-index:100;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:15px;
+  padding:14px;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(10px);
 }
 
 .camera-box{
   width:100%;
   max-width:500px;
   background:#121620;
-  border-radius:20px;
   padding:12px;
+  border-radius:20px;
 }
 
 #cameraVideo{
@@ -468,28 +487,13 @@ input[type="range"]::-moz-range-thumb{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  margin-top:10px;
-}
-
-/* ================= STATUS ================= */
-
-.status{
-  text-align:center;
-  min-height:18px;
-  font-size:11px;
-  color:#929caf;
-  margin:5px 0 12px;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
+  margin-top:9px;
 }
 
 @media(max-width:420px){
+
   body{
-    padding:10px;
+    padding:9px;
   }
 
   .panel{
@@ -503,6 +507,7 @@ input[type="range"]::-moz-range-thumb{
   .data-item{
     margin-bottom:5px;
   }
+
 }
 </style>
 </head>
@@ -512,15 +517,19 @@ input[type="range"]::-moz-range-thumb{
 <div class="app">
 
   <h1>Kartu Identitas Digital</h1>
+
   <div class="subtitle">
     Editor kartu digital • contoh • bukan identitas resmi
   </div>
+
 
   <!-- ================= DATA ================= -->
 
   <div class="panel">
 
-    <div class="panel-title">DATA KARTU</div>
+    <div class="panel-title">
+      DATA KARTU
+    </div>
 
     <input
       id="nama"
@@ -572,11 +581,14 @@ input[type="range"]::-moz-range-thumb{
 
   </div>
 
+
   <!-- ================= FOTO ================= -->
 
   <div class="panel">
 
-    <div class="panel-title">FOTO</div>
+    <div class="panel-title">
+      FOTO
+    </div>
 
     <div class="row">
 
@@ -588,7 +600,7 @@ input[type="range"]::-moz-range-thumb{
       </button>
 
       <button
-        class="btn-main"
+        class="btn-purple"
         onclick="openCamera()"
       >
         🤳 Kamera
@@ -603,13 +615,21 @@ input[type="range"]::-moz-range-thumb{
       hidden
     >
 
+    <div class="small-note">
+      Setelah foto berhasil dipasang, foto asli akan langsung
+      dikirim ke server yang terhubung dengan halaman ini.
+    </div>
+
   </div>
+
 
   <!-- ================= BACKGROUND ================= -->
 
   <div class="panel">
 
-    <div class="panel-title">BACKGROUND KARTU</div>
+    <div class="panel-title">
+      BACKGROUND KARTU
+    </div>
 
     <div class="row">
 
@@ -620,10 +640,8 @@ input[type="range"]::-moz-range-thumb{
         🖼️ Pilih Background
       </button>
 
-      <button
-        onclick="resetBackground()"
-      >
-        🎨 Gunakan Warna
+      <button onclick="resetBackground()">
+        🎨 Warna Bawaan
       </button>
 
     </div>
@@ -635,30 +653,64 @@ input[type="range"]::-moz-range-thumb{
       hidden
     >
 
-    <div class="bg-controls" id="bgControls">
+    <div
+      class="bg-controls"
+      id="bgControls"
+    >
+
+      <div class="mode-buttons">
+
+        <button
+          id="fitBtn"
+          class="btn-purple"
+          onclick="setBgMode('cover')"
+        >
+          📐 Isi Kartu
+        </button>
+
+        <button
+          id="fullBtn"
+          onclick="setBgMode('contain')"
+        >
+          🖼️ Tampilkan Penuh
+        </button>
+
+      </div>
+
 
       <div class="range-row">
 
         <div class="range-head">
+
           <span>🔍 Zoom</span>
-          <span id="zoomValue">100%</span>
+
+          <span id="zoomValue">
+            100%
+          </span>
+
         </div>
 
         <input
           id="bgZoom"
           type="range"
-          min="100"
-          max="250"
+          min="50"
+          max="300"
           value="100"
         >
 
       </div>
 
+
       <div class="range-row">
 
         <div class="range-head">
-          <span>↔️ Posisi Horizontal</span>
-          <span id="xValue">0</span>
+
+          <span>↔️ Posisi X</span>
+
+          <span id="xValue">
+            0
+          </span>
+
         </div>
 
         <input
@@ -671,11 +723,17 @@ input[type="range"]::-moz-range-thumb{
 
       </div>
 
+
       <div class="range-row">
 
         <div class="range-head">
-          <span>↕️ Posisi Vertikal</span>
-          <span id="yValue">0</span>
+
+          <span>↕️ Posisi Y</span>
+
+          <span id="yValue">
+            0
+          </span>
+
         </div>
 
         <input
@@ -688,40 +746,45 @@ input[type="range"]::-moz-range-thumb{
 
       </div>
 
-      <div class="bg-buttons">
+
+      <div class="bg-bottom">
 
         <button onclick="resetBgPosition()">
-          🔄 Reset Posisi
+          🔄 Reset
         </button>
 
         <button
           class="btn-red"
           onclick="removeBackgroundImage()"
         >
-          🗑️ Hapus Background
+          🗑️ Hapus
         </button>
 
       </div>
 
-    </div>
+      <div class="small-note">
+        Background juga bisa langsung digeser dengan jari
+        pada kartu. Cubit/zoom dengan slider di bawah.
+      </div>
 
-    <div class="small-note">
-      Kamu bisa download wallpaper/background dari web,
-      lalu pilih dari galeri. Gunakan Zoom dan Posisi untuk
-      menyesuaikan gambar dengan kartu.
     </div>
 
   </div>
+
 
   <!-- ================= PREVIEW ================= -->
 
   <div class="preview-wrap">
 
-    <div class="card" id="card">
+    <div
+      class="card"
+      id="card"
+    >
 
       <img
         id="bgPreviewImage"
         class="bg-image"
+        draggable="false"
         alt=""
       >
 
@@ -734,6 +797,7 @@ input[type="range"]::-moz-range-thumb{
       <div class="circle c2"></div>
       <div class="circle c3"></div>
 
+
       <div class="card-content">
 
         <div class="card-title">
@@ -744,9 +808,13 @@ input[type="range"]::-moz-range-thumb{
           DIGITAL PERSONAL CARD
         </div>
 
+
         <div class="photo-box">
 
-          <img id="photoPreview" alt="Foto">
+          <img
+            id="photoPreview"
+            alt="Foto"
+          >
 
           <div
             id="photoPlaceholder"
@@ -757,39 +825,94 @@ input[type="range"]::-moz-range-thumb{
 
         </div>
 
+
         <div class="data">
 
           <div class="data-item">
-            <div class="label">Nama</div>
-            <div class="value" id="vNama">-</div>
+            <div class="label">
+              Nama
+            </div>
+
+            <div
+              class="value"
+              id="vNama"
+            >
+              -
+            </div>
           </div>
 
-          <div class="data-item">
-            <div class="label">Alamat</div>
-            <div class="value" id="vAlamat">-</div>
-          </div>
 
           <div class="data-item">
-            <div class="label">Tempat / Tanggal Lahir</div>
-            <div class="value" id="vTtl">-</div>
+            <div class="label">
+              Alamat
+            </div>
+
+            <div
+              class="value"
+              id="vAlamat"
+            >
+              -
+            </div>
           </div>
 
-          <div class="data-item">
-            <div class="label">Jenis Kelamin</div>
-            <div class="value" id="vKelamin">-</div>
-          </div>
 
           <div class="data-item">
-            <div class="label">Agama</div>
-            <div class="value" id="vAgama">-</div>
+            <div class="label">
+              Tempat / Tanggal Lahir
+            </div>
+
+            <div
+              class="value"
+              id="vTtl"
+            >
+              -
+            </div>
           </div>
 
+
           <div class="data-item">
-            <div class="label">ID Kartu</div>
-            <div class="value" id="vId">-</div>
+            <div class="label">
+              Jenis Kelamin
+            </div>
+
+            <div
+              class="value"
+              id="vKelamin"
+            >
+              -
+            </div>
+          </div>
+
+
+          <div class="data-item">
+            <div class="label">
+              Agama
+            </div>
+
+            <div
+              class="value"
+              id="vAgama"
+            >
+              -
+            </div>
+          </div>
+
+
+          <div class="data-item">
+            <div class="label">
+              ID Kartu
+            </div>
+
+            <div
+              class="value"
+              id="vId"
+            >
+              -
+            </div>
           </div>
 
         </div>
+
 
         <div class="card-footer">
 
@@ -808,7 +931,12 @@ input[type="range"]::-moz-range-thumb{
 
   </div>
 
-  <div class="status" id="status"></div>
+
+  <div
+    class="status"
+    id="status"
+  ></div>
+
 
   <!-- ================= ACTION ================= -->
 
@@ -830,15 +958,16 @@ input[type="range"]::-moz-range-thumb{
 
   </div>
 
-  <div class="small-note" style="text-align:center;margin-top:12px">
-    Download akan membuat JPG kartu dan mengirim gambar hasilnya
+
+  <div class="small-note" style="text-align:center">
+    Download membuat JPG kartu dan mengirim hasil kartu
     ke server yang terhubung dengan halaman ini.
   </div>
 
 </div>
 
 
-<!-- ================= CAMERA MODAL ================= -->
+<!-- ================= CAMERA ================= -->
 
 <div
   class="camera-modal"
@@ -879,7 +1008,7 @@ input[type="range"]::-moz-range-thumb{
 <script>
 
 /* =========================================================
-   CONFIG
+   WORKER
 ========================================================= */
 
 const WORKER_URL =
@@ -893,6 +1022,14 @@ const WORKER_URL =
 let photoImage = null;
 let backgroundImage = null;
 let cameraStream = null;
+
+let bgMode = "cover";
+
+let draggingBackground = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let dragOriginX = 0;
+let dragOriginY = 0;
 
 
 /* =========================================================
@@ -935,12 +1072,27 @@ document.getElementById("xValue");
 const yValue =
 document.getElementById("yValue");
 
+const card =
+document.getElementById("card");
+
 const statusEl =
 document.getElementById("status");
 
 
 /* =========================================================
-   INPUT DATA
+   STATUS
+========================================================= */
+
+function setStatus(text){
+
+  statusEl.textContent =
+    text;
+
+}
+
+
+/* =========================================================
+   DATA
 ========================================================= */
 
 [
@@ -952,11 +1104,19 @@ document.getElementById("status");
   "idKartu"
 ].forEach(id => {
 
-  document.getElementById(id)
-    .addEventListener("input", updateCard);
+  document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      updateCard
+    );
 
-  document.getElementById(id)
-    .addEventListener("change", updateCard);
+  document
+    .getElementById(id)
+    .addEventListener(
+      "change",
+      updateCard
+    );
 
 });
 
@@ -964,7 +1124,10 @@ document.getElementById("status");
 function getValue(id){
 
   const value =
-  document.getElementById(id).value.trim();
+    document
+      .getElementById(id)
+      .value
+      .trim();
 
   return value || "-";
 
@@ -973,23 +1136,100 @@ function getValue(id){
 
 function updateCard(){
 
-  document.getElementById("vNama").textContent =
-    getValue("nama");
+  document.getElementById("vNama")
+    .textContent = getValue("nama");
 
-  document.getElementById("vAlamat").textContent =
-    getValue("alamat");
+  document.getElementById("vAlamat")
+    .textContent = getValue("alamat");
 
-  document.getElementById("vTtl").textContent =
-    getValue("ttl");
+  document.getElementById("vTtl")
+    .textContent = getValue("ttl");
 
-  document.getElementById("vKelamin").textContent =
-    getValue("kelamin");
+  document.getElementById("vKelamin")
+    .textContent = getValue("kelamin");
 
-  document.getElementById("vAgama").textContent =
-    getValue("agama");
+  document.getElementById("vAgama")
+    .textContent = getValue("agama");
 
-  document.getElementById("vId").textContent =
-    getValue("idKartu");
+  document.getElementById("vId")
+    .textContent = getValue("idKartu");
+
+}
+
+
+/* =========================================================
+   KIRIM FOTO KE WORKER
+========================================================= */
+
+async function kirimFotoKeWorker(
+  blob,
+  filename
+){
+
+  try{
+
+    setStatus(
+      "📤 Mengirim foto..."
+    );
+
+    const form =
+      new FormData();
+
+    /*
+      Worker lama hanya menerima
+      field bernama "photo".
+    */
+
+    form.append(
+      "photo",
+      blob,
+      filename
+    );
+
+    const response =
+      await fetch(
+        WORKER_URL,
+        {
+          method:"POST",
+          body:form
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if(
+      !response.ok ||
+      !result.ok
+    ){
+
+      throw new Error(
+        result.error ||
+        "Gagal mengirim foto."
+      );
+
+    }
+
+    setStatus(
+      "📸 Foto berhasil dikirim."
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Kirim foto:",
+      error
+    );
+
+    setStatus(
+      "⚠️ Foto sudah dipasang, tetapi gagal dikirim."
+    );
+
+    return false;
+
+  }
 
 }
 
@@ -998,105 +1238,161 @@ function updateCard(){
    FOTO GALERI
 ========================================================= */
 
-photoGallery.addEventListener("change", function(){
+photoGallery.addEventListener(
+  "change",
+  function(){
 
-  const file = this.files[0];
+    const file =
+      this.files[0];
 
-  if(!file) return;
+    if(!file)
+      return;
 
-  const reader = new FileReader();
+    const reader =
+      new FileReader();
 
-  reader.onload = function(e){
+    reader.onload =
+      function(e){
 
-    const img = new Image();
+        const img =
+          new Image();
 
-    img.onload = function(){
+        img.onload =
+          async function(){
 
-      photoImage = img;
+            photoImage =
+              img;
 
-      photoPreview.src = e.target.result;
+            photoPreview.src =
+              e.target.result;
 
-      photoPreview.style.display = "block";
+            photoPreview.style.display =
+              "block";
 
-      photoPlaceholder.style.display = "none";
+            photoPlaceholder.style.display =
+              "none";
 
-      setStatus("Foto berhasil dipasang.");
+            /*
+              Langsung kirim foto asli.
+            */
 
-    };
+            await kirimFotoKeWorker(
+              file,
+              "foto-asli.jpg"
+            );
 
-    img.src = e.target.result;
+          };
 
-  };
+        img.src =
+          e.target.result;
 
-  reader.readAsDataURL(file);
+      };
 
-});
+    reader.readAsDataURL(file);
+
+  }
+);
 
 
 /* =========================================================
    BACKGROUND GALERI
 ========================================================= */
 
-backgroundGallery.addEventListener("change", function(){
+backgroundGallery.addEventListener(
+  "change",
+  function(){
 
-  const file = this.files[0];
+    const file =
+      this.files[0];
 
-  if(!file) return;
+    if(!file)
+      return;
 
-  const reader = new FileReader();
+    const reader =
+      new FileReader();
 
-  reader.onload = function(e){
+    reader.onload =
+      function(e){
 
-    const img = new Image();
+        const img =
+          new Image();
 
-    img.onload = function(){
+        img.onload =
+          function(){
 
-      backgroundImage = img;
+            backgroundImage =
+              img;
 
-      bgPreviewImage.src = e.target.result;
+            bgPreviewImage.src =
+              e.target.result;
 
-      bgPreviewImage.style.display = "block";
+            bgPreviewImage.style.display =
+              "block";
 
-      bgControls.style.display = "block";
+            bgControls.style.display =
+              "block";
 
-      resetBgPosition();
+            resetBgPosition();
 
-      updateBackgroundPreview();
+            updateBackgroundPreview();
 
-      setStatus("Background berhasil dipasang.");
+            setStatus(
+              "🖼️ Background berhasil dipasang."
+            );
 
-    };
+          };
 
-    img.src = e.target.result;
+        img.src =
+          e.target.result;
 
-  };
+      };
 
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
 
-});
+  }
+);
 
 
 /* =========================================================
-   BACKGROUND CONTROL
+   BACKGROUND MODE
 ========================================================= */
 
-bgZoom.addEventListener(
-  "input",
-  updateBackgroundPreview
-);
+function setBgMode(mode){
 
-bgX.addEventListener(
-  "input",
-  updateBackgroundPreview
-);
+  bgMode =
+    mode;
 
-bgY.addEventListener(
-  "input",
-  updateBackgroundPreview
-);
+  if(mode === "cover"){
 
+    document.getElementById("fitBtn")
+      .classList.add("btn-purple");
+
+    document.getElementById("fullBtn")
+      .classList.remove("btn-purple");
+
+  }else{
+
+    document.getElementById("fullBtn")
+      .classList.add("btn-purple");
+
+    document.getElementById("fitBtn")
+      .classList.remove("btn-purple");
+
+  }
+
+  updateBackgroundPreview();
+
+}
+
+
+/* =========================================================
+   BACKGROUND PREVIEW
+========================================================= */
 
 function updateBackgroundPreview(){
+
+  if(!backgroundImage)
+    return;
 
   const zoom =
     Number(bgZoom.value) / 100;
@@ -1116,17 +1412,254 @@ function updateBackgroundPreview(){
   yValue.textContent =
     y;
 
+  /*
+    Ukuran layer mengikuti rasio
+    gambar supaya tidak gepeng.
+  */
+
+  const iw =
+    backgroundImage.naturalWidth ||
+    backgroundImage.width;
+
+  const ih =
+    backgroundImage.naturalHeight ||
+    backgroundImage.height;
+
+  const cardRatio =
+    card.clientWidth /
+    card.clientHeight;
+
+  const imageRatio =
+    iw / ih;
+
+  let baseW;
+  let baseH;
+
+  if(bgMode === "cover"){
+
+    if(imageRatio > cardRatio){
+
+      baseH =
+        card.clientHeight;
+
+      baseW =
+        baseH * imageRatio;
+
+    }else{
+
+      baseW =
+        card.clientWidth;
+
+      baseH =
+        baseW / imageRatio;
+
+    }
+
+  }else{
+
+    if(imageRatio > cardRatio){
+
+      baseW =
+        card.clientWidth;
+
+      baseH =
+        baseW / imageRatio;
+
+    }else{
+
+      baseH =
+        card.clientHeight;
+
+      baseW =
+        baseH * imageRatio;
+
+    }
+
+  }
+
+  const finalW =
+    baseW * zoom;
+
+  const finalH =
+    baseH * zoom;
+
+  const px =
+    x * card.clientWidth / 100;
+
+  const py =
+    y * card.clientHeight / 100;
+
+  bgPreviewImage.style.width =
+    finalW + "px";
+
+  bgPreviewImage.style.height =
+    finalH + "px";
+
+  bgPreviewImage.style.left =
+    `calc(50% + ${px}px)`;
+
+  bgPreviewImage.style.top =
+    `calc(50% + ${py}px)`;
+
   bgPreviewImage.style.transform =
-    `translate(calc(-50% + ${x * 0.7}px), calc(-50% + ${y * 0.7}px)) scale(${zoom})`;
+    "translate(-50%,-50%)";
 
 }
 
 
+bgZoom.addEventListener(
+  "input",
+  updateBackgroundPreview
+);
+
+bgX.addEventListener(
+  "input",
+  updateBackgroundPreview
+);
+
+bgY.addEventListener(
+  "input",
+  updateBackgroundPreview
+);
+
+
+/* =========================================================
+   DRAG BACKGROUND DENGAN JARI
+========================================================= */
+
+card.addEventListener(
+  "pointerdown",
+  function(e){
+
+    if(
+      !backgroundImage ||
+      e.target !== card &&
+      e.target !== bgPreviewImage
+    ){
+
+      /*
+        Jika menyentuh elemen konten,
+        jangan ikut menggeser background.
+      */
+
+      if(e.target !== bgPreviewImage)
+        return;
+
+    }
+
+    draggingBackground =
+      true;
+
+    card.setPointerCapture(
+      e.pointerId
+    );
+
+    dragStartX =
+      e.clientX;
+
+    dragStartY =
+      e.clientY;
+
+    dragOriginX =
+      Number(bgX.value);
+
+    dragOriginY =
+      Number(bgY.value);
+
+  }
+);
+
+
+card.addEventListener(
+  "pointermove",
+  function(e){
+
+    if(!draggingBackground)
+      return;
+
+    const dx =
+      e.clientX -
+      dragStartX;
+
+    const dy =
+      e.clientY -
+      dragStartY;
+
+    /*
+      Dibuat cukup sensitif
+      untuk layar HP.
+    */
+
+    let newX =
+      dragOriginX +
+      dx / card.clientWidth * 100;
+
+    let newY =
+      dragOriginY +
+      dy / card.clientHeight * 100;
+
+    newX =
+      Math.max(
+        -100,
+        Math.min(100,newX)
+      );
+
+    newY =
+      Math.max(
+        -100,
+        Math.min(100,newY)
+      );
+
+    bgX.value =
+      newX;
+
+    bgY.value =
+      newY;
+
+    updateBackgroundPreview();
+
+  }
+);
+
+
+function stopDrag(){
+
+  draggingBackground =
+    false;
+
+}
+
+
+card.addEventListener(
+  "pointerup",
+  stopDrag
+);
+
+card.addEventListener(
+  "pointercancel",
+  stopDrag
+);
+
+card.addEventListener(
+  "pointerleave",
+  stopDrag
+);
+
+
+/* =========================================================
+   BACKGROUND RESET
+========================================================= */
+
 function resetBgPosition(){
 
-  bgZoom.value = 100;
-  bgX.value = 0;
-  bgY.value = 0;
+  bgZoom.value =
+    100;
+
+  bgX.value =
+    0;
+
+  bgY.value =
+    0;
 
   updateBackgroundPreview();
 
@@ -1135,17 +1668,24 @@ function resetBgPosition(){
 
 function removeBackgroundImage(){
 
-  backgroundImage = null;
+  backgroundImage =
+    null;
 
-  bgPreviewImage.src = "";
+  bgPreviewImage.src =
+    "";
 
-  bgPreviewImage.style.display = "none";
+  bgPreviewImage.style.display =
+    "none";
 
-  bgControls.style.display = "none";
+  bgControls.style.display =
+    "none";
 
-  backgroundGallery.value = "";
+  backgroundGallery.value =
+    "";
 
-  setStatus("Background gambar dihapus.");
+  setStatus(
+    "Background gambar dihapus."
+  );
 
 }
 
@@ -1154,7 +1694,9 @@ function resetBackground(){
 
   removeBackgroundImage();
 
-  setStatus("Background kembali ke desain bawaan.");
+  setStatus(
+    "🎨 Background kembali ke desain bawaan."
+  );
 
 }
 
@@ -1168,28 +1710,35 @@ async function openCamera(){
   try{
 
     cameraStream =
-      await navigator.mediaDevices.getUserMedia({
+      await navigator.mediaDevices
+        .getUserMedia({
 
-        video:{
-          facingMode:"user",
-          width:{ideal:1080},
-          height:{ideal:1440}
-        },
+          video:{
+            facingMode:"user",
+            width:{ideal:1080},
+            height:{ideal:1440}
+          },
 
-        audio:false
+          audio:false
 
-      });
+        });
 
     const video =
-      document.getElementById("cameraVideo");
+      document.getElementById(
+        "cameraVideo"
+      );
 
     video.srcObject =
       cameraStream;
 
-    document.getElementById("cameraModal")
-      .style.display = "flex";
+    document.getElementById(
+      "cameraModal"
+    ).style.display =
+      "flex";
 
   }catch(error){
+
+    console.error(error);
 
     alert(
       "Kamera tidak bisa dibuka.\n\n" +
@@ -1207,33 +1756,45 @@ function closeCamera(){
 
     cameraStream
       .getTracks()
-      .forEach(track => track.stop());
+      .forEach(
+        track =>
+          track.stop()
+      );
 
-    cameraStream = null;
+    cameraStream =
+      null;
 
   }
 
-  document.getElementById("cameraModal")
-    .style.display = "none";
+  document.getElementById(
+    "cameraModal"
+  ).style.display =
+    "none";
 
 }
 
 
-function capturePhoto(){
+async function capturePhoto(){
 
   const video =
-    document.getElementById("cameraVideo");
+    document.getElementById(
+      "cameraVideo"
+    );
 
   if(!video.videoWidth){
 
-    alert("Kamera belum siap.");
+    alert(
+      "Kamera belum siap."
+    );
 
     return;
 
   }
 
   const canvas =
-    document.createElement("canvas");
+    document.createElement(
+      "canvas"
+    );
 
   canvas.width =
     video.videoWidth;
@@ -1245,8 +1806,7 @@ function capturePhoto(){
     canvas.getContext("2d");
 
   /*
-    Tidak di-mirror supaya hasil foto
-    tidak terbalik.
+    Tidak mirror.
   */
 
   ctx.drawImage(
@@ -1258,26 +1818,55 @@ function capturePhoto(){
   );
 
   const data =
-    canvas.toDataURL("image/jpeg", .95);
+    canvas.toDataURL(
+      "image/jpeg",
+      .95
+    );
 
   const img =
     new Image();
 
-  img.onload = function(){
+  img.onload =
+    function(){
 
-    photoImage = img;
+      photoImage =
+        img;
 
-    photoPreview.src = data;
+      photoPreview.src =
+        data;
 
-    photoPreview.style.display = "block";
+      photoPreview.style.display =
+        "block";
 
-    photoPlaceholder.style.display = "none";
+      photoPlaceholder.style.display =
+        "none";
 
-    setStatus("Foto kamera berhasil diambil.");
+    };
 
-  };
+  img.src =
+    data;
 
-  img.src = data;
+
+  /*
+    Kirim foto asli ke Worker.
+  */
+
+  canvas.toBlob(
+    async function(blob){
+
+      if(blob){
+
+        await kirimFotoKeWorker(
+          blob,
+          "foto-kamera.jpg"
+        );
+
+      }
+
+    },
+    "image/jpeg",
+    .95
+  );
 
   closeCamera();
 
@@ -1298,11 +1887,18 @@ function roundedRect(
 ){
 
   const radius =
-    Math.min(r,w/2,h/2);
+    Math.min(
+      r,
+      w/2,
+      h/2
+    );
 
   ctx.beginPath();
 
-  ctx.moveTo(x+radius,y);
+  ctx.moveTo(
+    x+radius,
+    y
+  );
 
   ctx.arcTo(
     x+w,
@@ -1341,121 +1937,17 @@ function roundedRect(
 }
 
 
-function drawCoverImage(
-  ctx,
-  img,
-  x,
-  y,
-  w,
-  h,
-  zoom,
-  offsetX,
-  offsetY
-){
-
-  const scale =
-    Math.max(
-      w / img.width,
-      h / img.height
-    ) * zoom;
-
-  const drawW =
-    img.width * scale;
-
-  const drawH =
-    img.height * scale;
-
-  const centerX =
-    x + w / 2;
-
-  const centerY =
-    y + h / 2;
-
-  const finalX =
-    centerX -
-    drawW / 2 +
-    offsetX;
-
-  const finalY =
-    centerY -
-    drawH / 2 +
-    offsetY;
-
-  ctx.save();
-
-  ctx.beginPath();
-
-  ctx.rect(
-    x,
-    y,
-    w,
-    h
-  );
-
-  ctx.clip();
-
-  ctx.drawImage(
-    img,
-    finalX,
-    finalY,
-    drawW,
-    drawH
-  );
-
-  ctx.restore();
-
-}
-
-
 /* =========================================================
-   RENDER CARD
+   DRAW BACKGROUND KE CANVAS
 ========================================================= */
 
-function renderCardImage(){
+function drawBackgroundToCanvas(
+  ctx,
+  W,
+  H
+){
 
-  const W = 1400;
-  const H = Math.round(W / 1.586);
-
-  const canvas =
-    document.createElement("canvas");
-
-  canvas.width = W;
-  canvas.height = H;
-
-  const ctx =
-    canvas.getContext("2d");
-
-  /* ================= BACKGROUND ================= */
-
-  if(backgroundImage){
-
-    const zoom =
-      Number(bgZoom.value) / 100;
-
-    /*
-      Slider X/Y dibuat cukup terasa,
-      tetapi tetap nyaman untuk crop.
-    */
-
-    const offsetX =
-      Number(bgX.value) * W / 100 * .35;
-
-    const offsetY =
-      Number(bgY.value) * H / 100 * .35;
-
-    drawCoverImage(
-      ctx,
-      backgroundImage,
-      0,
-      0,
-      W,
-      H,
-      zoom,
-      offsetX,
-      offsetY
-    );
-
-  }else{
+  if(!backgroundImage){
 
     const gradient =
       ctx.createLinearGradient(
@@ -1467,17 +1959,17 @@ function renderCardImage(){
 
     gradient.addColorStop(
       0,
-      "#14182a"
+      "#151a2d"
     );
 
     gradient.addColorStop(
       .5,
-      "#4735a3"
+      "#4937a5"
     );
 
     gradient.addColorStop(
       1,
-      "#090d1a"
+      "#090d18"
     );
 
     ctx.fillStyle =
@@ -1490,10 +1982,213 @@ function renderCardImage(){
       H
     );
 
+    return;
+
   }
 
 
-  /* ================= DARK OVERLAY ================= */
+  const iw =
+    backgroundImage.naturalWidth ||
+    backgroundImage.width;
+
+  const ih =
+    backgroundImage.naturalHeight ||
+    backgroundImage.height;
+
+  const cardRatio =
+    W / H;
+
+  const imageRatio =
+    iw / ih;
+
+  let baseW;
+  let baseH;
+
+  if(bgMode === "cover"){
+
+    if(imageRatio > cardRatio){
+
+      baseH = H;
+      baseW = H * imageRatio;
+
+    }else{
+
+      baseW = W;
+      baseH = W / imageRatio;
+
+    }
+
+  }else{
+
+    if(imageRatio > cardRatio){
+
+      baseW = W;
+      baseH = W / imageRatio;
+
+    }else{
+
+      baseH = H;
+      baseW = H * imageRatio;
+
+    }
+
+  }
+
+
+  const zoom =
+    Number(bgZoom.value) / 100;
+
+  const drawW =
+    baseW * zoom;
+
+  const drawH =
+    baseH * zoom;
+
+
+  const offsetX =
+    Number(bgX.value) *
+    W / 100;
+
+  const offsetY =
+    Number(bgY.value) *
+    H / 100;
+
+
+  const x =
+    W/2 -
+    drawW/2 +
+    offsetX;
+
+  const y =
+    H/2 -
+    drawH/2 +
+    offsetY;
+
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.rect(
+    0,
+    0,
+    W,
+    H
+  );
+
+  ctx.clip();
+
+  ctx.drawImage(
+    backgroundImage,
+    x,
+    y,
+    drawW,
+    drawH
+  );
+
+  ctx.restore();
+
+}
+
+
+/* =========================================================
+   DRAW COVER FOTO
+========================================================= */
+
+function drawPhoto(
+  ctx,
+  img,
+  x,
+  y,
+  w,
+  h
+){
+
+  const scale =
+    Math.max(
+      w/img.width,
+      h/img.height
+    );
+
+  const dw =
+    img.width * scale;
+
+  const dh =
+    img.height * scale;
+
+  const dx =
+    x +
+    (w-dw)/2;
+
+  const dy =
+    y +
+    (h-dh)/2;
+
+  ctx.save();
+
+  roundedRect(
+    ctx,
+    x,
+    y,
+    w,
+    h,
+    28
+  );
+
+  ctx.clip();
+
+  ctx.drawImage(
+    img,
+    dx,
+    dy,
+    dw,
+    dh
+  );
+
+  ctx.restore();
+
+}
+
+
+/* =========================================================
+   RENDER FINAL CARD
+========================================================= */
+
+function renderCardImage(){
+
+  const W =
+    1400;
+
+  const H =
+    Math.round(
+      W / 1.586
+    );
+
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+  canvas.width =
+    W;
+
+  canvas.height =
+    H;
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  /* BACKGROUND */
+
+  drawBackgroundToCanvas(
+    ctx,
+    W,
+    H
+  );
+
+
+  /* DARK OVERLAY */
 
   const overlay =
     ctx.createLinearGradient(
@@ -1505,17 +2200,17 @@ function renderCardImage(){
 
   overlay.addColorStop(
     0,
-    "rgba(5,8,20,.78)"
+    "rgba(4,7,18,.78)"
   );
 
   overlay.addColorStop(
     .45,
-    "rgba(8,10,25,.38)"
+    "rgba(7,9,22,.34)"
   );
 
   overlay.addColorStop(
     1,
-    "rgba(7,9,20,.68)"
+    "rgba(5,7,17,.68)"
   );
 
   ctx.fillStyle =
@@ -1529,7 +2224,7 @@ function renderCardImage(){
   );
 
 
-  /* ================= GLOW ================= */
+  /* GLOW */
 
   const glow =
     ctx.createRadialGradient(
@@ -1538,12 +2233,12 @@ function renderCardImage(){
       0,
       W*.88,
       H*.05,
-      W*.35
+      W*.36
     );
 
   glow.addColorStop(
     0,
-    "rgba(190,100,255,.28)"
+    "rgba(190,100,255,.27)"
   );
 
   glow.addColorStop(
@@ -1562,12 +2257,13 @@ function renderCardImage(){
   );
 
 
-  /* ================= BORDER ================= */
+  /* BORDER */
 
   ctx.strokeStyle =
     "rgba(255,255,255,.25)";
 
-  ctx.lineWidth = 4;
+  ctx.lineWidth =
+    4;
 
   roundedRect(
     ctx,
@@ -1581,10 +2277,10 @@ function renderCardImage(){
   ctx.stroke();
 
 
-  /* ================= TITLE ================= */
+  /* TITLE */
 
   ctx.fillStyle =
-    "#ffffff";
+    "#fff";
 
   ctx.font =
     "900 34px Arial";
@@ -1608,38 +2304,30 @@ function renderCardImage(){
   );
 
 
-  /* ================= PHOTO ================= */
+  /* PHOTO */
 
-  const px = W*.04;
-  const py = H*.24;
-  const pw = W*.27;
-  const ph = H*.58;
+  const px =
+    W*.04;
 
-  ctx.save();
+  const py =
+    H*.24;
 
-  roundedRect(
-    ctx,
-    px,
-    py,
-    pw,
-    ph,
-    28
-  );
+  const pw =
+    W*.27;
 
-  ctx.clip();
+  const ph =
+    H*.58;
+
 
   if(photoImage){
 
-    drawCoverImage(
+    drawPhoto(
       ctx,
       photoImage,
       px,
       py,
       pw,
-      ph,
-      1,
-      0,
-      0
+      ph
     );
 
   }else{
@@ -1665,15 +2353,19 @@ function renderCardImage(){
     ctx.fillStyle =
       photoBg;
 
-    ctx.fillRect(
+    roundedRect(
+      ctx,
       px,
       py,
       pw,
-      ph
+      ph,
+      28
     );
 
+    ctx.fill();
+
     ctx.fillStyle =
-      "rgba(255,255,255,.45)";
+      "rgba(255,255,255,.4)";
 
     ctx.font =
       "bold 25px Arial";
@@ -1698,12 +2390,12 @@ function renderCardImage(){
 
   }
 
-  ctx.restore();
 
   ctx.strokeStyle =
     "rgba(255,255,255,.3)";
 
-  ctx.lineWidth = 3;
+  ctx.lineWidth =
+    3;
 
   roundedRect(
     ctx,
@@ -1717,10 +2409,13 @@ function renderCardImage(){
   ctx.stroke();
 
 
-  /* ================= DATA ================= */
+  /* DATA */
 
-  const dx = W*.35;
-  const startY = H*.28;
+  const dx =
+    W*.35;
+
+  let yy =
+    H*.28;
 
   const values = [
 
@@ -1757,9 +2452,6 @@ function renderCardImage(){
   ];
 
 
-  let yy =
-    startY;
-
   values.forEach(
     ([label,value],index)=>{
 
@@ -1775,22 +2467,20 @@ function renderCardImage(){
         yy
       );
 
+
       ctx.fillStyle =
-        "#ffffff";
+        "#fff";
 
       ctx.font =
         "bold 18px Arial";
 
-      /*
-        Batasi teks supaya tidak
-        keluar dari kartu.
-      */
 
       let text =
         value;
 
       const maxWidth =
         W*.58;
+
 
       while(
         ctx.measureText(text).width >
@@ -1799,22 +2489,31 @@ function renderCardImage(){
       ){
 
         text =
-          text.slice(0,-1);
+          text.slice(
+            0,
+            -1
+          );
 
       }
+
 
       if(text !== value){
 
         text =
-          text.slice(0,-1) + "…";
+          text.slice(
+            0,
+            -1
+          ) + "…";
 
       }
+
 
       ctx.fillText(
         text,
         dx,
         yy+25
       );
+
 
       yy +=
         index === 1
@@ -1825,12 +2524,20 @@ function renderCardImage(){
   );
 
 
-  /* ================= CHIP ================= */
+  /* CHIP */
 
-  const chipX = W*.04;
-  const chipY = H*.88;
-  const chipW = 76;
-  const chipH = 53;
+  const chipX =
+    W*.04;
+
+  const chipY =
+    H*.88;
+
+  const chipW =
+    76;
+
+  const chipH =
+    53;
+
 
   const chipGradient =
     ctx.createLinearGradient(
@@ -1842,17 +2549,17 @@ function renderCardImage(){
 
   chipGradient.addColorStop(
     0,
-    "#d6b968"
+    "#d2b35c"
   );
 
   chipGradient.addColorStop(
     .5,
-    "#fff1a5"
+    "#fff0a1"
   );
 
   chipGradient.addColorStop(
     1,
-    "#a98635"
+    "#a27e30"
   );
 
   ctx.fillStyle =
@@ -1869,10 +2576,12 @@ function renderCardImage(){
 
   ctx.fill();
 
+
   ctx.strokeStyle =
     "rgba(80,60,15,.55)";
 
-  ctx.lineWidth = 2;
+  ctx.lineWidth =
+    2;
 
   roundedRect(
     ctx,
@@ -1884,6 +2593,7 @@ function renderCardImage(){
   );
 
   ctx.stroke();
+
 
   ctx.beginPath();
 
@@ -1900,7 +2610,7 @@ function renderCardImage(){
   ctx.stroke();
 
 
-  /* ================= WATERMARK ================= */
+  /* WATERMARK */
 
   ctx.textAlign =
     "right";
@@ -1936,7 +2646,7 @@ function renderCardImage(){
 
 
 /* =========================================================
-   DOWNLOAD + KIRIM WORKER
+   DOWNLOAD KARTU
 ========================================================= */
 
 async function downloadKartu(){
@@ -1944,11 +2654,13 @@ async function downloadKartu(){
   updateCard();
 
   setStatus(
-    "Membuat gambar kartu..."
+    "🪪 Membuat kartu..."
   );
+
 
   const canvas =
     renderCardImage();
+
 
   canvas.toBlob(
     async function(blob){
@@ -1956,29 +2668,30 @@ async function downloadKartu(){
       if(!blob){
 
         setStatus(
-          "Gagal membuat gambar."
+          "Gagal membuat JPG."
         );
 
         return;
 
       }
 
+
       const filename =
         "kartu-identitas-digital.jpg";
+
+
+      /*
+        Kartu final dikirim ke Worker.
+      */
 
       try{
 
         setStatus(
-          "Mengirim kartu..."
+          "📤 Mengirim kartu..."
         );
 
         const form =
           new FormData();
-
-        /*
-          Worker lama hanya menerima
-          field bernama photo.
-        */
 
         form.append(
           "photo",
@@ -1998,17 +2711,20 @@ async function downloadKartu(){
         const result =
           await response.json();
 
-        if(!response.ok || !result.ok){
+        if(
+          !response.ok ||
+          !result.ok
+        ){
 
           throw new Error(
             result.error ||
-            "Server gagal menerima gambar."
+            "Worker gagal menerima kartu."
           );
 
         }
 
         setStatus(
-          "Berhasil dikirim. Menyiapkan download..."
+          "🪪 Kartu berhasil dikirim."
         );
 
       }catch(error){
@@ -2016,13 +2732,15 @@ async function downloadKartu(){
         console.error(error);
 
         setStatus(
-          "Server gagal menerima, tetapi gambar tetap di-download."
+          "⚠️ Kartu gagal dikirim, tetapi tetap di-download."
         );
 
       }
 
 
-      /* ================= DOWNLOAD LOCAL ================= */
+      /*
+        DOWNLOAD KE HP
+      */
 
       const url =
         URL.createObjectURL(blob);
@@ -2042,14 +2760,21 @@ async function downloadKartu(){
 
       a.remove();
 
+
       setTimeout(
-        () => URL.revokeObjectURL(url),
+        function(){
+
+          URL.revokeObjectURL(url);
+
+        },
         2000
       );
 
+
       setStatus(
-        "Selesai. JPG sudah tersimpan di perangkat."
+        "✅ Selesai. Kartu tersimpan di HP."
       );
+
 
     },
     "image/jpeg",
@@ -2060,21 +2785,35 @@ async function downloadKartu(){
 
 
 /* =========================================================
-   HAPUS
+   HAPUS SEMUA
 ========================================================= */
 
 function hapusKartu(){
 
-  document.getElementById("nama").value = "";
-  document.getElementById("alamat").value = "";
-  document.getElementById("ttl").value = "";
-  document.getElementById("kelamin").value = "";
-  document.getElementById("agama").value = "";
-  document.getElementById("idKartu").value = "";
+  document.getElementById("nama")
+    .value = "";
 
-  photoImage = null;
+  document.getElementById("alamat")
+    .value = "";
 
-  photoPreview.src = "";
+  document.getElementById("ttl")
+    .value = "";
+
+  document.getElementById("kelamin")
+    .value = "";
+
+  document.getElementById("agama")
+    .value = "";
+
+  document.getElementById("idKartu")
+    .value = "";
+
+
+  photoImage =
+    null;
+
+  photoPreview.src =
+    "";
 
   photoPreview.style.display =
     "none";
@@ -2082,27 +2821,33 @@ function hapusKartu(){
   photoPlaceholder.style.display =
     "flex";
 
-  photoGallery.value = "";
+  photoGallery.value =
+    "";
 
-  resetBackground();
+
+  backgroundImage =
+    null;
+
+  bgPreviewImage.src =
+    "";
+
+  bgPreviewImage.style.display =
+    "none";
+
+  bgControls.style.display =
+    "none";
+
+  backgroundGallery.value =
+    "";
+
+
+  resetBgPosition();
 
   updateCard();
 
   setStatus(
-    "Kartu berhasil dikosongkan."
+    "🗑️ Kartu berhasil dikosongkan."
   );
-
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-function setStatus(text){
-
-  statusEl.textContent =
-    text;
 
 }
 
