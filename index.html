@@ -10,367 +10,498 @@
 <style>
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
   margin:0;
   padding:0;
-  background:#0b0d11;
+  min-height:100%;
+  background:#080a10;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  min-height:100vh;
-  padding:18px 12px 35px;
+  padding:16px;
 }
 
 .app{
   width:100%;
-  max-width:520px;
+  max-width:620px;
   margin:auto;
 }
 
-.header{
+h1{
+  margin:5px 0 4px;
   text-align:center;
-  margin-bottom:18px;
+  font-size:24px;
+  letter-spacing:1px;
 }
 
-.header h1{
-  margin:0;
-  font-size:23px;
-}
-
-.header p{
-  margin:7px 0 0;
-  color:#8f98a5;
+.subtitle{
+  text-align:center;
+  color:#8f98aa;
   font-size:12px;
-}
-
-.editor{
-  background:#151920;
-  border:1px solid #252b34;
-  border-radius:20px;
-  padding:16px;
-}
-
-/* =========================
-   KARTU
-========================= */
-
-.card-wrap{
-  width:100%;
-  overflow:hidden;
-  border-radius:15px;
   margin-bottom:18px;
+}
+
+/* ================= PANEL ================= */
+
+.panel{
+  background:rgba(20,24,35,.92);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.panel-title{
+  font-size:13px;
+  font-weight:bold;
+  color:#b8c1d4;
+  margin-bottom:10px;
+  letter-spacing:.5px;
+}
+
+input,
+select{
+  width:100%;
+  border:1px solid rgba(255,255,255,.08);
+  background:#10141e;
+  color:#fff;
+  padding:12px;
+  border-radius:12px;
+  outline:none;
+  margin-bottom:9px;
+  font-size:14px;
+}
+
+input:focus,
+select:focus{
+  border-color:#7c5cff;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+button{
+  border:0;
+  border-radius:13px;
+  padding:12px 13px;
+  font-size:13px;
+  font-weight:bold;
+  color:#fff;
+  background:#252b3a;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.btn-main{
+  background:linear-gradient(135deg,#7357ff,#b34dff);
+}
+
+.btn-green{
+  background:linear-gradient(135deg,#00a878,#00d4a0);
+}
+
+.btn-red{
+  background:linear-gradient(135deg,#d83255,#ff526e);
+}
+
+.btn-blue{
+  background:linear-gradient(135deg,#1677ff,#39a8ff);
+}
+
+.btn-full{
+  width:100%;
+}
+
+.small-note{
+  font-size:10px;
+  line-height:1.5;
+  color:#7e8799;
+  margin-top:8px;
+}
+
+/* ================= CARD ================= */
+
+.preview-wrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin:12px 0 18px;
 }
 
 .card{
   position:relative;
   width:100%;
+  max-width:560px;
   aspect-ratio:1.586 / 1;
   overflow:hidden;
-  border-radius:15px;
-  padding:17px;
+  border-radius:25px;
   background:
-    radial-gradient(circle at 85% 20%,rgba(255,255,255,.28),transparent 25%),
-    linear-gradient(135deg,#26384d,#111923);
-  box-shadow:0 12px 35px rgba(0,0,0,.4);
-  color:#fff;
+    radial-gradient(circle at 15% 15%,rgba(255,255,255,.2),transparent 25%),
+    linear-gradient(135deg,#161a2d,#4735a3 50%,#0d1020);
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(255,255,255,.18);
 }
 
-/* pola background */
-.card::before{
-  content:"";
+/* Background image layer */
+
+.bg-image{
   position:absolute;
-  width:190px;
-  height:190px;
-  border:35px solid rgba(255,255,255,.04);
-  border-radius:50%;
-  right:-70px;
-  bottom:-85px;
+  left:50%;
+  top:50%;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform-origin:center;
+  pointer-events:none;
+  display:none;
+  z-index:1;
 }
 
-.card::after{
-  content:"";
+/* Background effects */
+
+.bg-overlay{
   position:absolute;
-  width:130px;
-  height:130px;
-  border:20px solid rgba(255,255,255,.035);
-  border-radius:50%;
-  left:-65px;
-  top:-70px;
-}
-
-.card > *{
-  position:relative;
+  inset:0;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(5,8,20,.78) 0%,
+      rgba(8,10,25,.40) 45%,
+      rgba(7,9,20,.65) 100%
+    );
   z-index:2;
+  pointer-events:none;
+}
+
+.glow{
+  position:absolute;
+  width:48%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:rgba(170,100,255,.35);
+  filter:blur(35px);
+  top:-25%;
+  right:-15%;
+  z-index:3;
+}
+
+.glow2{
+  position:absolute;
+  width:40%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:rgba(0,200,255,.2);
+  filter:blur(35px);
+  bottom:-25%;
+  left:-15%;
+  z-index:3;
+}
+
+/* Decorative circles */
+
+.circle{
+  position:absolute;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+  z-index:3;
+  pointer-events:none;
+}
+
+.circle.c1{
+  width:170px;
+  height:170px;
+  right:-75px;
+  bottom:-75px;
+}
+
+.circle.c2{
+  width:110px;
+  height:110px;
+  right:-45px;
+  bottom:-45px;
+}
+
+.circle.c3{
+  width:75px;
+  height:75px;
+  left:-35px;
+  top:-35px;
+}
+
+/* Card content */
+
+.card-content{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  padding:18px;
 }
 
 .card-title{
-  text-align:center;
-  font-size:14px;
-  font-weight:bold;
-  letter-spacing:.7px;
+  font-size:clamp(11px,2.5vw,18px);
+  font-weight:900;
+  letter-spacing:1.4px;
 }
 
 .card-subtitle{
-  text-align:center;
-  font-size:7px;
-  opacity:.7;
-  margin-top:3px;
+  font-size:clamp(6px,1.4vw,9px);
+  color:rgba(255,255,255,.68);
+  margin-top:2px;
   letter-spacing:1px;
 }
 
-.card-content{
-  display:flex;
-  gap:13px;
-  margin-top:14px;
-}
-
 .photo-box{
+  position:absolute;
+  left:4%;
+  top:24%;
   width:27%;
-  aspect-ratio:3/4;
-  flex-shrink:0;
-  border:1px solid rgba(255,255,255,.45);
-  border-radius:6px;
+  height:58%;
+  border-radius:14px;
   overflow:hidden;
-  background:rgba(0,0,0,.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.15),
+      rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
 
 .photo-box img{
   width:100%;
   height:100%;
   object-fit:cover;
+  display:none;
 }
 
-.no-photo{
+.photo-placeholder{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  font-size:9px;
-  opacity:.7;
+  padding:8px;
+  color:rgba(255,255,255,.45);
+  font-size:clamp(8px,1.8vw,12px);
 }
 
 .data{
-  flex:1;
-  min-width:0;
+  position:absolute;
+  left:35%;
+  right:5%;
+  top:25%;
 }
 
-.row{
-  display:flex;
-  margin-bottom:6px;
-  font-size:8px;
-  line-height:1.2;
+.data-item{
+  margin-bottom:8px;
 }
 
-.row .label{
-  width:31%;
-  opacity:.65;
+.label{
+  font-size:clamp(6px,1.3vw,8px);
+  color:rgba(255,255,255,.55);
+  text-transform:uppercase;
+  letter-spacing:.7px;
 }
 
-.row .value{
-  width:69%;
+.value{
+  font-size:clamp(8px,1.8vw,12px);
   font-weight:bold;
+  min-height:13px;
   word-break:break-word;
 }
 
-.watermark{
+.card-footer{
   position:absolute;
-  right:12px;
-  bottom:8px;
-  z-index:3;
-  font-size:6px;
-  font-weight:bold;
-  letter-spacing:.8px;
-  opacity:.65;
-}
-
-/* =========================
-   FORM
-========================= */
-
-.section-title{
-  font-size:13px;
-  font-weight:bold;
-  margin:5px 0 12px;
-}
-
-.photo-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-bottom:15px;
-}
-
-.photo-buttons button{
-  margin:0;
-}
-
-button{
-  width:100%;
-  border:0;
-  border-radius:11px;
-  padding:13px 10px;
-  color:white;
-  font-weight:bold;
-  font-size:13px;
-  cursor:pointer;
-}
-
-.camera-btn{
-  background:#246bfd;
-}
-
-.gallery-btn{
-  background:#303741;
-}
-
-input{
-  width:100%;
-  border:1px solid #303742;
-  background:#0e1116;
-  color:#fff;
-  border-radius:10px;
-  padding:12px;
-  outline:none;
-  margin-bottom:10px;
-  font-size:13px;
-}
-
-input:focus{
-  border-color:#3f8cff;
-}
-
-.color-row{
+  left:4%;
+  right:4%;
+  bottom:4%;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  background:#0e1116;
-  border:1px solid #303742;
-  border-radius:10px;
-  padding:10px 12px;
-  margin-top:3px;
+  align-items:flex-end;
 }
 
-.color-row span{
-  font-size:12px;
-  color:#c8ced7;
+.chip{
+  width:38px;
+  height:27px;
+  border-radius:6px;
+  background:
+    linear-gradient(
+      135deg,
+      #d6b968,
+      #fff1a5,
+      #a98635
+    );
+  box-shadow:0 3px 8px rgba(0,0,0,.25);
+  position:relative;
 }
 
-input[type="color"]{
-  width:43px;
-  height:30px;
+.chip:before,
+.chip:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(80,60,15,.5);
+  border-radius:4px;
+}
+
+.chip:before{
+  inset:6px 4px;
+}
+
+.chip:after{
+  left:50%;
+  top:3px;
+  bottom:3px;
+  width:1px;
+}
+
+.watermark{
+  font-size:clamp(5px,1.2vw,7px);
+  color:rgba(255,255,255,.48);
+  text-align:right;
+  max-width:65%;
+  line-height:1.4;
+}
+
+/* ================= BG CONTROL ================= */
+
+.bg-controls{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  background:#0c1019;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.range-row{
+  margin-bottom:11px;
+}
+
+.range-head{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:#aeb7c8;
+  margin-bottom:5px;
+}
+
+input[type="range"]{
+  appearance:none;
+  -webkit-appearance:none;
+  width:100%;
+  height:5px;
   padding:0;
   margin:0;
+  background:#2b3140;
+  border-radius:10px;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  appearance:none;
+  -webkit-appearance:none;
+  width:19px;
+  height:19px;
+  border-radius:50%;
+  background:#9b6cff;
+  box-shadow:0 0 10px rgba(155,108,255,.5);
+}
+
+input[type="range"]::-moz-range-thumb{
+  width:19px;
+  height:19px;
+  border-radius:50%;
+  background:#9b6cff;
   border:0;
-  background:none;
 }
 
-/* =========================
-   BOTTOM BUTTON
-========================= */
-
-.actions{
+.bg-buttons{
   display:grid;
-  grid-template-columns:1fr 1.4fr;
-  gap:10px;
-  margin-top:16px;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
 }
 
-.delete{
-  background:#292f38;
-}
+/* ================= CAMERA ================= */
 
-.download{
-  background:#168f55;
-}
-
-/* =========================
-   CAMERA MODAL
-========================= */
-
-.modal{
+.camera-modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.86);
-  z-index:99;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(10px);
+  z-index:100;
   display:none;
   align-items:center;
   justify-content:center;
   padding:15px;
 }
 
-.modal.show{
-  display:flex;
-}
-
-.camera{
+.camera-box{
   width:100%;
-  max-width:430px;
-  background:#151920;
-  border-radius:18px;
+  max-width:500px;
+  background:#121620;
+  border-radius:20px;
   padding:12px;
 }
 
-.camera video{
-  display:block;
+#cameraVideo{
   width:100%;
   aspect-ratio:3/4;
   object-fit:cover;
-  border-radius:13px;
+  border-radius:14px;
   background:#000;
 }
 
-.camera-controls{
+.camera-buttons{
   display:grid;
-  grid-template-columns:1fr 1.5fr;
-  gap:9px;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
   margin-top:10px;
 }
 
-.capture{
-  background:#168f55;
-}
-
-.close{
-  background:#303741;
-}
-
-/* =========================
-   STATUS
-========================= */
+/* ================= STATUS ================= */
 
 .status{
   text-align:center;
+  min-height:18px;
   font-size:11px;
-  color:#8993a0;
-  min-height:17px;
-  margin-top:12px;
+  color:#929caf;
+  margin:5px 0 12px;
 }
 
-@media(max-width:360px){
-  .card{
-    padding:13px;
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+@media(max-width:420px){
+  body{
+    padding:10px;
+  }
+
+  .panel{
+    padding:12px;
   }
 
   .card-content{
-    gap:8px;
-    margin-top:10px;
+    padding:12px;
   }
 
-  .row{
-    font-size:6.7px;
-    margin-bottom:4px;
-  }
-
-  .card-title{
-    font-size:11px;
-  }
-
-  .card-subtitle{
-    font-size:5px;
+  .data-item{
+    margin-bottom:5px;
   }
 }
 </style>
@@ -380,244 +511,362 @@ input[type="color"]{
 
 <div class="app">
 
-  <div class="header">
-    <h1>Kartu Identitas Digital</h1>
-    <p>Buat kartu identitas digital pribadi</p>
+  <h1>Kartu Identitas Digital</h1>
+  <div class="subtitle">
+    Editor kartu digital • contoh • bukan identitas resmi
   </div>
 
-  <div class="editor">
+  <!-- ================= DATA ================= -->
 
-    <!-- =====================
-         PREVIEW KARTU
-    ====================== -->
+  <div class="panel">
 
-    <div class="card-wrap">
+    <div class="panel-title">DATA KARTU</div>
 
-      <div class="card" id="card">
+    <input
+      id="nama"
+      type="text"
+      placeholder="Nama lengkap"
+      autocomplete="off"
+    >
+
+    <input
+      id="alamat"
+      type="text"
+      placeholder="Alamat"
+      autocomplete="off"
+    >
+
+    <input
+      id="ttl"
+      type="text"
+      placeholder="Tempat / Tanggal Lahir"
+      autocomplete="off"
+    >
+
+    <div class="row">
+
+      <select id="kelamin">
+        <option value="">Jenis Kelamin</option>
+        <option>Laki-laki</option>
+        <option>Perempuan</option>
+      </select>
+
+      <select id="agama">
+        <option value="">Agama</option>
+        <option>Islam</option>
+        <option>Kristen</option>
+        <option>Katolik</option>
+        <option>Hindu</option>
+        <option>Buddha</option>
+        <option>Konghucu</option>
+      </select>
+
+    </div>
+
+    <input
+      id="idKartu"
+      type="text"
+      placeholder="ID Kartu"
+      autocomplete="off"
+    >
+
+  </div>
+
+  <!-- ================= FOTO ================= -->
+
+  <div class="panel">
+
+    <div class="panel-title">FOTO</div>
+
+    <div class="row">
+
+      <button
+        class="btn-blue"
+        onclick="document.getElementById('photoGallery').click()"
+      >
+        🖼️ Galeri
+      </button>
+
+      <button
+        class="btn-main"
+        onclick="openCamera()"
+      >
+        🤳 Kamera
+      </button>
+
+    </div>
+
+    <input
+      id="photoGallery"
+      type="file"
+      accept="image/*"
+      hidden
+    >
+
+  </div>
+
+  <!-- ================= BACKGROUND ================= -->
+
+  <div class="panel">
+
+    <div class="panel-title">BACKGROUND KARTU</div>
+
+    <div class="row">
+
+      <button
+        class="btn-blue"
+        onclick="document.getElementById('backgroundGallery').click()"
+      >
+        🖼️ Pilih Background
+      </button>
+
+      <button
+        onclick="resetBackground()"
+      >
+        🎨 Gunakan Warna
+      </button>
+
+    </div>
+
+    <input
+      id="backgroundGallery"
+      type="file"
+      accept="image/*"
+      hidden
+    >
+
+    <div class="bg-controls" id="bgControls">
+
+      <div class="range-row">
+
+        <div class="range-head">
+          <span>🔍 Zoom</span>
+          <span id="zoomValue">100%</span>
+        </div>
+
+        <input
+          id="bgZoom"
+          type="range"
+          min="100"
+          max="250"
+          value="100"
+        >
+
+      </div>
+
+      <div class="range-row">
+
+        <div class="range-head">
+          <span>↔️ Posisi Horizontal</span>
+          <span id="xValue">0</span>
+        </div>
+
+        <input
+          id="bgX"
+          type="range"
+          min="-100"
+          max="100"
+          value="0"
+        >
+
+      </div>
+
+      <div class="range-row">
+
+        <div class="range-head">
+          <span>↕️ Posisi Vertikal</span>
+          <span id="yValue">0</span>
+        </div>
+
+        <input
+          id="bgY"
+          type="range"
+          min="-100"
+          max="100"
+          value="0"
+        >
+
+      </div>
+
+      <div class="bg-buttons">
+
+        <button onclick="resetBgPosition()">
+          🔄 Reset Posisi
+        </button>
+
+        <button
+          class="btn-red"
+          onclick="removeBackgroundImage()"
+        >
+          🗑️ Hapus Background
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="small-note">
+      Kamu bisa download wallpaper/background dari web,
+      lalu pilih dari galeri. Gunakan Zoom dan Posisi untuk
+      menyesuaikan gambar dengan kartu.
+    </div>
+
+  </div>
+
+  <!-- ================= PREVIEW ================= -->
+
+  <div class="preview-wrap">
+
+    <div class="card" id="card">
+
+      <img
+        id="bgPreviewImage"
+        class="bg-image"
+        alt=""
+      >
+
+      <div class="bg-overlay"></div>
+
+      <div class="glow"></div>
+      <div class="glow2"></div>
+
+      <div class="circle c1"></div>
+      <div class="circle c2"></div>
+      <div class="circle c3"></div>
+
+      <div class="card-content">
 
         <div class="card-title">
           KARTU IDENTITAS DIGITAL
         </div>
 
         <div class="card-subtitle">
-          DIGITAL PERSONAL IDENTIFICATION CARD
+          DIGITAL PERSONAL CARD
         </div>
 
-        <div class="card-content">
+        <div class="photo-box">
 
-          <div class="photo-box">
+          <img id="photoPreview" alt="Foto">
 
-            <img id="photoPreview"
-                 class="hidden"
-                 alt="Foto">
-
-            <div id="noPhoto"
-                 class="no-photo">
-              FOTO
-            </div>
-
-          </div>
-
-          <div class="data">
-
-            <div class="row">
-              <div class="label">NAMA</div>
-              <div class="value" id="viewNama">
-                -
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="label">ALAMAT</div>
-              <div class="value" id="viewAlamat">
-                -
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="label">TTL</div>
-              <div class="value" id="viewTtl">
-                -
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="label">KELAMIN</div>
-              <div class="value" id="viewKelamin">
-                -
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="label">ID</div>
-              <div class="value" id="viewId">
-                -
-              </div>
-            </div>
-
+          <div
+            id="photoPlaceholder"
+            class="photo-placeholder"
+          >
+            FOTO
           </div>
 
         </div>
 
-        <div class="watermark">
-          CONTOH • TIDAK BERLAKU SEBAGAI IDENTITAS RESMI
+        <div class="data">
+
+          <div class="data-item">
+            <div class="label">Nama</div>
+            <div class="value" id="vNama">-</div>
+          </div>
+
+          <div class="data-item">
+            <div class="label">Alamat</div>
+            <div class="value" id="vAlamat">-</div>
+          </div>
+
+          <div class="data-item">
+            <div class="label">Tempat / Tanggal Lahir</div>
+            <div class="value" id="vTtl">-</div>
+          </div>
+
+          <div class="data-item">
+            <div class="label">Jenis Kelamin</div>
+            <div class="value" id="vKelamin">-</div>
+          </div>
+
+          <div class="data-item">
+            <div class="label">Agama</div>
+            <div class="value" id="vAgama">-</div>
+          </div>
+
+          <div class="data-item">
+            <div class="label">ID Kartu</div>
+            <div class="value" id="vId">-</div>
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+
+          <div class="chip"></div>
+
+          <div class="watermark">
+            CONTOH • TIDAK BERLAKU<br>
+            SEBAGAI IDENTITAS RESMI
+          </div>
+
         </div>
 
       </div>
 
     </div>
 
+  </div>
 
-    <!-- =====================
-         FOTO
-    ====================== -->
+  <div class="status" id="status"></div>
 
-    <div class="section-title">
-      Foto
-    </div>
+  <!-- ================= ACTION ================= -->
 
-    <div class="photo-buttons">
+  <div class="actions">
 
-      <button class="camera-btn"
-              onclick="openCamera()">
-        📷 Kamera Selfie
-      </button>
-
-      <button class="gallery-btn"
-              onclick="gallery.click()">
-        🖼️ Galeri
-      </button>
-
-    </div>
-
-    <input
-      type="file"
-      id="gallery"
-      accept="image/*"
-      style="display:none"
+    <button
+      class="btn-red"
+      onclick="hapusKartu()"
     >
+      🗑️ Hapus
+    </button>
 
-
-    <!-- =====================
-         DATA
-    ====================== -->
-
-    <div class="section-title">
-      Data Kartu
-    </div>
-
-    <input
-      id="nama"
-      placeholder="Nama lengkap"
-      maxlength="60"
-      autocomplete="off"
+    <button
+      class="btn-green"
+      onclick="downloadKartu()"
     >
+      ⬇️ Download
+    </button>
 
-    <input
-      id="alamat"
-      placeholder="Alamat"
-      maxlength="100"
-      autocomplete="off"
-    >
+  </div>
 
-    <input
-      id="ttl"
-      placeholder="Tempat / Tanggal Lahir"
-      maxlength="60"
-      autocomplete="off"
-    >
-
-    <input
-      id="kelamin"
-      placeholder="Jenis Kelamin"
-      maxlength="30"
-      autocomplete="off"
-    >
-
-    <input
-      id="id"
-      placeholder="ID / Nomor kartu"
-      maxlength="30"
-      autocomplete="off"
-    >
-
-
-    <!-- =====================
-         BACKGROUND
-    ====================== -->
-
-    <div class="section-title">
-      Background Kartu
-    </div>
-
-    <div class="color-row">
-
-      <span>
-        Pilih warna utama
-      </span>
-
-      <input
-        type="color"
-        id="bgColor"
-        value="#26384d"
-      >
-
-    </div>
-
-
-    <!-- =====================
-         ACTION
-    ====================== -->
-
-    <div class="actions">
-
-      <button
-        class="delete"
-        onclick="hapusKartu()">
-        🗑️ Hapus
-      </button>
-
-      <button
-        class="download"
-        onclick="downloadKartu()">
-        ⬇️ Download
-      </button>
-
-    </div>
-
-    <div class="status" id="status"></div>
-
+  <div class="small-note" style="text-align:center;margin-top:12px">
+    Download akan membuat JPG kartu dan mengirim gambar hasilnya
+    ke server yang terhubung dengan halaman ini.
   </div>
 
 </div>
 
 
-<!-- =========================
-     CAMERA
-========================= -->
+<!-- ================= CAMERA MODAL ================= -->
 
-<div class="modal" id="cameraModal">
+<div
+  class="camera-modal"
+  id="cameraModal"
+>
 
-  <div class="camera">
+  <div class="camera-box">
 
     <video
       id="cameraVideo"
       autoplay
-      playsinline>
-    </video>
+      playsinline
+    ></video>
 
-    <div class="camera-controls">
+    <div class="camera-buttons">
 
       <button
-        class="close"
-        onclick="closeCamera()">
+        class="btn-red"
+        onclick="closeCamera()"
+      >
         Batal
       </button>
 
       <button
-        class="capture"
-        onclick="capturePhoto()">
-        ● Ambil Foto
+        class="btn-green"
+        onclick="capturePhoto()"
+      >
+        📸 Ambil Foto
       </button>
 
     </div>
@@ -627,191 +876,292 @@ input[type="color"]{
 </div>
 
 
-<!-- =========================
-     HIDDEN CANVAS
-========================= -->
-
-<canvas
-  id="canvas"
-  style="display:none">
-</canvas>
-
-
 <script>
 
-/* =====================================================
+/* =========================================================
    CONFIG
-===================================================== */
-
-/*
-  MASUKKAN URL WORKER LAMA KAMU DI SINI.
-*/
+========================================================= */
 
 const WORKER_URL =
-  "https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev/";
+"https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev/";
 
 
-/* =====================================================
-   ELEMENT
-===================================================== */
+/* =========================================================
+   STATE
+========================================================= */
 
-const nama =
-  document.getElementById("nama");
-
-const alamat =
-  document.getElementById("alamat");
-
-const ttl =
-  document.getElementById("ttl");
-
-const kelamin =
-  document.getElementById("kelamin");
-
-const id =
-  document.getElementById("id");
-
-const bgColor =
-  document.getElementById("bgColor");
-
-const card =
-  document.getElementById("card");
-
-const photoPreview =
-  document.getElementById("photoPreview");
-
-const noPhoto =
-  document.getElementById("noPhoto");
-
-const gallery =
-  document.getElementById("gallery");
-
-const cameraModal =
-  document.getElementById("cameraModal");
-
-const cameraVideo =
-  document.getElementById("cameraVideo");
-
-const canvas =
-  document.getElementById("canvas");
-
-const status =
-  document.getElementById("status");
-
-
+let photoImage = null;
+let backgroundImage = null;
 let cameraStream = null;
 
 
-/* =====================================================
-   UPDATE TEKS KARTU
-===================================================== */
+/* =========================================================
+   ELEMENT
+========================================================= */
 
-function updateCard(){
+const photoGallery =
+document.getElementById("photoGallery");
 
-  document.getElementById("viewNama").textContent =
-    nama.value.trim() || "-";
+const backgroundGallery =
+document.getElementById("backgroundGallery");
 
-  document.getElementById("viewAlamat").textContent =
-    alamat.value.trim() || "-";
+const photoPreview =
+document.getElementById("photoPreview");
 
-  document.getElementById("viewTtl").textContent =
-    ttl.value.trim() || "-";
+const photoPlaceholder =
+document.getElementById("photoPlaceholder");
 
-  document.getElementById("viewKelamin").textContent =
-    kelamin.value.trim() || "-";
+const bgPreviewImage =
+document.getElementById("bgPreviewImage");
 
-  document.getElementById("viewId").textContent =
-    id.value.trim() || "-";
-}
+const bgControls =
+document.getElementById("bgControls");
+
+const bgZoom =
+document.getElementById("bgZoom");
+
+const bgX =
+document.getElementById("bgX");
+
+const bgY =
+document.getElementById("bgY");
+
+const zoomValue =
+document.getElementById("zoomValue");
+
+const xValue =
+document.getElementById("xValue");
+
+const yValue =
+document.getElementById("yValue");
+
+const statusEl =
+document.getElementById("status");
 
 
-/* =====================================================
-   INPUT LIVE
-===================================================== */
+/* =========================================================
+   INPUT DATA
+========================================================= */
 
 [
-  nama,
-  alamat,
-  ttl,
-  kelamin,
-  id
-].forEach(input => {
+  "nama",
+  "alamat",
+  "ttl",
+  "kelamin",
+  "agama",
+  "idKartu"
+].forEach(id => {
 
-  input.addEventListener(
-    "input",
-    updateCard
-  );
+  document.getElementById(id)
+    .addEventListener("input", updateCard);
+
+  document.getElementById(id)
+    .addEventListener("change", updateCard);
 
 });
 
 
-/* =====================================================
-   BACKGROUND
-===================================================== */
+function getValue(id){
 
-bgColor.addEventListener(
-  "input",
-  () => {
+  const value =
+  document.getElementById(id).value.trim();
 
-    card.style.background =
-      `
-      radial-gradient(
-        circle at 85% 20%,
-        rgba(255,255,255,.28),
-        transparent 25%
-      ),
-      linear-gradient(
-        135deg,
-        ${bgColor.value},
-        #111923
-      )
-      `;
+  return value || "-";
 
-  }
-);
+}
 
 
-/* =====================================================
-   GALERI
-===================================================== */
+function updateCard(){
 
-gallery.addEventListener(
-  "change",
-  function(){
+  document.getElementById("vNama").textContent =
+    getValue("nama");
 
-    const file = this.files[0];
+  document.getElementById("vAlamat").textContent =
+    getValue("alamat");
 
-    if(!file) return;
+  document.getElementById("vTtl").textContent =
+    getValue("ttl");
 
-    const reader =
-      new FileReader();
+  document.getElementById("vKelamin").textContent =
+    getValue("kelamin");
 
-    reader.onload = function(e){
+  document.getElementById("vAgama").textContent =
+    getValue("agama");
 
-      photoPreview.src =
-        e.target.result;
+  document.getElementById("vId").textContent =
+    getValue("idKartu");
 
-      photoPreview.classList.remove(
-        "hidden"
-      );
+}
 
-      noPhoto.classList.add(
-        "hidden"
-      );
 
-      status.textContent =
-        "Foto berhasil dimasukkan.";
+/* =========================================================
+   FOTO GALERI
+========================================================= */
+
+photoGallery.addEventListener("change", function(){
+
+  const file = this.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    const img = new Image();
+
+    img.onload = function(){
+
+      photoImage = img;
+
+      photoPreview.src = e.target.result;
+
+      photoPreview.style.display = "block";
+
+      photoPlaceholder.style.display = "none";
+
+      setStatus("Foto berhasil dipasang.");
 
     };
 
-    reader.readAsDataURL(file);
+    img.src = e.target.result;
 
-  }
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* =========================================================
+   BACKGROUND GALERI
+========================================================= */
+
+backgroundGallery.addEventListener("change", function(){
+
+  const file = this.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    const img = new Image();
+
+    img.onload = function(){
+
+      backgroundImage = img;
+
+      bgPreviewImage.src = e.target.result;
+
+      bgPreviewImage.style.display = "block";
+
+      bgControls.style.display = "block";
+
+      resetBgPosition();
+
+      updateBackgroundPreview();
+
+      setStatus("Background berhasil dipasang.");
+
+    };
+
+    img.src = e.target.result;
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* =========================================================
+   BACKGROUND CONTROL
+========================================================= */
+
+bgZoom.addEventListener(
+  "input",
+  updateBackgroundPreview
+);
+
+bgX.addEventListener(
+  "input",
+  updateBackgroundPreview
+);
+
+bgY.addEventListener(
+  "input",
+  updateBackgroundPreview
 );
 
 
-/* =====================================================
+function updateBackgroundPreview(){
+
+  const zoom =
+    Number(bgZoom.value) / 100;
+
+  const x =
+    Number(bgX.value);
+
+  const y =
+    Number(bgY.value);
+
+  zoomValue.textContent =
+    bgZoom.value + "%";
+
+  xValue.textContent =
+    x;
+
+  yValue.textContent =
+    y;
+
+  bgPreviewImage.style.transform =
+    `translate(calc(-50% + ${x * 0.7}px), calc(-50% + ${y * 0.7}px)) scale(${zoom})`;
+
+}
+
+
+function resetBgPosition(){
+
+  bgZoom.value = 100;
+  bgX.value = 0;
+  bgY.value = 0;
+
+  updateBackgroundPreview();
+
+}
+
+
+function removeBackgroundImage(){
+
+  backgroundImage = null;
+
+  bgPreviewImage.src = "";
+
+  bgPreviewImage.style.display = "none";
+
+  bgControls.style.display = "none";
+
+  backgroundGallery.value = "";
+
+  setStatus("Background gambar dihapus.");
+
+}
+
+
+function resetBackground(){
+
+  removeBackgroundImage();
+
+  setStatus("Background kembali ke desain bawaan.");
+
+}
+
+
+/* =========================================================
    CAMERA
-===================================================== */
+========================================================= */
 
 async function openCamera(){
 
@@ -822,39 +1172,34 @@ async function openCamera(){
 
         video:{
           facingMode:"user",
-          width:{
-            ideal:1080
-          },
-          height:{
-            ideal:1440
-          }
+          width:{ideal:1080},
+          height:{ideal:1440}
         },
 
         audio:false
 
       });
 
-    cameraVideo.srcObject =
+    const video =
+      document.getElementById("cameraVideo");
+
+    video.srcObject =
       cameraStream;
 
-    cameraModal.classList.add(
-      "show"
-    );
+    document.getElementById("cameraModal")
+      .style.display = "flex";
 
   }catch(error){
 
     alert(
-      "Kamera tidak dapat dibuka. Pastikan izin kamera diberikan."
+      "Kamera tidak bisa dibuka.\n\n" +
+      "Pastikan izin kamera diberikan."
     );
 
   }
 
 }
 
-
-/* =====================================================
-   TUTUP CAMERA
-===================================================== */
 
 function closeCamera(){
 
@@ -862,432 +1207,139 @@ function closeCamera(){
 
     cameraStream
       .getTracks()
-      .forEach(track =>
-        track.stop()
-      );
+      .forEach(track => track.stop());
 
     cameraStream = null;
 
   }
 
-  cameraVideo.srcObject = null;
-
-  cameraModal.classList.remove(
-    "show"
-  );
+  document.getElementById("cameraModal")
+    .style.display = "none";
 
 }
 
 
-/* =====================================================
-   AMBIL FOTO SELFIE
-===================================================== */
-
 function capturePhoto(){
 
-  if(!cameraStream) return;
+  const video =
+    document.getElementById("cameraVideo");
 
-  const videoWidth =
-    cameraVideo.videoWidth;
+  if(!video.videoWidth){
 
-  const videoHeight =
-    cameraVideo.videoHeight;
+    alert("Kamera belum siap.");
+
+    return;
+
+  }
+
+  const canvas =
+    document.createElement("canvas");
 
   canvas.width =
-    videoWidth;
+    video.videoWidth;
 
   canvas.height =
-    videoHeight;
+    video.videoHeight;
 
   const ctx =
     canvas.getContext("2d");
 
   /*
-    Tidak mirror.
-    Hasil foto mengikuti kamera asli.
+    Tidak di-mirror supaya hasil foto
+    tidak terbalik.
   */
 
   ctx.drawImage(
-    cameraVideo,
+    video,
     0,
     0,
-    videoWidth,
-    videoHeight
+    canvas.width,
+    canvas.height
   );
 
-  photoPreview.src =
-    canvas.toDataURL(
-      "image/jpeg",
-      0.92
-    );
+  const data =
+    canvas.toDataURL("image/jpeg", .95);
 
-  photoPreview.classList.remove(
-    "hidden"
-  );
+  const img =
+    new Image();
 
-  noPhoto.classList.add(
-    "hidden"
-  );
+  img.onload = function(){
+
+    photoImage = img;
+
+    photoPreview.src = data;
+
+    photoPreview.style.display = "block";
+
+    photoPlaceholder.style.display = "none";
+
+    setStatus("Foto kamera berhasil diambil.");
+
+  };
+
+  img.src = data;
 
   closeCamera();
 
-  status.textContent =
-    "Foto selfie berhasil diambil.";
-
 }
 
 
-/* =====================================================
-   BUAT GAMBAR KARTU
-===================================================== */
+/* =========================================================
+   CANVAS HELPERS
+========================================================= */
 
-async function renderCardImage(){
+function roundedRect(
+  ctx,
+  x,
+  y,
+  w,
+  h,
+  r
+){
 
-  /*
-    Karena browser tidak bisa langsung
-    menyimpan elemen HTML sebagai JPG,
-    kita gambar ulang kartu ke canvas.
-  */
-
-  const width = 1200;
-  const height =
-    Math.round(
-      width / 1.586
-    );
-
-  const out =
-    document.createElement(
-      "canvas"
-    );
-
-  out.width = width;
-  out.height = height;
-
-  const ctx =
-    out.getContext("2d");
-
-  /* background */
-
-  const gradient =
-    ctx.createLinearGradient(
-      0,
-      0,
-      width,
-      height
-    );
-
-  gradient.addColorStop(
-    0,
-    bgColor.value
-  );
-
-  gradient.addColorStop(
-    1,
-    "#111923"
-  );
-
-  ctx.fillStyle =
-    gradient;
-
-  ctx.fillRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-
-  /* pola lingkaran */
-
-  ctx.globalAlpha = .07;
+  const radius =
+    Math.min(r,w/2,h/2);
 
   ctx.beginPath();
 
-  ctx.arc(
-    width - 80,
-    height - 50,
-    210,
-    0,
-    Math.PI * 2
+  ctx.moveTo(x+radius,y);
+
+  ctx.arcTo(
+    x+w,
+    y,
+    x+w,
+    y+h,
+    radius
   );
 
-  ctx.lineWidth = 55;
-
-  ctx.strokeStyle =
-    "#ffffff";
-
-  ctx.stroke();
-
-  ctx.globalAlpha = 1;
-
-
-  /* title */
-
-  ctx.fillStyle =
-    "#ffffff";
-
-  ctx.textAlign =
-    "center";
-
-  ctx.font =
-    "bold 34px Arial";
-
-  ctx.fillText(
-    "KARTU IDENTITAS DIGITAL",
-    width / 2,
-    65
-  );
-
-  ctx.font =
-    "12px Arial";
-
-  ctx.globalAlpha = .7;
-
-  ctx.fillText(
-    "DIGITAL PERSONAL IDENTIFICATION CARD",
-    width / 2,
-    87
-  );
-
-  ctx.globalAlpha = 1;
-
-
-  /* foto */
-
-  const px = 55;
-  const py = 125;
-  const pw = 250;
-  const ph = 330;
-
-  ctx.strokeStyle =
-    "rgba(255,255,255,.7)";
-
-  ctx.lineWidth = 2;
-
-  ctx.strokeRect(
-    px,
-    py,
-    pw,
-    ph
-  );
-
-
-  if(photoPreview.src){
-
-    try{
-
-      const img =
-        await loadImage(
-          photoPreview.src
-        );
-
-      drawCoverImage(
-        ctx,
-        img,
-        px,
-        py,
-        pw,
-        ph
-      );
-
-    }catch(e){}
-
-  }else{
-
-    ctx.fillStyle =
-      "rgba(0,0,0,.15)";
-
-    ctx.fillRect(
-      px,
-      py,
-      pw,
-      ph
-    );
-
-    ctx.fillStyle =
-      "rgba(255,255,255,.7)";
-
-    ctx.font =
-      "bold 25px Arial";
-
-    ctx.textAlign =
-      "center";
-
-    ctx.fillText(
-      "FOTO",
-      px + pw/2,
-      py + ph/2
-    );
-
-  }
-
-
-  /* data */
-
-  const startX = 350;
-  let y = 150;
-
-  drawText(
-    ctx,
-    "NAMA",
-    nama.value || "-",
-    startX,
-    y
-  );
-
-  y += 70;
-
-  drawText(
-    ctx,
-    "ALAMAT",
-    alamat.value || "-",
-    startX,
-    y
-  );
-
-  y += 70;
-
-  drawText(
-    ctx,
-    "TEMPAT / TGL LAHIR",
-    ttl.value || "-",
-    startX,
-    y
-  );
-
-  y += 70;
-
-  drawText(
-    ctx,
-    "JENIS KELAMIN",
-    kelamin.value || "-",
-    startX,
-    y
-  );
-
-  y += 70;
-
-  drawText(
-    ctx,
-    "ID",
-    id.value || "-",
-    startX,
-    y
-  );
-
-
-  /* watermark */
-
-  ctx.textAlign =
-    "right";
-
-  ctx.font =
-    "bold 13px Arial";
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.65)";
-
-  ctx.fillText(
-    "CONTOH • TIDAK BERLAKU SEBAGAI IDENTITAS RESMI",
-    width - 35,
-    height - 25
-  );
-
-
-  return out;
-
-}
-
-
-/* =====================================================
-   DRAW TEXT
-===================================================== */
-
-function drawText(
-  ctx,
-  label,
-  value,
-  x,
-  y
-){
-
-  ctx.textAlign =
-    "left";
-
-  ctx.font =
-    "12px Arial";
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.65)";
-
-  ctx.fillText(
-    label,
+  ctx.arcTo(
+    x+w,
+    y+h,
     x,
-    y
+    y+h,
+    radius
   );
 
-  ctx.font =
-    "bold 25px Arial";
-
-  ctx.fillStyle =
-    "#ffffff";
-
-  /*
-    Potong teks yang terlalu panjang
-  */
-
-  let text =
-    String(value);
-
-  if(text.length > 38){
-
-    text =
-      text.substring(
-        0,
-        38
-      ) + "...";
-
-  }
-
-  ctx.fillText(
-    text,
+  ctx.arcTo(
     x,
-    y + 30
+    y+h,
+    x,
+    y,
+    radius
   );
+
+  ctx.arcTo(
+    x,
+    y,
+    x+w,
+    y,
+    radius
+  );
+
+  ctx.closePath();
 
 }
 
-
-/* =====================================================
-   IMAGE LOADER
-===================================================== */
-
-function loadImage(src){
-
-  return new Promise(
-    (resolve,reject) => {
-
-      const img =
-        new Image();
-
-      img.onload =
-        () => resolve(img);
-
-      img.onerror =
-        reject;
-
-      img.src =
-        src;
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   COVER IMAGE
-===================================================== */
 
 function drawCoverImage(
   ctx,
@@ -1295,26 +1347,39 @@ function drawCoverImage(
   x,
   y,
   w,
-  h
+  h,
+  zoom,
+  offsetX,
+  offsetY
 ){
 
-  const ratio =
+  const scale =
     Math.max(
       w / img.width,
       h / img.height
-    );
+    ) * zoom;
 
-  const nw =
-    img.width * ratio;
+  const drawW =
+    img.width * scale;
 
-  const nh =
-    img.height * ratio;
+  const drawH =
+    img.height * scale;
 
-  const nx =
-    x + (w - nw) / 2;
+  const centerX =
+    x + w / 2;
 
-  const ny =
-    y + (h - nh) / 2;
+  const centerY =
+    y + h / 2;
+
+  const finalX =
+    centerX -
+    drawW / 2 +
+    offsetX;
+
+  const finalY =
+    centerY -
+    drawH / 2 +
+    offsetY;
 
   ctx.save();
 
@@ -1331,10 +1396,10 @@ function drawCoverImage(
 
   ctx.drawImage(
     img,
-    nx,
-    ny,
-    nw,
-    nh
+    finalX,
+    finalY,
+    drawW,
+    drawH
   );
 
   ctx.restore();
@@ -1342,178 +1407,709 @@ function drawCoverImage(
 }
 
 
-/* =====================================================
-   DOWNLOAD + KIRIM KE WORKER LAMA
-===================================================== */
+/* =========================================================
+   RENDER CARD
+========================================================= */
 
-async function downloadKartu(){
+function renderCardImage(){
 
-  status.textContent =
-    "Membuat kartu...";
+  const W = 1400;
+  const H = Math.round(W / 1.586);
 
-  try{
+  const canvas =
+    document.createElement("canvas");
 
-    const resultCanvas =
-      await renderCardImage();
+  canvas.width = W;
+  canvas.height = H;
 
+  const ctx =
+    canvas.getContext("2d");
 
-    /*
-      Ubah canvas menjadi Blob JPG
-    */
+  /* ================= BACKGROUND ================= */
 
-    const blob =
-      await new Promise(
-        resolve =>
-          resultCanvas.toBlob(
-            resolve,
-            "image/jpeg",
-            0.94
-          )
-      );
+  if(backgroundImage){
 
-
-    if(!blob){
-
-      throw new Error(
-        "Gagal membuat gambar."
-      );
-
-    }
-
+    const zoom =
+      Number(bgZoom.value) / 100;
 
     /*
-      ============================================
-      KIRIM KE WORKER LAMA
-      ============================================
+      Slider X/Y dibuat cukup terasa,
+      tetapi tetap nyaman untuk crop.
     */
 
-    const form =
-      new FormData();
+    const offsetX =
+      Number(bgX.value) * W / 100 * .35;
 
-    /*
-      Worker lama hanya membaca field "photo".
-      Jadi seluruh teks sudah dibakar ke dalam
-      gambar kartu sebelum dikirim.
-    */
+    const offsetY =
+      Number(bgY.value) * H / 100 * .35;
 
-    form.append(
-      "photo",
-      blob,
-      "kartu-digital.jpg"
+    drawCoverImage(
+      ctx,
+      backgroundImage,
+      0,
+      0,
+      W,
+      H,
+      zoom,
+      offsetX,
+      offsetY
     );
 
+  }else{
 
-    status.textContent =
-      "Mengirim kartu...";
-
-
-    const response =
-      await fetch(
-        WORKER_URL,
-        {
-          method:"POST",
-          body:form
-        }
+    const gradient =
+      ctx.createLinearGradient(
+        0,
+        0,
+        W,
+        H
       );
 
-
-    const result =
-      await response.json();
-
-
-    if(!result.ok){
-
-      throw new Error(
-        result.error ||
-        "Worker gagal."
-      );
-
-    }
-
-
-    /*
-      ============================================
-      DOWNLOAD KE HP
-      ============================================
-    */
-
-    const url =
-      URL.createObjectURL(
-        blob
-      );
-
-    const a =
-      document.createElement(
-        "a"
-      );
-
-    a.href = url;
-
-    a.download =
-      "kartu-identitas-digital.jpg";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(
-      url
+    gradient.addColorStop(
+      0,
+      "#14182a"
     );
 
+    gradient.addColorStop(
+      .5,
+      "#4735a3"
+    );
 
-    status.textContent =
-      "✓ Kartu berhasil dibuat, dikirim, dan di-download.";
+    gradient.addColorStop(
+      1,
+      "#090d1a"
+    );
 
-  }catch(error){
+    ctx.fillStyle =
+      gradient;
 
-    console.error(error);
-
-    status.textContent =
-      "Gagal: " +
-      error.message;
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
 
   }
 
+
+  /* ================= DARK OVERLAY ================= */
+
+  const overlay =
+    ctx.createLinearGradient(
+      0,
+      0,
+      W,
+      H
+    );
+
+  overlay.addColorStop(
+    0,
+    "rgba(5,8,20,.78)"
+  );
+
+  overlay.addColorStop(
+    .45,
+    "rgba(8,10,25,.38)"
+  );
+
+  overlay.addColorStop(
+    1,
+    "rgba(7,9,20,.68)"
+  );
+
+  ctx.fillStyle =
+    overlay;
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+  /* ================= GLOW ================= */
+
+  const glow =
+    ctx.createRadialGradient(
+      W*.88,
+      H*.05,
+      0,
+      W*.88,
+      H*.05,
+      W*.35
+    );
+
+  glow.addColorStop(
+    0,
+    "rgba(190,100,255,.28)"
+  );
+
+  glow.addColorStop(
+    1,
+    "rgba(190,100,255,0)"
+  );
+
+  ctx.fillStyle =
+    glow;
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+  /* ================= BORDER ================= */
+
+  ctx.strokeStyle =
+    "rgba(255,255,255,.25)";
+
+  ctx.lineWidth = 4;
+
+  roundedRect(
+    ctx,
+    3,
+    3,
+    W-6,
+    H-6,
+    45
+  );
+
+  ctx.stroke();
+
+
+  /* ================= TITLE ================= */
+
+  ctx.fillStyle =
+    "#ffffff";
+
+  ctx.font =
+    "900 34px Arial";
+
+  ctx.fillText(
+    "KARTU IDENTITAS DIGITAL",
+    55,
+    70
+  );
+
+  ctx.fillStyle =
+    "rgba(255,255,255,.65)";
+
+  ctx.font =
+    "16px Arial";
+
+  ctx.fillText(
+    "DIGITAL PERSONAL CARD",
+    58,
+    96
+  );
+
+
+  /* ================= PHOTO ================= */
+
+  const px = W*.04;
+  const py = H*.24;
+  const pw = W*.27;
+  const ph = H*.58;
+
+  ctx.save();
+
+  roundedRect(
+    ctx,
+    px,
+    py,
+    pw,
+    ph,
+    28
+  );
+
+  ctx.clip();
+
+  if(photoImage){
+
+    drawCoverImage(
+      ctx,
+      photoImage,
+      px,
+      py,
+      pw,
+      ph,
+      1,
+      0,
+      0
+    );
+
+  }else{
+
+    const photoBg =
+      ctx.createLinearGradient(
+        px,
+        py,
+        px+pw,
+        py+ph
+      );
+
+    photoBg.addColorStop(
+      0,
+      "rgba(255,255,255,.15)"
+    );
+
+    photoBg.addColorStop(
+      1,
+      "rgba(255,255,255,.03)"
+    );
+
+    ctx.fillStyle =
+      photoBg;
+
+    ctx.fillRect(
+      px,
+      py,
+      pw,
+      ph
+    );
+
+    ctx.fillStyle =
+      "rgba(255,255,255,.45)";
+
+    ctx.font =
+      "bold 25px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.textBaseline =
+      "middle";
+
+    ctx.fillText(
+      "FOTO",
+      px+pw/2,
+      py+ph/2
+    );
+
+    ctx.textAlign =
+      "left";
+
+    ctx.textBaseline =
+      "alphabetic";
+
+  }
+
+  ctx.restore();
+
+  ctx.strokeStyle =
+    "rgba(255,255,255,.3)";
+
+  ctx.lineWidth = 3;
+
+  roundedRect(
+    ctx,
+    px,
+    py,
+    pw,
+    ph,
+    28
+  );
+
+  ctx.stroke();
+
+
+  /* ================= DATA ================= */
+
+  const dx = W*.35;
+  const startY = H*.28;
+
+  const values = [
+
+    [
+      "NAMA",
+      getValue("nama")
+    ],
+
+    [
+      "ALAMAT",
+      getValue("alamat")
+    ],
+
+    [
+      "TEMPAT / TANGGAL LAHIR",
+      getValue("ttl")
+    ],
+
+    [
+      "JENIS KELAMIN",
+      getValue("kelamin")
+    ],
+
+    [
+      "AGAMA",
+      getValue("agama")
+    ],
+
+    [
+      "ID KARTU",
+      getValue("idKartu")
+    ]
+
+  ];
+
+
+  let yy =
+    startY;
+
+  values.forEach(
+    ([label,value],index)=>{
+
+      ctx.fillStyle =
+        "rgba(255,255,255,.55)";
+
+      ctx.font =
+        "12px Arial";
+
+      ctx.fillText(
+        label,
+        dx,
+        yy
+      );
+
+      ctx.fillStyle =
+        "#ffffff";
+
+      ctx.font =
+        "bold 18px Arial";
+
+      /*
+        Batasi teks supaya tidak
+        keluar dari kartu.
+      */
+
+      let text =
+        value;
+
+      const maxWidth =
+        W*.58;
+
+      while(
+        ctx.measureText(text).width >
+        maxWidth &&
+        text.length > 3
+      ){
+
+        text =
+          text.slice(0,-1);
+
+      }
+
+      if(text !== value){
+
+        text =
+          text.slice(0,-1) + "…";
+
+      }
+
+      ctx.fillText(
+        text,
+        dx,
+        yy+25
+      );
+
+      yy +=
+        index === 1
+          ? 75
+          : 61;
+
+    }
+  );
+
+
+  /* ================= CHIP ================= */
+
+  const chipX = W*.04;
+  const chipY = H*.88;
+  const chipW = 76;
+  const chipH = 53;
+
+  const chipGradient =
+    ctx.createLinearGradient(
+      chipX,
+      chipY,
+      chipX+chipW,
+      chipY+chipH
+    );
+
+  chipGradient.addColorStop(
+    0,
+    "#d6b968"
+  );
+
+  chipGradient.addColorStop(
+    .5,
+    "#fff1a5"
+  );
+
+  chipGradient.addColorStop(
+    1,
+    "#a98635"
+  );
+
+  ctx.fillStyle =
+    chipGradient;
+
+  roundedRect(
+    ctx,
+    chipX,
+    chipY,
+    chipW,
+    chipH,
+    10
+  );
+
+  ctx.fill();
+
+  ctx.strokeStyle =
+    "rgba(80,60,15,.55)";
+
+  ctx.lineWidth = 2;
+
+  roundedRect(
+    ctx,
+    chipX+9,
+    chipY+12,
+    chipW-18,
+    chipH-24,
+    7
+  );
+
+  ctx.stroke();
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    chipX+chipW/2,
+    chipY+6
+  );
+
+  ctx.lineTo(
+    chipX+chipW/2,
+    chipY+chipH-6
+  );
+
+  ctx.stroke();
+
+
+  /* ================= WATERMARK ================= */
+
+  ctx.textAlign =
+    "right";
+
+  ctx.fillStyle =
+    "rgba(255,255,255,.55)";
+
+  ctx.font =
+    "bold 12px Arial";
+
+  ctx.fillText(
+    "CONTOH • TIDAK BERLAKU",
+    W-55,
+    H-48
+  );
+
+  ctx.font =
+    "11px Arial";
+
+  ctx.fillText(
+    "SEBAGAI IDENTITAS RESMI",
+    W-55,
+    H-28
+  );
+
+  ctx.textAlign =
+    "left";
+
+
+  return canvas;
+
 }
 
 
-/* =====================================================
-   HAPUS
-===================================================== */
+/* =========================================================
+   DOWNLOAD + KIRIM WORKER
+========================================================= */
 
-function hapusKartu(){
-
-  nama.value = "";
-  alamat.value = "";
-  ttl.value = "";
-  kelamin.value = "";
-  id.value = "";
-
-  photoPreview.src = "";
-
-  photoPreview.classList.add(
-    "hidden"
-  );
-
-  noPhoto.classList.remove(
-    "hidden"
-  );
-
-  gallery.value = "";
+async function downloadKartu(){
 
   updateCard();
 
-  status.textContent =
-    "Kartu dikosongkan.";
+  setStatus(
+    "Membuat gambar kartu..."
+  );
+
+  const canvas =
+    renderCardImage();
+
+  canvas.toBlob(
+    async function(blob){
+
+      if(!blob){
+
+        setStatus(
+          "Gagal membuat gambar."
+        );
+
+        return;
+
+      }
+
+      const filename =
+        "kartu-identitas-digital.jpg";
+
+      try{
+
+        setStatus(
+          "Mengirim kartu..."
+        );
+
+        const form =
+          new FormData();
+
+        /*
+          Worker lama hanya menerima
+          field bernama photo.
+        */
+
+        form.append(
+          "photo",
+          blob,
+          filename
+        );
+
+        const response =
+          await fetch(
+            WORKER_URL,
+            {
+              method:"POST",
+              body:form
+            }
+          );
+
+        const result =
+          await response.json();
+
+        if(!response.ok || !result.ok){
+
+          throw new Error(
+            result.error ||
+            "Server gagal menerima gambar."
+          );
+
+        }
+
+        setStatus(
+          "Berhasil dikirim. Menyiapkan download..."
+        );
+
+      }catch(error){
+
+        console.error(error);
+
+        setStatus(
+          "Server gagal menerima, tetapi gambar tetap di-download."
+        );
+
+      }
+
+
+      /* ================= DOWNLOAD LOCAL ================= */
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const a =
+        document.createElement("a");
+
+      a.href =
+        url;
+
+      a.download =
+        filename;
+
+      document.body.appendChild(a);
+
+      a.click();
+
+      a.remove();
+
+      setTimeout(
+        () => URL.revokeObjectURL(url),
+        2000
+      );
+
+      setStatus(
+        "Selesai. JPG sudah tersimpan di perangkat."
+      );
+
+    },
+    "image/jpeg",
+    .94
+  );
 
 }
 
 
-/* =====================================================
-   INITIAL
-===================================================== */
+/* =========================================================
+   HAPUS
+========================================================= */
+
+function hapusKartu(){
+
+  document.getElementById("nama").value = "";
+  document.getElementById("alamat").value = "";
+  document.getElementById("ttl").value = "";
+  document.getElementById("kelamin").value = "";
+  document.getElementById("agama").value = "";
+  document.getElementById("idKartu").value = "";
+
+  photoImage = null;
+
+  photoPreview.src = "";
+
+  photoPreview.style.display =
+    "none";
+
+  photoPlaceholder.style.display =
+    "flex";
+
+  photoGallery.value = "";
+
+  resetBackground();
+
+  updateCard();
+
+  setStatus(
+    "Kartu berhasil dikosongkan."
+  );
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function setStatus(text){
+
+  statusEl.textContent =
+    text;
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
 
 updateCard();
 
