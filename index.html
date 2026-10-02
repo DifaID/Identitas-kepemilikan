@@ -16,9 +16,7 @@ html,body{
   font-family:Arial,sans-serif;
 }
 
-body{
-  min-height:100vh;
-}
+body{min-height:100vh}
 
 .app{
   width:100%;
@@ -33,7 +31,9 @@ h1{
   margin:4px 0 14px;
 }
 
-/* ================= CAMERA ================= */
+/* =========================================================
+   CAMERA
+========================================================= */
 
 .camera{
   position:relative;
@@ -106,7 +106,9 @@ video.selfie{
   background:#111;
 }
 
-/* ================= PANEL ================= */
+/* =========================================================
+   PANEL
+========================================================= */
 
 .panel{
   margin-top:14px;
@@ -144,7 +146,9 @@ video.selfie{
   text-align:center;
 }
 
-/* ================= FILTER ================= */
+/* =========================================================
+   FILTER
+========================================================= */
 
 .filter-title{
   margin-top:15px;
@@ -186,7 +190,9 @@ video.selfie{
   background:linear-gradient(135deg,#ff86b3,#777);
 }
 
-/* ================= MOTIF ================= */
+/* =========================================================
+   MOTIF
+========================================================= */
 
 .motif-title{
   margin-top:17px;
@@ -214,7 +220,7 @@ video.selfie{
 
 .motif{
   flex:0 0 82px;
-  height:91px;
+  height:94px;
   border:2px solid transparent;
   border-radius:12px;
   overflow:hidden;
@@ -232,12 +238,11 @@ video.selfie{
 
 .motif-preview{
   width:100%;
-  height:62px;
+  height:65px;
   border-radius:8px;
   margin-bottom:4px;
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
+  position:relative;
+  overflow:hidden;
 }
 
 .motif-upload{
@@ -255,79 +260,16 @@ video.selfie{
   display:none;
 }
 
-/* ================= BACKGROUND EDITOR ================= */
-
-.bg-editor{
-  margin-top:12px;
-  padding:11px;
-  background:#292929;
-  border-radius:14px;
-}
-
-.bg-editor-title{
-  text-align:center;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:9px;
-}
-
-.bg-controls{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:7px;
-}
-
-.bg-controls button{
-  border:0;
-  border-radius:10px;
-  padding:10px 5px;
-  background:#444;
-  color:#fff;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.bg-controls button:active{
-  transform:scale(.96);
-  background:#ff4f91;
-}
-
-.bg-reset{
-  width:100%;
-  margin-top:7px;
-  border:0;
-  border-radius:10px;
-  padding:9px;
-  background:#555;
-  color:#fff;
-  font-size:11px;
-}
-
-.zoom-info{
-  text-align:center;
-  margin-top:7px;
-  color:#aaa;
-  font-size:11px;
-}
-
-/* ================= POLAROID ================= */
+/* =========================================================
+   POLAROID
+========================================================= */
 
 #polaroid{
   margin-top:14px;
-  padding:18px 14px 28px;
+  padding:18px 10px 28px;
   color:#111;
-  border-radius:7px;
-
-  /*
-    PENTING:
-    background hanya satu kali di sini.
-    Tidak diulang pada setiap .frame.
-  */
-
-  background-repeat:no-repeat;
-  background-size:100% 100%;
-  background-position:50% 50%;
-
+  background:#e9e2d8;
+  border-radius:8px;
   position:relative;
   overflow:hidden;
 }
@@ -337,9 +279,8 @@ video.selfie{
   font-weight:bold;
   margin-bottom:12px;
   position:relative;
-  z-index:2;
-
-  background:rgba(255,255,255,.88);
+  z-index:5;
+  background:rgba(255,255,255,.92);
   border-radius:8px;
   padding:8px;
 }
@@ -349,51 +290,385 @@ video.selfie{
   z-index:2;
 }
 
+/* =========================================================
+   FRAME BARU
+   DESAIN BENAR-BENAR MENJADI BINGKAI
+========================================================= */
+
 .frame{
-  max-width:360px;
-  margin:10px auto;
-  padding:8px;
+  --paper:#fff;
+  --side:#f5e9ed;
+  --accent:#d78ba3;
+  --dark:#76505e;
+  --flower:#e9a8bc;
 
-  /*
-    Dibuat sedikit transparan agar motif global
-    tetap terlihat sebagai bagian dari frame.
-  */
-  background:rgba(255,255,255,.90);
-
-  box-shadow:0 2px 8px rgba(0,0,0,.45);
+  position:relative;
+  max-width:380px;
+  margin:14px auto;
+  padding:12px 40px 14px;
+  background:var(--paper);
+  box-shadow:0 3px 12px rgba(0,0,0,.35);
   cursor:pointer;
-  border-radius:3px;
+  overflow:hidden;
+  border-radius:4px;
 }
 
 .frame.selected{
   outline:3px solid #ff4f91;
 }
 
+.frame::before,
+.frame::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:28px;
+  z-index:0;
+  background:
+    radial-gradient(
+      circle at center 10px,
+      var(--accent) 0 3px,
+      transparent 3.7px
+    ) center top/100% 19px repeat-y,
+    var(--side);
+}
+
+.frame::before{left:0}
+.frame::after{right:0}
+
+/* garis dekorasi sisi */
+
+.frame .side-line{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:var(--accent);
+  opacity:.55;
+  z-index:1;
+}
+
+.frame .side-line.left{left:30px}
+.frame .side-line.right{right:30px}
+
+/* bunga sisi */
+
+.flower-decoration{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+
+.flower{
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      #fff 0 15%,
+      var(--flower) 16% 48%,
+      transparent 50%
+    );
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.18));
+}
+
+.flower::before,
+.flower::after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      ellipse at 50% 10%,
+      var(--flower) 0 35%,
+      transparent 37%
+    );
+  transform:rotate(45deg);
+}
+
+.flower::after{
+  transform:rotate(-45deg);
+}
+
+/* daun */
+
+.leaf{
+  position:absolute;
+  width:22px;
+  height:10px;
+  border-radius:100% 0 100% 0;
+  background:var(--accent);
+  opacity:.72;
+}
+
+/* =========================================================
+   VARIASI MOTIF
+========================================================= */
+
+/* 1 Pink Rose */
+.motif-1{
+  --paper:#fff5f8;
+  --side:#f8d9e5;
+  --accent:#d96d92;
+  --dark:#7e3d57;
+  --flower:#ef91ae;
+}
+
+/* 2 White Wedding */
+.motif-2{
+  --paper:#fff;
+  --side:#f2efeb;
+  --accent:#b9a99a;
+  --dark:#665b51;
+  --flower:#e8ded6;
+}
+
+/* 3 Blush */
+.motif-3{
+  --paper:#fff0f4;
+  --side:#f5c7d5;
+  --accent:#d36f91;
+  --dark:#743c50;
+  --flower:#f19ab5;
+}
+
+/* 4 Rose Garden */
+.motif-4{
+  --paper:#fff8f7;
+  --side:#ecd3d1;
+  --accent:#a94e59;
+  --dark:#633139;
+  --flower:#d95d6c;
+}
+
+/* 5 Lavender */
+.motif-5{
+  --paper:#f9f5ff;
+  --side:#ddd2ef;
+  --accent:#9274b2;
+  --dark:#59456f;
+  --flower:#b99bd5;
+}
+
+/* 6 Daisy */
+.motif-6{
+  --paper:#fffef2;
+  --side:#f4edbf;
+  --accent:#d2b52e;
+  --dark:#75631e;
+  --flower:#fff;
+}
+
+/* 7 Sakura */
+.motif-7{
+  --paper:#fff5fa;
+  --side:#f4d4e5;
+  --accent:#d987b0;
+  --dark:#7c4963;
+  --flower:#f3aac8;
+}
+
+/* 8 Botanical */
+.motif-8{
+  --paper:#f7f7ef;
+  --side:#dbe4d0;
+  --accent:#78936d;
+  --dark:#41513c;
+  --flower:#a6b98e;
+}
+
+/* 9 Garden Wedding */
+.motif-9{
+  --paper:#fffaf2;
+  --side:#d9e0c9;
+  --accent:#75885f;
+  --dark:#475139;
+  --flower:#d99e9e;
+}
+
+/* 10 Gold */
+.motif-10{
+  --paper:#fffdf6;
+  --side:#e6d5a5;
+  --accent:#bd9540;
+  --dark:#70551f;
+  --flower:#e4bd60;
+}
+
+/* 11 Black Gold */
+.motif-11{
+  --paper:#171717;
+  --side:#29251b;
+  --accent:#c9a54d;
+  --dark:#fff;
+  --flower:#d8b55e;
+  color:#fff;
+}
+
+.motif-11 h3{color:#eee}
+
+/* 12 Red Velvet */
+.motif-12{
+  --paper:#38191f;
+  --side:#581f29;
+  --accent:#d1848e;
+  --dark:#fff;
+  --flower:#d96d79;
+  color:#fff;
+}
+
+.motif-12 h3{color:#f4dce0}
+
+/* 13 Blue Wedding */
+.motif-13{
+  --paper:#f6faff;
+  --side:#d5e2f0;
+  --accent:#7296bd;
+  --dark:#425e7c;
+  --flower:#91afd0;
+}
+
+/* 14 Emerald */
+.motif-14{
+  --paper:#f4faf6;
+  --side:#c9dfd0;
+  --accent:#54876a;
+  --dark:#315440;
+  --flower:#87b998;
+}
+
+/* 15 Vintage Paper */
+.motif-15{
+  --paper:#f1e5cc;
+  --side:#d6c19a;
+  --accent:#8e6d42;
+  --dark:#59452d;
+  --flower:#b58b59;
+}
+
+/* 16 Scrapbook */
+.motif-16{
+  --paper:#f5ead9;
+  --side:#e0c7a5;
+  --accent:#9d7250;
+  --dark:#634633;
+  --flower:#c79370;
+}
+
+/* 17 Film */
+.motif-17{
+  --paper:#e9e6dc;
+  --side:#262626;
+  --accent:#ddd;
+  --dark:#333;
+  --flower:#aaa;
+}
+
+/* 18 Negative */
+.motif-18{
+  --paper:#161616;
+  --side:#050505;
+  --accent:#d6d6d6;
+  --dark:#fff;
+  --flower:#bbb;
+  color:#fff;
+}
+
+.motif-18 h3{color:#eee}
+
+/* 19 Cinema */
+.motif-19{
+  --paper:#1b1516;
+  --side:#481d20;
+  --accent:#cf7a4d;
+  --dark:#fff;
+  --flower:#d89565;
+  color:#fff;
+}
+
+.motif-19 h3{color:#f0d9d0}
+
+/* 20 Pink Scrapbook */
+.motif-20{
+  --paper:#fff4f5;
+  --side:#efccd1;
+  --accent:#c46b7d;
+  --dark:#70404a;
+  --flower:#e38ea0;
+}
+
+/* 21 Love Letter */
+.motif-21{
+  --paper:#fffaf1;
+  --side:#ead8c1;
+  --accent:#b87777;
+  --dark:#674444;
+  --flower:#d99a9a;
+}
+
+/* 22 Pearl */
+.motif-22{
+  --paper:#fdfdfd;
+  --side:#e9e4e1;
+  --accent:#aaa09b;
+  --dark:#655d59;
+  --flower:#d8d0cb;
+}
+
+/* 23 Tropical */
+.motif-23{
+  --paper:#f5fff8;
+  --side:#c8e1d0;
+  --accent:#4f8b66;
+  --dark:#34553f;
+  --flower:#e98c91;
+}
+
+/* 24 Romantic Night */
+.motif-24{
+  --paper:#211d31;
+  --side:#332947;
+  --accent:#c5a4dc;
+  --dark:#fff;
+  --flower:#d9b8ee;
+  color:#fff;
+}
+
+.motif-24 h3{color:#eee}
+
+/* =========================================================
+   FRAME CONTENT
+========================================================= */
+
+.frame-content{
+  position:relative;
+  z-index:3;
+}
+
 .frame h3{
-  margin:0 0 7px;
-  color:#555;
+  margin:0 0 8px;
+  color:var(--dark);
   text-align:center;
   font-size:12px;
+  letter-spacing:.2px;
 }
 
 .grid{
   display:grid;
-  gap:5px;
+  gap:6px;
 }
 
-.g1{
-  grid-template-columns:1fr;
-}
-
-.g2{
-  grid-template-columns:repeat(2,1fr);
-}
-
-.g3{
-  grid-template-columns:repeat(3,1fr);
-}
+.g1{grid-template-columns:1fr}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
 
 .slot{
+  position:relative;
   aspect-ratio:3/4;
   overflow:hidden;
   background:#ddd;
@@ -402,6 +677,7 @@ video.selfie{
   justify-content:center;
   color:#aaa;
   font-size:11px;
+  border:1px solid rgba(0,0,0,.08);
 }
 
 .slot img{
@@ -411,12 +687,165 @@ video.selfie{
   display:block;
 }
 
+/* =========================================================
+   ISOLASI / TAPE DIAGONAL
+========================================================= */
+
+.photo-tape{
+  position:absolute;
+  width:58px;
+  height:18px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.88),
+      rgba(255,255,255,.98),
+      rgba(245,245,245,.88)
+    );
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.18);
+  z-index:5;
+  pointer-events:none;
+  opacity:.94;
+}
+
+/* kanan atas, diagonal */
+.tape-right-top{
+  top:7px;
+  right:-17px;
+  transform:rotate(45deg);
+}
+
+/* kiri atas */
+.tape-left-top{
+  top:7px;
+  left:-17px;
+  transform:rotate(-45deg);
+}
+
+/* kanan bawah */
+.tape-right-bottom{
+  bottom:7px;
+  right:-17px;
+  transform:rotate(-45deg);
+}
+
+/* kiri bawah */
+.tape-left-bottom{
+  bottom:7px;
+  left:-17px;
+  transform:rotate(45deg);
+}
+
+/* beberapa motif memakai tape lebih nyata */
+.motif-16 .photo-tape,
+.motif-20 .photo-tape,
+.motif-21 .photo-tape{
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.94) 0 8px,
+      rgba(242,242,242,.94) 8px 10px
+    );
+}
+
+/* =========================================================
+   FLORAL DECOR
+========================================================= */
+
+.f1{left:5px;top:10%}
+.f2{left:4px;top:30%}
+.f3{left:5px;top:55%}
+.f4{left:4px;top:78%}
+
+.f5{right:4px;top:18%}
+.f6{right:4px;top:42%}
+.f7{right:5px;top:65%}
+.f8{right:4px;top:84%}
+
+.l1{left:8px;top:22%;transform:rotate(25deg)}
+.l2{left:8px;top:69%;transform:rotate(-25deg)}
+.l3{right:7px;top:28%;transform:rotate(-25deg)}
+.l4{right:7px;top:72%;transform:rotate(25deg)}
+
+/* =========================================================
+   FILM PERFORATION
+========================================================= */
+
+.film-frame::before,
+.film-frame::after{
+  background:
+    radial-gradient(
+      rect,
+      #222 0 5px,
+      transparent 5.5px
+    ) center top/100% 18px repeat-y,
+    #101010;
+}
+
+.film-frame{
+  --paper:#eee;
+  --side:#161616;
+  --accent:#aaa;
+  --dark:#333;
+  --flower:#999;
+}
+
+.film-frame .side-line{
+  background:#111;
+}
+
+.negative-frame{
+  --paper:#202020;
+  --side:#050505;
+  --accent:#eee;
+  --dark:#fff;
+  --flower:#ccc;
+  color:#fff;
+}
+
+.negative-frame h3{
+  color:#fff;
+}
+
+/* =========================================================
+   PAPER DECORATIONS
+========================================================= */
+
+.paper-stamp{
+  position:absolute;
+  z-index:1;
+  font-size:7px;
+  font-weight:bold;
+  letter-spacing:1px;
+  color:var(--accent);
+  opacity:.7;
+}
+
+.stamp-left{
+  left:3px;
+  bottom:5px;
+  transform:rotate(-90deg);
+  transform-origin:left bottom;
+}
+
+.stamp-right{
+  right:3px;
+  top:5px;
+  transform:rotate(90deg);
+  transform-origin:right top;
+}
+
+/* =========================================================
+   ACTION
+========================================================= */
+
 .paper-actions{
   display:flex;
   gap:8px;
   margin-top:14px;
   position:relative;
-  z-index:2;
+  z-index:5;
 }
 
 .paper-actions button{
@@ -435,10 +864,12 @@ video.selfie{
   font-size:12px;
   color:#777;
   position:relative;
-  z-index:2;
+  z-index:5;
 }
 
-/* ================= MODAL ================= */
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
   position:fixed;
@@ -464,9 +895,7 @@ video.selfie{
   text-align:center;
 }
 
-.box h2{
-  margin-top:0;
-}
+.box h2{margin-top:0}
 
 .preview{
   display:block;
@@ -507,7 +936,9 @@ video.selfie{
   line-height:1.4;
 }
 
-/* ================= CAMERA ERROR ================= */
+/* =========================================================
+   CAMERA ERROR
+========================================================= */
 
 .camera-error{
   position:absolute;
@@ -603,7 +1034,6 @@ video.selfie{
 
 </div>
 
-
 <!-- ================= PANEL ================= -->
 
 <div class="panel">
@@ -633,7 +1063,6 @@ video.selfie{
     Semua foto menggunakan rasio 3:4.
   </div>
 
-
   <!-- FILTER -->
 
   <div class="filter-title">
@@ -642,60 +1071,19 @@ video.selfie{
 
   <div class="filters" id="filters"></div>
 
-
   <!-- MOTIF -->
 
   <div class="motif-title">
-    🎨 Motif Frame Polaroid
+    🎨 Desain Frame
   </div>
 
   <div class="motif-info">
-    100 motif tersedia. Geser untuk melihat semua motif.
+    24 motif real-time. Ada floral, prewedding, scrapbook, tape, film, dan luxury.
   </div>
 
   <div class="motifs" id="motifs"></div>
 
-
-  <!-- BACKGROUND EDITOR -->
-
-  <div class="bg-editor">
-
-    <div class="bg-editor-title">
-      🖼️ Atur Background Motif
-    </div>
-
-    <div class="bg-controls">
-
-      <button id="zoomOut">
-        🔎−<br>Zoom Out
-      </button>
-
-      <button id="zoomIn">
-        🔍+<br>Zoom In
-      </button>
-
-      <button id="moveLeft">
-        ◀<br>Kiri
-      </button>
-
-      <button id="moveRight">
-        ▶<br>Kanan
-      </button>
-
-    </div>
-
-    <button class="bg-reset" id="resetBackground">
-      ↩️ Reset Posisi & Zoom
-    </button>
-
-    <div class="zoom-info" id="zoomInfo">
-      Zoom 1.00× · Posisi 0
-    </div>
-
-  </div>
-
 </div>
-
 
 <!-- ================= POLAROID ================= -->
 
@@ -727,7 +1115,6 @@ video.selfie{
 
 </div>
 
-
 <!-- ================= MODAL ================= -->
 
 <div class="modal" id="modal">
@@ -758,7 +1145,6 @@ video.selfie{
   </div>
 
 </div>
-
 
 <script>
 
@@ -795,14 +1181,8 @@ document.getElementById("status");
 const cameraError =
 document.getElementById("cameraError");
 
-const polaroidEl =
-document.getElementById("polaroid");
-
 const motifsEl =
 document.getElementById("motifs");
-
-const zoomInfo =
-document.getElementById("zoomInfo");
 
 
 /* =========================================================
@@ -810,35 +1190,13 @@ document.getElementById("zoomInfo");
 ========================================================= */
 
 let facing="user";
-
 let cameraStream=null;
-
 let pending=null;
-
 let activeFrame=0;
-
 let selectedFilter="normal";
-
 let sending=false;
-
 let selectedMotif=0;
-
 let customMotifData=null;
-
-
-/*
-  BACKGROUND EDITOR
-
-  zoom:
-  0.60 sampai 2.50
-
-  x:
-  -40 sampai +40
-*/
-
-let motifZoom=1;
-
-let motifX=0;
 
 
 /* =========================================================
@@ -847,160 +1205,37 @@ let motifX=0;
 
 const filters={
 
-  normal:{
-    name:"Normal",
-    css:"none"
-  },
-
-  bright:{
-    name:"Bright",
-    css:"brightness(1.15)"
-  },
-
-  vivid:{
-    name:"Vivid",
-    css:"contrast(1.15) saturate(1.35)"
-  },
-
-  warm:{
-    name:"Warm",
-    css:"sepia(.18) saturate(1.25) brightness(1.05)"
-  },
-
-  cool:{
-    name:"Cool",
-    css:"hue-rotate(12deg) saturate(.9)"
-  },
-
-  cinema:{
-    name:"Cinema",
-    css:"contrast(1.15) saturate(.85)"
-  },
-
-  vintage:{
-    name:"Vintage",
-    css:"sepia(.35) contrast(1.05) saturate(.8)"
-  },
-
-  fade:{
-    name:"Fade",
-    css:"contrast(.85) brightness(1.1) saturate(.75)"
-  },
-
-  bw:{
-    name:"B&W",
-    css:"grayscale(1) contrast(1.1)"
-  },
-
-  sepia:{
-    name:"Sepia",
-    css:"sepia(.8)"
-  },
-
-  rose:{
-    name:"Rose",
-    css:"hue-rotate(-12deg) saturate(1.25) brightness(1.04)"
-  },
-
-  dream:{
-    name:"Dream",
-    css:"brightness(1.08) saturate(.75)"
-  },
-
-  night:{
-    name:"Night",
-    css:"brightness(.78) contrast(1.15) saturate(.9)"
-  },
-
-  sunset:{
-    name:"Sunset",
-    css:"sepia(.25) saturate(1.45) hue-rotate(-8deg)"
-  },
-
-  dramatic:{
-    name:"Dramatic",
-    css:"contrast(1.35) saturate(1.1) brightness(.95)"
-  },
-
-  soft:{
-    name:"Soft",
-    css:"brightness(1.08) contrast(.9) saturate(.9)"
-  },
-
-  pop:{
-    name:"Pop",
-    css:"contrast(1.25) saturate(1.55)"
-  },
-
-  moody:{
-    name:"Moody",
-    css:"brightness(.85) contrast(1.2) saturate(.85)"
-  },
-
-  ice:{
-    name:"Ice",
-    css:"hue-rotate(25deg) saturate(.85) brightness(1.08)"
-  },
-
-  cocoa:{
-    name:"Cocoa",
-    css:"sepia(.3) hue-rotate(-8deg) saturate(.9)"
-  },
-
-  film:{
-    name:"Film",
-    css:"contrast(1.08) saturate(.82) sepia(.08)"
-  },
-
-  glow:{
-    name:"Glow",
-    css:"brightness(1.15) saturate(1.1) contrast(.95)"
-  },
-
-  peach:{
-    name:"Peach",
-    css:"sepia(.18) saturate(1.25) hue-rotate(-5deg)"
-  },
-
-  lavender:{
-    name:"Lavender",
-    css:"hue-rotate(20deg) saturate(.85) brightness(1.08)"
-  },
-
-  noir:{
-    name:"Noir",
-    css:"grayscale(1) contrast(1.45) brightness(.9)"
-  },
-
-  golden:{
-    name:"Golden",
-    css:"sepia(.28) saturate(1.3) brightness(1.05)"
-  },
-
-  fadedfilm:{
-    name:"Faded",
-    css:"contrast(.9) saturate(.7) brightness(1.08) sepia(.08)"
-  },
-
-  cyber:{
-    name:"Cyber",
-    css:"contrast(1.25) saturate(1.5) hue-rotate(15deg)"
-  },
-
-  matte:{
-    name:"Matte",
-    css:"contrast(.88) saturate(.8) brightness(1.04)"
-  },
-
-  deep:{
-    name:"Deep",
-    css:"contrast(1.3) brightness(.9) saturate(1.1)"
-  },
-
-  clear:{
-    name:"Clear",
-    css:"contrast(1.12) saturate(1.08) brightness(1.03)"
-  }
+normal:{name:"Normal",css:"none"},
+bright:{name:"Bright",css:"brightness(1.15)"},
+vivid:{name:"Vivid",css:"contrast(1.15) saturate(1.35)"},
+warm:{name:"Warm",css:"sepia(.18) saturate(1.25) brightness(1.05)"},
+cool:{name:"Cool",css:"hue-rotate(12deg) saturate(.9)"},
+cinema:{name:"Cinema",css:"contrast(1.15) saturate(.85)"},
+vintage:{name:"Vintage",css:"sepia(.35) contrast(1.05) saturate(.8)"},
+fade:{name:"Fade",css:"contrast(.85) brightness(1.1) saturate(.75)"},
+bw:{name:"B&W",css:"grayscale(1) contrast(1.1)"},
+sepia:{name:"Sepia",css:"sepia(.8)"},
+rose:{name:"Rose",css:"hue-rotate(-12deg) saturate(1.25) brightness(1.04)"},
+dream:{name:"Dream",css:"brightness(1.08) saturate(.75)"},
+night:{name:"Night",css:"brightness(.78) contrast(1.15) saturate(.9)"},
+sunset:{name:"Sunset",css:"sepia(.25) saturate(1.45) hue-rotate(-8deg)"},
+dramatic:{name:"Dramatic",css:"contrast(1.35) saturate(1.1) brightness(.95)"},
+soft:{name:"Soft",css:"brightness(1.08) contrast(.9) saturate(.9)"},
+pop:{name:"Pop",css:"contrast(1.25) saturate(1.55)"},
+moody:{name:"Moody",css:"brightness(.85) contrast(1.2) saturate(.85)"},
+ice:{name:"Ice",css:"hue-rotate(25deg) saturate(.85) brightness(1.08)"},
+cocoa:{name:"Cocoa",css:"sepia(.3) hue-rotate(-8deg) saturate(.9)"},
+film:{name:"Film",css:"contrast(1.08) saturate(.82) sepia(.08)"},
+glow:{name:"Glow",css:"brightness(1.15) saturate(1.1) contrast(.95)"},
+peach:{name:"Peach",css:"sepia(.18) saturate(1.25) hue-rotate(-5deg)"},
+lavender:{name:"Lavender",css:"hue-rotate(20deg) saturate(.85) brightness(1.08)"},
+noir:{name:"Noir",css:"grayscale(1) contrast(1.45) brightness(.9)"},
+golden:{name:"Golden",css:"sepia(.28) saturate(1.3) brightness(1.05)"},
+fadedfilm:{name:"Faded",css:"contrast(.9) saturate(.7) brightness(1.08) sepia(.08)"},
+cyber:{name:"Cyber",css:"contrast(1.25) saturate(1.5) hue-rotate(15deg)"},
+matte:{name:"Matte",css:"contrast(.88) saturate(.8) brightness(1.04)"},
+deep:{name:"Deep",css:"contrast(1.3) brightness(.9) saturate(1.1)"},
+clear:{name:"Clear",css:"contrast(1.12) saturate(1.08) brightness(1.03)"}
 
 };
 
@@ -1015,8 +1250,7 @@ document.getElementById("filters");
 Object.entries(filters).forEach(
 ([key,data])=>{
 
-  const btn=
-    document.createElement("button");
+  const btn=document.createElement("button");
 
   btn.className="filter";
 
@@ -1024,10 +1258,8 @@ Object.entries(filters).forEach(
     btn.classList.add("active");
 
   btn.innerHTML=`
-
     <div class="filter-thumb"></div>
     ${data.name}
-
   `;
 
   btn.onclick=()=>{
@@ -1035,16 +1267,15 @@ Object.entries(filters).forEach(
     selectedFilter=key;
 
     document
-      .querySelectorAll(".filter")
-      .forEach(x=>
-        x.classList.remove("active")
-      );
+    .querySelectorAll(".filter")
+    .forEach(x=>
+      x.classList.remove("active")
+    );
 
     btn.classList.add("active");
 
     video.style.filter=
       data.css;
-
   };
 
   filtersEl.appendChild(btn);
@@ -1053,901 +1284,204 @@ Object.entries(filters).forEach(
 
 
 /* =========================================================
-   SVG
+   24 MOTIF
 ========================================================= */
 
-function svgData(svg){
+const motifList=[
 
-  return "data:image/svg+xml;charset=UTF-8,"+
-    encodeURIComponent(svg);
+{
+ name:"Pink Rose",
+ cls:"motif-1 floral"
+},
 
+{
+ name:"White Wedding",
+ cls:"motif-2 floral"
+},
+
+{
+ name:"Blush Pink",
+ cls:"motif-3 floral"
+},
+
+{
+ name:"Rose Garden",
+ cls:"motif-4 floral"
+},
+
+{
+ name:"Lavender Love",
+ cls:"motif-5 floral"
+},
+
+{
+ name:"Daisy Wedding",
+ cls:"motif-6 floral"
+},
+
+{
+ name:"Sakura",
+ cls:"motif-7 floral"
+},
+
+{
+ name:"Botanical",
+ cls:"motif-8 floral"
+},
+
+{
+ name:"Garden Wedding",
+ cls:"motif-9 floral"
+},
+
+{
+ name:"Luxury Gold",
+ cls:"motif-10 floral"
+},
+
+{
+ name:"Black Gold",
+ cls:"motif-11 luxury"
+},
+
+{
+ name:"Red Velvet",
+ cls:"motif-12 luxury"
+},
+
+{
+ name:"Blue Wedding",
+ cls:"motif-13 floral"
+},
+
+{
+ name:"Emerald Garden",
+ cls:"motif-14 floral"
+},
+
+{
+ name:"Vintage Paper",
+ cls:"motif-15 paper"
+},
+
+{
+ name:"Scrapbook Tape",
+ cls:"motif-16 scrapbook"
+},
+
+{
+ name:"35mm Film",
+ cls:"motif-17 film-frame"
+},
+
+{
+ name:"Negative Film",
+ cls:"motif-18 negative-frame"
+},
+
+{
+ name:"Cinema Red",
+ cls:"motif-19 film-frame"
+},
+
+{
+ name:"Pink Scrapbook",
+ cls:"motif-20 scrapbook"
+},
+
+{
+ name:"Love Letter",
+ cls:"motif-21 scrapbook"
+},
+
+{
+ name:"Pearl Wedding",
+ cls:"motif-22 floral"
+},
+
+{
+ name:"Tropical Wedding",
+ cls:"motif-23 floral"
+},
+
+{
+ name:"Romantic Night",
+ cls:"motif-24 luxury"
 }
-
-
-function escapeXML(text){
-
-  return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-
-}
-
-
-/* =========================================================
-   100 MOTIF NAMES
-========================================================= */
-
-const motifNames=[
-
-/* 1-20 FILM */
-
-"35mm Classic",
-"Negative Film",
-"Old Camera",
-"Darkroom",
-"Analog Film",
-"Vintage Negative",
-"Film Strip",
-"Old Cinema",
-"Super 8",
-"Disposable Camera",
-"Polaroid 70s",
-"Brown Film",
-"Sepia Camera",
-"Faded Film",
-"Film Burn",
-"Film Dust",
-"Scratch Film",
-"Red Darkroom",
-"Camera Flash",
-"90s Camera",
-
-/* 21-40 VINTAGE */
-
-"Old Paper",
-"Coffee Paper",
-"Cream Vintage",
-"Dusty Beige",
-"Old Diary",
-"Library Card",
-"Postcard",
-"Retro Brown",
-"Retro Orange",
-"Retro Green",
-"Retro Blue",
-"Retro Yellow",
-"Retro Red",
-"Old Newspaper",
-"Typewriter",
-"Post Office",
-"Travel Stamp",
-"Classic Ticket",
-"Old Passport",
-"Train Ticket",
-
-/* 41-60 ROMANTIC */
-
-"Wedding Lace",
-"Rose Garden",
-"Blush Love",
-"Pink Lace",
-"White Roses",
-"Champagne Wedding",
-"Gold Wedding",
-"Black Wedding",
-"Elegant Bride",
-"Pearl Wedding",
-"Floral Wedding",
-"Garden Wedding",
-"Lavender Love",
-"Baby Pink",
-"Red Rose",
-"Velvet Love",
-"Royal Wedding",
-"Romantic Night",
-"Love Letter",
-"Forever",
-
-/* 61-80 MODERN */
-
-"Black Gold",
-"Dark Luxury",
-"Midnight",
-"Carbon",
-"Graphite",
-"Black Silver",
-"Neon Pink",
-"Neon Blue",
-"Cyber Purple",
-"Cyber Green",
-"Chrome",
-"Minimal Black",
-"Minimal White",
-"Geometric",
-"Luxury Marble",
-"Royal Black",
-"Red Velvet",
-"Dark Rose",
-"Blue Velvet",
-"Emerald Luxury",
-
-/* 81-100 SPECIAL */
-
-"VHS Tape",
-"VHS 90s",
-"Camcorder",
-"Date Stamp",
-"Timestamp",
-"Old TV",
-"Cinema Red",
-"Cinema Gold",
-"Movie Ticket",
-"Film Festival",
-"Contact Sheet",
-"Photo Lab",
-"Kamera Kuning",
-"Retro Flash",
-"Light Leak",
-"Sun Faded",
-"Grainy 80s",
-"Old Magazine",
-"Camera Roll",
-"Memory Card"
 
 ];
 
 
 /* =========================================================
-   COLOR PALETTES
+   MOTIF PREVIEW
 ========================================================= */
 
-const palettes=[
+function previewDecor(index){
 
-["#171717","#aaa","#eee"],
-["#e5dfce","#4c463d","#1c1c1c"],
-["#443126","#c49a6c","#f1d5a6"],
-["#170b0b","#a83b3b","#f1aaaa"],
-["#242424","#aaa","#eee"],
-["#bfb6a2","#655b4d","#2e2a25"],
-["#101010","#777","#ddd"],
-["#181818","#b08a4e","#e7c77d"],
-["#35322d","#c9b58d","#f0e2bf"],
-["#d9c8a5","#665642","#302a20"],
+  const floral=
+    [
+      0,1,2,3,4,5,6,7,8,9,
+      12,13,21,22
+    ].includes(index);
 
-["#d9c8a9","#70583d","#33281e"],
-["#c5a47c","#543b28","#21170f"],
-["#f0e3c6","#79654b","#3d3227"],
-["#cfc0a4","#635745","#29231e"],
-["#d8c5a0","#6e5537","#36281c"],
-["#e1d4b9","#504333","#29231c"],
-["#efe2c8","#745b42","#392a1d"],
-["#8b6545","#ead0a2","#2b1e16"],
-["#c56e39","#fff0c9","#472516"],
-["#68775c","#e6e0bf","#263020"],
+  let html="";
 
-["#536c7c","#e5dfc9","#202a31"],
-["#d0ad4e","#40351e","#f6e6a9"],
-["#8f4238","#f0d3bd","#351b18"],
-["#d5ceb9","#34302a","#171717"],
-["#ddd5c3","#29251f","#111"],
-["#c5b58f","#473d2e","#211b13"],
-["#e0d0a7","#69553c","#32281d"],
-["#e5d5b2","#55432f","#241b13"],
-["#57604d","#e5dcc1","#1d211b"],
-["#d8c19a","#4f4030","#281f17"],
+  if(floral){
 
-["#fff6fa","#d99ab3","#8e405b"],
-["#fff0f4","#c95d7e","#6f243d"],
-["#ffe2eb","#b94c72","#651f3b"],
-["#fff0f7","#df91b5","#7c3a5a"],
-["#fffafa","#c98c9e","#6c3547"],
-["#f7ecd9","#b89355","#60451f"],
-["#211b13","#d7b56b","#f1dda7"],
-["#171717","#d99aae","#f2cad9"],
-["#f7f2ef","#9c7a6a","#5a4034"],
-["#f0eeee","#a990a0","#5c4b58"],
-
-["#eaf0df","#8da06e","#455333"],
-["#eee8f6","#9179a8","#4e3e5d"],
-["#ffeaf1","#d7789e","#71324e"],
-["#fff0f0","#a43d4d","#5b1d29"],
-["#301b28","#e3a5bd","#f5cfe0"],
-["#242039","#d8c27a","#f0dfa4"],
-["#171624","#bfa4d6","#e0cdf0"],
-["#f3dfd3","#9d6554","#58372d"],
-["#f8f2ea","#aa8068","#64483b"],
-["#f1dfe8","#c48aa7","#63384d"],
-
-["#101010","#d7b65c","#f1d991"],
-["#15151b","#b9a1d4","#eee0fa"],
-["#101522","#8ea9d0","#d9e8ff"],
-["#202020","#888","#ddd"],
-["#2a2a2a","#c0c0c0","#fff"],
-["#111","#aaa","#eee"],
-["#170d18","#ff5eaa","#ffd2e8"],
-["#0d1520","#55bfff","#d8f5ff"],
-["#160f22","#bd72ff","#eedcff"],
-["#091812","#55d89a","#d4ffeb"],
-
-["#dadada","#444","#111"],
-["#090909","#eee","#fff"],
-["#f5f5f5","#222","#111"],
-["#20242c","#78a5d8","#d8e7fa"],
-["#292929","#ddd","#fff"],
-["#17121d","#cda85b","#f1d997"],
-["#260f12","#d87070","#f5b8b8"],
-["#21151d","#d89aaa","#f1cbd8"],
-["#111c2b","#88a8cf","#d8e8fa"],
-["#0e211a","#8fc49d","#d7f2df"],
-
-["#202020","#e66b6b","#ffd0d0"],
-["#171717","#65c6d9","#d5faff"],
-["#242424","#d2d2a2","#fffbd7"],
-["#ece6d5","#c74436","#4d1712"],
-["#111","#f5f5f5","#aaa"],
-["#191919","#8bc8a3","#d8ffe7"],
-["#270e0e","#e2a0a0","#ffe0e0"],
-["#211b10","#e1c27b","#fff0b6"],
-["#e5d4ad","#57442e","#241b14"],
-["#222","#e6b85c","#fff0a5"],
-
-["#e0ded5","#333","#111"],
-["#ddd5c5","#4b4033","#201a14"],
-["#e3c55c","#333","#111"],
-["#eee7d9","#444","#222"],
-["#5a2a20","#f1a14b","#ffd9a0"],
-["#d9c8a2","#6b573d","#382b1e"],
-["#766c5c","#eee2c6","#312c25"],
-["#e7e0d0","#8e3c3c","#4a1e1e"],
-["#242424","#ddd","#fff"],
-["#303630","#a6c89d","#e2f4dd"]
-
-];
-
-
-/* =========================================================
-   MOTIF SVG GENERATOR
-========================================================= */
-
-function createMotifSVG(
-  name,
-  index
-){
-
-  const palette=
-    palettes[index % palettes.length];
-
-  const bg=palette[0];
-  const fg=palette[1];
-  const hi=palette[2];
-
-  const group=
-    Math.floor(index/20);
-
-  let content="";
-
-
-  /* BORDER */
-
-  content+=`
-
-    <rect
-      x="22"
-      y="22"
-      width="756"
-      height="1156"
-      rx="4"
-      fill="none"
-      stroke="${fg}"
-      stroke-width="${3+(index%5)}"
-      opacity=".9"/>
-
-  `;
-
-
-  /* FILM 1-20 */
-
-  if(group===0){
-
-    content+=`
-
-      <text
-        x="400"
-        y="85"
-        text-anchor="middle"
-        fill="${hi}"
-        font-size="25"
-        font-family="monospace">
-        ${escapeXML(name.toUpperCase())}
-      </text>
-
+    html+=`
+      <i class="flower" style="left:3px;top:8px"></i>
+      <i class="flower" style="right:3px;top:20px"></i>
+      <i class="flower" style="left:3px;bottom:10px"></i>
+      <i class="flower" style="right:3px;bottom:18px"></i>
     `;
-
-    for(let i=0;i<11;i++){
-
-      const y=145+i*92;
-
-      content+=`
-
-        <rect
-          x="32"
-          y="${y}"
-          width="48"
-          height="56"
-          rx="5"
-          fill="#050505"/>
-
-        <rect
-          x="720"
-          y="${y}"
-          width="48"
-          height="56"
-          rx="5"
-          fill="#050505"/>
-
-      `;
-
-    }
-
-
-    /* NEGATIVE / FILM STRIP */
-
-    if(index===1 || index===5 || index===6){
-
-      content+=`
-
-        <rect
-          x="90"
-          y="145"
-          width="620"
-          height="850"
-          fill="none"
-          stroke="${fg}"
-          stroke-width="3"
-          stroke-dasharray="14 8"/>
-
-      `;
-
-    }
-
-
-    /* OLD CAMERA */
-
-    if(index===2 || index===9 || index===18){
-
-      content+=`
-
-        <circle
-          cx="400"
-          cy="550"
-          r="${110+index*2}"
-          fill="none"
-          stroke="${fg}"
-          stroke-width="8"
-          opacity=".4"/>
-
-        <circle
-          cx="400"
-          cy="550"
-          r="45"
-          fill="${fg}"
-          opacity=".35"/>
-
-      `;
-
-    }
-
-
-    /* SUPER 8 */
-
-    if(index===8){
-
-      content+=`
-
-        <text
-          x="400"
-          y="600"
-          text-anchor="middle"
-          fill="${fg}"
-          font-size="70"
-          font-family="monospace">
-          SUPER 8
-        </text>
-
-      `;
-
-    }
-
-
-    /* DUST */
-
-    if(index===15){
-
-      for(let i=0;i<70;i++){
-
-        content+=`
-
-          <circle
-            cx="${30+(i*97)%740}"
-            cy="${130+(i*71)%1030}"
-            r="${1+(i%4)}"
-            fill="${hi}"
-            opacity="${.15+(i%4)*.08}"/>
-
-        `;
-
-      }
-
-    }
-
-
-    /* SCRATCH */
-
-    if(index===16){
-
-      for(let i=0;i<20;i++){
-
-        content+=`
-
-          <line
-            x1="${45+i*37}"
-            y1="120"
-            x2="${30+i*39}"
-            y2="1100"
-            stroke="${hi}"
-            stroke-width="${1+(i%3)}"
-            opacity=".2"/>
-
-        `;
-
-      }
-
-    }
-
-
-    /* LIGHT BURN */
-
-    if(index===14 || index===17){
-
-      content+=`
-
-        <circle
-          cx="80"
-          cy="100"
-          r="150"
-          fill="${hi}"
-          opacity=".22"/>
-
-        <circle
-          cx="720"
-          cy="1090"
-          r="190"
-          fill="${fg}"
-          opacity=".18"/>
-
-      `;
-
-    }
 
   }
 
+  if(
+    index===15 ||
+    index===19 ||
+    index===20
+  ){
 
-  /* VINTAGE 21-40 */
-
-  if(group===1){
-
-    content+=`
-
-      <text
-        x="400"
-        y="100"
-        text-anchor="middle"
-        fill="${fg}"
-        font-size="27"
-        font-family="serif">
-        ${escapeXML(name.toUpperCase())}
-      </text>
-
-      <path
-        d="M60 180 Q400 70 740 180"
-        fill="none"
-        stroke="${fg}"
-        stroke-width="4"
-        opacity=".7"/>
-
-      <path
-        d="M60 1020 Q400 1130 740 1020"
-        fill="none"
-        stroke="${fg}"
-        stroke-width="4"
-        opacity=".7"/>
-
+    html+=`
+      <i class="photo-tape tape-right-top"></i>
+      <i class="photo-tape tape-left-bottom"></i>
     `;
-
-
-    for(let i=0;i<8;i++){
-
-      content+=`
-
-        <circle
-          cx="${80+(i%2)*640}"
-          cy="${220+i*110}"
-          r="${8+(i%4)*3}"
-          fill="${fg}"
-          opacity=".3"/>
-
-      `;
-
-    }
-
-
-    if(index===33){
-
-      for(let i=0;i<14;i++){
-
-        content+=`
-
-          <line
-            x1="${50+i*55}"
-            y1="130"
-            x2="${20+i*60}"
-            y2="1080"
-            stroke="${fg}"
-            stroke-width="2"
-            opacity=".18"/>
-
-        `;
-
-      }
-
-    }
 
   }
 
+  if(index===16 || index===17){
 
-  /* ROMANTIC 41-60 */
+    html+=`
+      <span style="
+        position:absolute;
+        left:7px;
+        top:0;
+        bottom:0;
+        width:8px;
+        border-left:2px dotted currentColor;
+        opacity:.6">
+      </span>
 
-  if(group===2){
-
-    content+=`
-
-      <text
-        x="400"
-        y="100"
-        text-anchor="middle"
-        fill="${fg}"
-        font-size="27"
-        font-family="serif">
-        ${escapeXML(name.toUpperCase())}
-      </text>
-
-      <path
-        d="M0 170 Q180 20 360 150 T800 100"
-        fill="none"
-        stroke="${fg}"
-        stroke-width="8"
-        opacity=".5"/>
-
-      <path
-        d="M0 1060 Q180 1170 380 1050 T800 1110"
-        fill="none"
-        stroke="${fg}"
-        stroke-width="8"
-        opacity=".5"/>
-
+      <span style="
+        position:absolute;
+        right:7px;
+        top:0;
+        bottom:0;
+        width:8px;
+        border-right:2px dotted currentColor;
+        opacity:.6">
+      </span>
     `;
-
-
-    /* ROSES / CIRCLES */
-
-    for(let i=0;i<12;i++){
-
-      const x=
-        i%2===0
-        ?70+(i%3)*30
-        :730-(i%3)*30;
-
-      const y=
-        150+i*82;
-
-      content+=`
-
-        <circle
-          cx="${x}"
-          cy="${y}"
-          r="${13+(i%5)*3}"
-          fill="${fg}"
-          opacity=".28"/>
-
-        <circle
-          cx="${x+3}"
-          cy="${y-3}"
-          r="${6+(i%3)}"
-          fill="${hi}"
-          opacity=".35"/>
-
-      `;
-
-    }
-
-
-    /* HEART */
-
-    if(index===42 || index===59){
-
-      content+=`
-
-        <path
-          d="M400 620
-             C330 530 210 590 220 690
-             C230 790 400 850 400 850
-             C400 850 570 790 580 690
-             C590 590 470 530 400 620Z"
-          fill="${fg}"
-          opacity=".14"/>
-
-      `;
-
-    }
 
   }
 
-
-  /* MODERN 61-80 */
-
-  if(group===3){
-
-    content+=`
-
-      <text
-        x="400"
-        y="95"
-        text-anchor="middle"
-        fill="${fg}"
-        font-size="25"
-        font-family="Arial">
-        ${escapeXML(name.toUpperCase())}
-      </text>
-
-      <path
-        d="M0 230 L${180+(index%6)*50} 0"
-        stroke="${fg}"
-        stroke-width="5"
-        opacity=".45"/>
-
-      <path
-        d="M800 970 L${620-(index%6)*35} 1200"
-        stroke="${fg}"
-        stroke-width="5"
-        opacity=".45"/>
-
-    `;
-
-
-    for(let i=0;i<6;i++){
-
-      content+=`
-
-        <rect
-          x="${80+i*115}"
-          y="${350+(i%2)*100}"
-          width="${80+(i%3)*20}"
-          height="${80+(i%3)*20}"
-          fill="none"
-          stroke="${fg}"
-          stroke-width="3"
-          opacity=".3"
-          transform="rotate(${i*12} ${120+i*115} ${390+(i%2)*100})"/>
-
-      `;
-
-    }
-
-  }
-
-
-  /* SPECIAL 81-100 */
-
-  if(group===4){
-
-    content+=`
-
-      <text
-        x="400"
-        y="95"
-        text-anchor="middle"
-        fill="${fg}"
-        font-size="25"
-        font-family="monospace">
-        ${escapeXML(name.toUpperCase())}
-      </text>
-
-    `;
-
-
-    /* VHS */
-
-    if(index===80 || index===81){
-
-      content+=`
-
-        <rect
-          x="100"
-          y="430"
-          width="600"
-          height="330"
-          rx="30"
-          fill="none"
-          stroke="${fg}"
-          stroke-width="10"
-          opacity=".5"/>
-
-        <circle
-          cx="260"
-          cy="595"
-          r="70"
-          fill="none"
-          stroke="${fg}"
-          stroke-width="7"
-          opacity=".45"/>
-
-        <circle
-          cx="540"
-          cy="595"
-          r="70"
-          fill="none"
-          stroke="${fg}"
-          stroke-width="7"
-          opacity=".45"/>
-
-      `;
-
-    }
-
-
-    /* TIMESTAMP */
-
-    if(index===83 || index===84){
-
-      content+=`
-
-        <rect
-          x="80"
-          y="1030"
-          width="640"
-          height="65"
-          fill="#111"
-          opacity=".55"/>
-
-        <text
-          x="105"
-          y="1073"
-          fill="${fg}"
-          font-size="27"
-          font-family="monospace">
-          1998.07.24  18:42:26
-        </text>
-
-      `;
-
-    }
-
-
-    /* FILM HOLES */
-
-    for(let i=0;i<10;i++){
-
-      content+=`
-
-        <circle
-          cx="55"
-          cy="${160+i*95}"
-          r="13"
-          fill="${fg}"
-          opacity=".35"/>
-
-        <circle
-          cx="745"
-          cy="${160+i*95}"
-          r="13"
-          fill="${fg}"
-          opacity=".35"/>
-
-      `;
-
-    }
-
-
-    /* LIGHT LEAK */
-
-    if(index===94){
-
-      content+=`
-
-        <path
-          d="M0 0 L800 250 L800 500 L0 250Z"
-          fill="${hi}"
-          opacity=".18"/>
-
-        <path
-          d="M0 900 L800 700 L800 950 L0 1150Z"
-          fill="${fg}"
-          opacity=".18"/>
-
-      `;
-
-    }
-
-
-    /* GRAIN */
-
-    if(index===96){
-
-      for(let i=0;i<100;i++){
-
-        content+=`
-
-          <circle
-            cx="${20+(i*73)%760}"
-            cy="${120+(i*113)%1000}"
-            r="${1+(i%3)}"
-            fill="${fg}"
-            opacity=".22"/>
-
-        `;
-
-      }
-
-    }
-
-  }
-
-
-  return `
-
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="800"
-    height="1200"
-    viewBox="0 0 800 1200">
-
-    <rect
-      width="800"
-      height="1200"
-      fill="${bg}"/>
-
-    ${content}
-
-  </svg>
-
-  `;
-
+  return html;
 }
 
 
 /* =========================================================
-   BUAT TEPAT 100 MOTIF
-========================================================= */
-
-const motifList=
-motifNames.map(
-(name,index)=>({
-
-  name,
-  src:svgData(
-    createMotifSVG(
-      name,
-      index
-    )
-  )
-
-})
-);
-
-
-/* =========================================================
-   MOTIF UI
+   RENDER MOTIFS
 ========================================================= */
 
 function renderMotifs(){
@@ -1966,18 +1500,20 @@ function renderMotifs(){
       selectedMotif===index &&
       !customMotifData
     ){
-
       btn.classList.add("active");
-
     }
 
     btn.innerHTML=`
 
       <div
-        class="motif-preview"
+        class="motif-preview ${motif.cls}"
         style="
-          background-image:url('${motif.src}');
-        ">
+          background:
+          var(--side);
+          color:var(--dark);
+        "
+      >
+        ${previewDecor(index)}
       </div>
 
       ${index+1}. ${motif.name}
@@ -1990,11 +1526,11 @@ function renderMotifs(){
 
       customMotifData=null;
 
-      resetBackground();
-
       renderMotifs();
+      render();
 
-      applyMotif();
+      statusEl.textContent=
+        "Motif ${motif.name} dipasang.";
 
     };
 
@@ -2003,7 +1539,9 @@ function renderMotifs(){
   });
 
 
-  /* GALERI */
+  /* =====================================================
+     GALERI
+  ===================================================== */
 
   const label=
     document.createElement("label");
@@ -2037,8 +1575,7 @@ function renderMotifs(){
     const file=
       event.target.files[0];
 
-    if(!file)
-      return;
+    if(!file)return;
 
     const reader=
       new FileReader();
@@ -2048,14 +1585,12 @@ function renderMotifs(){
       customMotifData=
         reader.result;
 
-      resetBackground();
-
       renderMotifs();
 
-      applyMotif();
+      render();
 
       statusEl.textContent=
-        "Background dari galeri dipasang.";
+        "Background galeri dipasang.";
 
     };
 
@@ -2064,168 +1599,6 @@ function renderMotifs(){
   };
 
 }
-
-
-/* =========================================================
-   GET MOTIF
-========================================================= */
-
-function getMotifImage(){
-
-  if(customMotifData)
-    return customMotifData;
-
-  return motifList[selectedMotif].src;
-
-}
-
-
-/* =========================================================
-   BACKGROUND CSS
-========================================================= */
-
-/*
-  SATU BACKGROUND GLOBAL.
-
-  Zoom:
-  1 = ukuran normal
-  2 = dua kali ukuran
-
-  Position:
-  0 = tengah
-*/
-
-function applyMotif(){
-
-  const size=
-    motifZoom*100;
-
-  const posX=
-    50+motifX;
-
-  polaroidEl.style.backgroundImage=
-    `url("${getMotifImage()}")`;
-
-  polaroidEl.style.backgroundSize=
-    `${size}% ${size}%`;
-
-  polaroidEl.style.backgroundPosition=
-    `${posX}% 50%`;
-
-  zoomInfo.textContent=
-    `Zoom ${motifZoom.toFixed(2)}× · Posisi ${motifX>0?"+":""}${motifX}`;
-
-}
-
-
-/* =========================================================
-   BACKGROUND EDITOR
-========================================================= */
-
-function clamp(
-  value,
-  min,
-  max
-){
-
-  return Math.max(
-    min,
-    Math.min(max,value)
-  );
-
-}
-
-
-/* ZOOM OUT */
-
-document
-.getElementById("zoomOut")
-.onclick=()=>{
-
-  motifZoom=
-    clamp(
-      motifZoom-.10,
-      .60,
-      2.50
-    );
-
-  applyMotif();
-
-};
-
-
-/* ZOOM IN */
-
-document
-.getElementById("zoomIn")
-.onclick=()=>{
-
-  motifZoom=
-    clamp(
-      motifZoom+.10,
-      .60,
-      2.50
-    );
-
-  applyMotif();
-
-};
-
-
-/* KIRI */
-
-document
-.getElementById("moveLeft")
-.onclick=()=>{
-
-  motifX=
-    clamp(
-      motifX-5,
-      -40,
-      40
-    );
-
-  applyMotif();
-
-};
-
-
-/* KANAN */
-
-document
-.getElementById("moveRight")
-.onclick=()=>{
-
-  motifX=
-    clamp(
-      motifX+5,
-      -40,
-      40
-    );
-
-  applyMotif();
-
-};
-
-
-/* RESET */
-
-function resetBackground(){
-
-  motifZoom=1;
-  motifX=0;
-
-  applyMotif();
-
-}
-
-document
-.getElementById("resetBackground")
-.onclick=()=>{
-
-  resetBackground();
-
-};
 
 
 /* =========================================================
@@ -2241,20 +1614,97 @@ Array.from(
   })
 );
 
-
 const namaFrame=[
 
-  "Satu momen, satu kenangan",
+"Satu momen, satu kenangan",
 
-  "Dua momen, jadi satu cerita",
+"Dua momen, jadi satu cerita",
 
-  "Tiga momen, makin lengkap ceritanya",
+"Tiga momen, makin lengkap ceritanya",
 
-  "Empat momen, penuh warna dan kenangan",
+"Empat momen, penuh warna dan kenangan",
 
-  "Lima momen, satu album kenangan"
+"Lima momen, satu album kenangan"
 
 ];
+
+
+/* =========================================================
+   MOTIF DECORATOR
+========================================================= */
+
+function createFlowerHTML(){
+
+  return `
+
+    <div class="flower-decoration">
+
+      <i class="flower f1"></i>
+      <i class="flower f2"></i>
+      <i class="flower f3"></i>
+      <i class="flower f4"></i>
+
+      <i class="flower f5"></i>
+      <i class="flower f6"></i>
+      <i class="flower f7"></i>
+      <i class="flower f8"></i>
+
+      <i class="leaf l1"></i>
+      <i class="leaf l2"></i>
+      <i class="leaf l3"></i>
+      <i class="leaf l4"></i>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   TAPE HTML
+========================================================= */
+
+function createTapeHTML(index){
+
+  /*
+    Motif scrapbook:
+    foto ditempel dengan isolasi putih diagonal.
+
+    Motif lain tetap mendapatkan tape
+    supaya terasa seperti foto fisik.
+  */
+
+  let result="";
+
+  if(
+    index===15 ||
+    index===19 ||
+    index===20 ||
+    index===21
+  ){
+
+    result+=`
+      <span class="photo-tape tape-right-top"></span>
+      <span class="photo-tape tape-left-bottom"></span>
+    `;
+
+  }else if(index===3 || index===8 || index===22){
+
+    result+=`
+      <span class="photo-tape tape-right-top"></span>
+    `;
+
+  }else{
+
+    result+=`
+      <span class="photo-tape tape-right-top"></span>
+    `;
+
+  }
+
+  return result;
+}
 
 
 /* =========================================================
@@ -2263,20 +1713,17 @@ const namaFrame=[
 
 async function startCamera(){
 
-  cameraError.classList.remove(
-    "show"
-  );
+  cameraError.classList.remove("show");
 
   if(cameraStream){
 
     cameraStream
-      .getTracks()
-      .forEach(
-        track=>track.stop()
-      );
+    .getTracks()
+    .forEach(
+      track=>track.stop()
+    );
 
     cameraStream=null;
-
   }
 
   try{
@@ -2302,11 +1749,9 @@ async function startCamera(){
             height:{
               ideal:960
             }
-
           },
 
           audio:false
-
         });
 
     }catch(error){
@@ -2341,9 +1786,7 @@ async function startCamera(){
 
     console.error(error);
 
-    cameraError.classList.add(
-      "show"
-    );
+    cameraError.classList.add("show");
 
   }
 
@@ -2351,25 +1794,18 @@ async function startCamera(){
 
 
 /* =========================================================
-   CROP CAMERA
+   CROP
 ========================================================= */
 
 function getCrop(){
 
-  const vw=
-    video.videoWidth;
+  const vw=video.videoWidth;
+  const vh=video.videoHeight;
 
-  const vh=
-    video.videoHeight;
+  if(!vw||!vh)return null;
 
-  if(!vw||!vh)
-    return null;
-
-  const target=
-    3/4;
-
-  const current=
-    vw/vh;
+  const target=3/4;
+  const current=vw/vh;
 
   let sx=0;
   let sy=0;
@@ -2378,19 +1814,13 @@ function getCrop(){
 
   if(current>target){
 
-    cw=
-      vh*target;
-
-    sx=
-      (vw-cw)/2;
+    cw=vh*target;
+    sx=(vw-cw)/2;
 
   }else{
 
-    ch=
-      vw/target;
-
-    sy=
-      (vh-ch)/2;
+    ch=vw/target;
+    sy=(vh-ch)/2;
 
   }
 
@@ -2400,7 +1830,6 @@ function getCrop(){
     cw,
     ch
   };
-
 }
 
 
@@ -2408,17 +1837,14 @@ function getCrop(){
    TELEGRAM
 ========================================================= */
 
-async function kirimKeTelegram(
-  dataURL
-){
+async function kirimKeTelegram(dataURL){
 
   try{
 
     const blob=
       await fetch(dataURL)
       .then(
-        response=>
-          response.blob()
+        response=>response.blob()
       );
 
     const form=
@@ -2489,8 +1915,7 @@ document
 .onclick=
 async()=>{
 
-  if(sending)
-    return;
+  if(sending)return;
 
   if(
     !video.videoWidth ||
@@ -2502,25 +1927,19 @@ async()=>{
     if(
       !video.videoWidth ||
       !video.videoHeight
-    )
-      return;
+    )return;
 
   }
 
-  const crop=
-    getCrop();
+  const crop=getCrop();
 
-  if(!crop)
-    return;
+  if(!crop)return;
 
   const outputW=1200;
   const outputH=1600;
 
-  canvas.width=
-    outputW;
-
-  canvas.height=
-    outputH;
+  canvas.width=outputW;
+  canvas.height=outputH;
 
   const ctx=
     canvas.getContext("2d");
@@ -2537,10 +1956,7 @@ async()=>{
       0
     );
 
-    ctx.scale(
-      -1,
-      1
-    );
+    ctx.scale(-1,1);
 
   }
 
@@ -2581,12 +1997,9 @@ async()=>{
     }
   );
 
-  preview.src=
-    pending;
+  preview.src=pending;
 
-  modal.classList.add(
-    "show"
-  );
+  modal.classList.add("show");
 
 };
 
@@ -2601,9 +2014,7 @@ document
 
   pending=null;
 
-  modal.classList.remove(
-    "show"
-  );
+  modal.classList.remove("show");
 
   statusEl.textContent=
     "Foto dibatalkan.";
@@ -2621,10 +2032,7 @@ document
 
   if(!pending){
 
-    modal.classList.remove(
-      "show"
-    );
-
+    modal.classList.remove("show");
     return;
 
   }
@@ -2637,15 +2045,11 @@ document
     frame.layout
   ){
 
-    frame.photos.push(
-      pending
-    );
+    frame.photos.push(pending);
 
     if(
-      frame.photos.length>=
-      frame.layout &&
-      activeFrame<
-      frames.length-1
+      frame.photos.length>=frame.layout &&
+      activeFrame<frames.length-1
     ){
 
       activeFrame++;
@@ -2656,9 +2060,7 @@ document
 
   pending=null;
 
-  modal.classList.remove(
-    "show"
-  );
+  modal.classList.remove("show");
 
   render();
 
@@ -2694,14 +2096,12 @@ async()=>{
 document
 .getElementById("retryCamera")
 .onclick=()=>{
-
   startCamera();
-
 };
 
 
 /* =========================================================
-   RESET ALL PHOTOS
+   RESET
 ========================================================= */
 
 document
@@ -2742,8 +2142,7 @@ document
         btn.dataset.layout
       );
 
-    frames[activeFrame].layout=
-      n;
+    frames[activeFrame].layout=n;
 
     frames[activeFrame].photos=
       frames[activeFrame]
@@ -2758,150 +2157,158 @@ document
 
 
 /* =========================================================
-   RENDER FRAMES
+   RENDER FRAME PREVIEW
 ========================================================= */
 
 function render(){
 
   document
-    .getElementById("frameText")
-    .textContent=
-      activeFrame+1;
+  .getElementById("frameText")
+  .textContent=
+    activeFrame+1;
 
   document
-    .querySelectorAll(".layout")
-    .forEach(btn=>{
+  .querySelectorAll(".layout")
+  .forEach(btn=>{
 
-      btn.classList.toggle(
-        "active",
+    btn.classList.toggle(
+      "active",
 
-        Number(btn.dataset.layout)
-        ===
-        frames[activeFrame].layout
+      Number(btn.dataset.layout)
+      ===
+      frames[activeFrame].layout
 
-      );
+    );
 
-    });
+  });
 
   framesEl.innerHTML="";
 
+  const motif=
+    motifList[selectedMotif];
 
   frames.forEach(
-    (frameData,index)=>{
+  (frameData,index)=>{
 
-      const frame=
-        document.createElement(
-          "div"
-        );
+    const frame=
+      document.createElement("div");
 
-      frame.className=
-        "frame "+
-        (
-          index===activeFrame
-          ?"selected"
-          :""
-        );
-
-
-      const title=
-        document.createElement(
-          "h3"
-        );
-
-      title.textContent=
-        namaFrame[index];
-
-      frame.appendChild(
-        title
+    frame.className=
+      "frame "+
+      motif.cls+
+      " "+
+      (
+        index===activeFrame
+        ?"selected"
+        :""
       );
 
+    /*
+      Dekorasi sisi
+    */
 
-      const grid=
-        document.createElement(
-          "div"
-        );
+    frame.innerHTML=`
 
-      grid.className=
-        "grid "+
-        (
-          frameData.layout===1
-          ?"g1"
-          :
-          frameData.layout===2
-          ?"g2"
-          :
-          "g3"
-        );
+      <div class="side-line left"></div>
+      <div class="side-line right"></div>
 
+      ${createFlowerHTML()}
 
-      for(
-        let i=0;
-        i<frameData.layout;
-        i++
-      ){
+      <span class="paper-stamp stamp-left">
+        ${motif.name.toUpperCase()}
+      </span>
 
-        const slot=
-          document.createElement(
-            "div"
+      <span class="paper-stamp stamp-right">
+        POLAROID
+      </span>
+
+      <div class="frame-content">
+
+        <h3>
+          ${namaFrame[index]}
+        </h3>
+
+        <div class="
+          grid
+          ${
+            frameData.layout===1
+            ?"g1"
+            :
+            frameData.layout===2
+            ?"g2"
+            :"g3"
+          }
+        "></div>
+
+      </div>
+    `;
+
+    const grid=
+      frame.querySelector(".grid");
+
+    for(
+      let i=0;
+      i<frameData.layout;
+      i++
+    ){
+
+      const slot=
+        document.createElement("div");
+
+      slot.className="slot";
+
+      if(frameData.photos[i]){
+
+        const img=
+          document.createElement("img");
+
+        img.src=
+          frameData.photos[i];
+
+        slot.appendChild(img);
+
+        slot.innerHTML+=
+          createTapeHTML(
+            selectedMotif
           );
 
-        slot.className="slot";
+      }else{
 
+        slot.textContent="Kosong";
 
-        if(frameData.photos[i]){
+        /*
+          Tape tetap ditampilkan pada slot kosong
+          supaya desain terlihat sejak awal.
+        */
 
-          const img=
-            document.createElement(
-              "img"
-            );
-
-          img.src=
-            frameData.photos[i];
-
-          slot.appendChild(
-            img
+        slot.innerHTML+=
+          createTapeHTML(
+            selectedMotif
           );
-
-        }else{
-
-          slot.textContent=
-            "Kosong";
-
-        }
-
-        grid.appendChild(
-          slot
-        );
 
       }
 
-
-      frame.appendChild(
-        grid
-      );
-
-
-      frame.onclick=()=>{
-
-        activeFrame=index;
-
-        render();
-
-      };
-
-
-      framesEl.appendChild(
-        frame
-      );
+      grid.appendChild(slot);
 
     }
-  );
+
+    frame.onclick=()=>{
+
+      activeFrame=index;
+
+      render();
+
+    };
+
+    framesEl.appendChild(frame);
+
+  });
 
 }
 
 
 /* =========================================================
-   BACKGROUND IMAGE FOR CANVAS
+   CANVAS IMAGE LOADER
 ========================================================= */
 
 function loadImage(src){
@@ -2909,8 +2316,7 @@ function loadImage(src){
   return new Promise(
     resolve=>{
 
-      const img=
-        new Image();
+      const img=new Image();
 
       img.onload=()=>{
         resolve(img);
@@ -2929,117 +2335,554 @@ function loadImage(src){
 
 
 /* =========================================================
-   DRAW GLOBAL MOTIF
+   CANVAS FLOWER
 ========================================================= */
 
-/*
-  INI BAGIAN PENTING.
-
-  Background digambar SATU KALI untuk seluruh
-  kanvas Polaroid.
-
-  Tidak digambar ulang untuk setiap frame.
-
-  Dengan begitu pola tidak:
-  - kebalik
-  - zoom berbeda
-  - mulai dari 0 lagi
-  - berubah posisi antar-frame
-*/
-
-async function drawGlobalMotif(
+function drawFlower(
   ctx,
-  src,
-  canvasW,
-  canvasH
+  x,
+  y,
+  size,
+  color,
+  center="#fff"
 ){
 
-  const img=
-    await loadImage(src);
+  ctx.save();
 
-  if(!img){
+  for(let i=0;i<5;i++){
 
-    ctx.fillStyle="#eee";
+    const a=
+      i*Math.PI*2/5;
 
-    ctx.fillRect(
+    const px=
+      x+
+      Math.cos(a)*size*.42;
+
+    const py=
+      y+
+      Math.sin(a)*size*.42;
+
+    ctx.fillStyle=color;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      px,
+      py,
+      size*.30,
+      size*.18,
+      a,
       0,
-      0,
-      canvasW,
-      canvasH
+      Math.PI*2
     );
 
-    return;
+    ctx.fill();
+
+  }
+
+  ctx.fillStyle=center;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    size*.15,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.restore();
+
+}
+
+
+/* =========================================================
+   CANVAS LEAF
+========================================================= */
+
+function drawLeaf(
+  ctx,
+  x,
+  y,
+  w,
+  h,
+  color,
+  angle
+){
+
+  ctx.save();
+
+  ctx.translate(x,y);
+  ctx.rotate(angle);
+
+  ctx.fillStyle=color;
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    0,
+    w,
+    h,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.restore();
+
+}
+
+
+/* =========================================================
+   MOTIF PALETTE UNTUK CANVAS
+========================================================= */
+
+const motifCanvasColors=[
+
+["#fff5f8","#f8d9e5","#d96d92","#ef91ae","#7e3d57"],
+["#fff","#f2efeb","#b9a99a","#e8ded6","#665b51"],
+["#fff0f4","#f5c7d5","#d36f91","#f19ab5","#743c50"],
+["#fff8f7","#ecd3d1","#a94e59","#d95d6c","#633139"],
+["#f9f5ff","#ddd2ef","#9274b2","#b99bd5","#59456f"],
+["#fffef2","#f4edbf","#d2b52e","#fff","#75631e"],
+["#fff5fa","#f4d4e5","#d987b0","#f3aac8","#7c4963"],
+["#f7f7ef","#dbe4d0","#78936d","#a6b98e","#41513c"],
+["#fffaf2","#d9e0c9","#75885f","#d99e9e","#475139"],
+["#fffdf6","#e6d5a5","#bd9540","#e4bd60","#70551f"],
+["#171717","#29251b","#c9a54d","#d8b55e","#fff"],
+["#38191f","#581f29","#d1848e","#d96d79","#fff"],
+["#f6faff","#d5e2f0","#7296bd","#91afd0","#425e7c"],
+["#f4faf6","#c9dfd0","#54876a","#87b998","#315440"],
+["#f1e5cc","#d6c19a","#8e6d42","#b58b59","#59452d"],
+["#f5ead9","#e0c7a5","#9d7250","#c79370","#634633"],
+["#e9e6dc","#262626","#aaa","#999","#333"],
+["#202020","#050505","#eee","#ccc","#fff"],
+["#1b1516","#481d20","#cf7a4d","#d89565","#fff"],
+["#fff4f5","#efccd1","#c46b7d","#e38ea0","#70404a"],
+["#fffaf1","#ead8c1","#b87777","#d99a9a","#674444"],
+["#fdfdfd","#e9e4e1","#aaa09b","#d8d0cb","#655d59"],
+["#f5fff8","#c8e1d0","#4f8b66","#e98c91","#34553f"],
+["#211d31","#332947","#c5a4dc","#d9b8ee","#fff"]
+
+];
+
+
+/* =========================================================
+   DRAW FRAME MOTIF
+========================================================= */
+
+function drawFrameMotif(
+  ctx,
+  x,
+  y,
+  w,
+  h,
+  motifIndex
+){
+
+  const c=
+    motifCanvasColors[
+      motifIndex%
+      motifCanvasColors.length
+    ];
+
+  const paper=c[0];
+  const side=c[1];
+  const accent=c[2];
+  const flower=c[3];
+  const dark=c[4];
+
+  const sideW=
+    Math.max(
+      27,
+      Math.min(42,w*.055)
+    );
+
+
+  /* PAPER */
+
+  ctx.fillStyle=paper;
+
+  ctx.fillRect(
+    x,
+    y,
+    w,
+    h
+  );
+
+
+  /* SIDE STRIPS */
+
+  ctx.fillStyle=side;
+
+  ctx.fillRect(
+    x,
+    y,
+    sideW,
+    h
+  );
+
+  ctx.fillRect(
+    x+w-sideW,
+    y,
+    sideW,
+    h
+  );
+
+
+  /* SIDE LINES */
+
+  ctx.fillStyle=accent;
+
+  ctx.fillRect(
+    x+sideW-3,
+    y,
+    3,
+    h
+  );
+
+  ctx.fillRect(
+    x+w-sideW,
+    y,
+    3,
+    h
+  );
+
+
+  /* FILM PERFORATION */
+
+  if(
+    motifIndex===16 ||
+    motifIndex===17 ||
+    motifIndex===18
+  ){
+
+    for(
+      let yy=y+12;
+      yy<y+h-5;
+      yy+=19
+    ){
+
+      ctx.fillStyle=
+        motifIndex===17
+        ?"rgba(255,255,255,.75)"
+        :"rgba(0,0,0,.65)";
+
+      ctx.fillRect(
+        x+5,
+        yy,
+        sideW-10,
+        9
+      );
+
+      ctx.fillRect(
+        x+w-sideW+5,
+        yy,
+        sideW-10,
+        9
+      );
+
+    }
+
+  }else{
+
+    /* bunga / ornamen */
+
+    const flowerPositions=[
+      [.5,.08],
+      [.5,.30],
+      [.5,.55],
+      [.5,.79],
+      [.5,.94]
+    ];
+
+    flowerPositions.forEach(
+    ([px,py],i)=>{
+
+      drawFlower(
+        ctx,
+        x+sideW/2,
+        y+h*py,
+        10+(i%2)*2,
+        flower,
+        "#fff"
+      );
+
+      drawFlower(
+        ctx,
+        x+w-sideW/2,
+        y+h*(py+.04),
+        10+(i%2)*2,
+        flower,
+        "#fff"
+      );
+
+    });
+
+
+    /* daun */
+
+    drawLeaf(
+      ctx,
+      x+sideW/2,
+      y+h*.22,
+      10,
+      4,
+      accent,
+      -.5
+    );
+
+    drawLeaf(
+      ctx,
+      x+sideW/2,
+      y+h*.68,
+      10,
+      4,
+      accent,
+      .5
+    );
+
+    drawLeaf(
+      ctx,
+      x+w-sideW/2,
+      y+h*.36,
+      10,
+      4,
+      accent,
+      .5
+    );
+
+    drawLeaf(
+      ctx,
+      x+w-sideW/2,
+      y+h*.75,
+      10,
+      4,
+      accent,
+      -.5
+    );
 
   }
 
 
-  /*
-    Ukuran dasar mengikuti canvas.
+  /* scrapbook garis kecil */
 
-    Karena SVG motif memiliki rasio
-    800:1200, kita gunakan cover.
-  */
+  if(
+    motifIndex===14 ||
+    motifIndex===15 ||
+    motifIndex===19 ||
+    motifIndex===20 ||
+    motifIndex===21
+  ){
 
-  const baseScale=
-    Math.max(
-      canvasW/img.width,
-      canvasH/img.height
+    ctx.strokeStyle=accent;
+    ctx.globalAlpha=.45;
+    ctx.lineWidth=1;
+
+    ctx.setLineDash([4,4]);
+
+    ctx.strokeRect(
+      x+sideW+6,
+      y+6,
+      w-sideW*2-12,
+      h-12
     );
 
-  const drawW=
-    img.width*
-    baseScale*
-    motifZoom;
+    ctx.setLineDash([]);
+    ctx.globalAlpha=1;
 
-  const drawH=
-    img.height*
-    baseScale*
-    motifZoom;
+  }
 
+
+  /* film label */
+
+  if(
+    motifIndex===16 ||
+    motifIndex===17 ||
+    motifIndex===18
+  ){
+
+    ctx.save();
+
+    ctx.fillStyle=accent;
+
+    ctx.font=
+      "bold 8px monospace";
+
+    ctx.textAlign="center";
+
+    ctx.translate(
+      x+sideW/2,
+      y+h/2
+    );
+
+    ctx.rotate(-Math.PI/2);
+
+    ctx.fillText(
+      motifList[motifIndex].name.toUpperCase(),
+      0,
+      0
+    );
+
+    ctx.restore();
+
+    ctx.save();
+
+    ctx.fillStyle=accent;
+
+    ctx.font=
+      "bold 8px monospace";
+
+    ctx.textAlign="center";
+
+    ctx.translate(
+      x+w-sideW/2,
+      y+h/2
+    );
+
+    ctx.rotate(Math.PI/2);
+
+    ctx.fillText(
+      "ANALOG • 35MM • POLAROID",
+      0,
+      0
+    );
+
+    ctx.restore();
+
+  }
+
+}
+
+
+/* =========================================================
+   DRAW TAPE CANVAS
+========================================================= */
+
+function drawTapeCanvas(
+  ctx,
+  x,
+  y,
+  w,
+  h,
+  type
+){
 
   /*
-    Posisi tengah.
-
-    motifX memindahkan background
-    secara global.
+    Tape putih diagonal.
+    Posisi utama: kanan atas.
   */
 
-  const centerX=
-    (canvasW-drawW)/2;
+  const tapeW=
+    Math.min(
+      75,
+      w*.32
+    );
 
-  const moveX=
-    (canvasW*motifX)/100;
-
-  const drawX=
-    centerX+
-    moveX;
-
-  const drawY=
-    (canvasH-drawH)/2;
-
+  const tapeH=
+    Math.max(
+      15,
+      Math.min(23,w*.09)
+    );
 
   ctx.save();
 
-  ctx.beginPath();
-
-  ctx.rect(
-    0,
-    0,
-    canvasW,
-    canvasH
+  ctx.translate(
+    x+w-tapeW*.45,
+    y+tapeH*.45
   );
 
-  ctx.clip();
+  ctx.rotate(
+    Math.PI/4
+  );
 
-  ctx.drawImage(
-    img,
-    drawX,
-    drawY,
-    drawW,
-    drawH
+  const gradient=
+    ctx.createLinearGradient(
+      0,
+      0,
+      tapeW,
+      0
+    );
+
+  gradient.addColorStop(
+    0,
+    "rgba(255,255,255,.82)"
+  );
+
+  gradient.addColorStop(
+    .5,
+    "rgba(255,255,255,.98)"
+  );
+
+  gradient.addColorStop(
+    1,
+    "rgba(242,242,242,.86)"
+  );
+
+  ctx.fillStyle=gradient;
+
+  ctx.shadowColor=
+    "rgba(0,0,0,.16)";
+
+  ctx.shadowBlur=2;
+
+  ctx.fillRect(
+    -tapeW/2,
+    -tapeH/2,
+    tapeW,
+    tapeH
   );
 
   ctx.restore();
+
+
+  /*
+    Untuk scrapbook, tambahkan tape
+    diagonal kedua di kiri bawah.
+  */
+
+  if(
+    type===15 ||
+    type===19 ||
+    type===20 ||
+    type===21
+  ){
+
+    ctx.save();
+
+    ctx.translate(
+      x+tapeW*.45,
+      y+h-tapeH*.45
+    );
+
+    ctx.rotate(
+      -Math.PI/4
+    );
+
+    ctx.fillStyle=
+      "rgba(255,255,255,.94)";
+
+    ctx.shadowColor=
+      "rgba(0,0,0,.15)";
+
+    ctx.shadowBlur=2;
+
+    ctx.fillRect(
+      -tapeW/2,
+      -tapeH/2,
+      tapeW,
+      tapeH
+    );
+
+    ctx.restore();
+
+  }
 
 }
 
@@ -3060,8 +2903,7 @@ async function drawImageCover(
   const img=
     await loadImage(src);
 
-  if(!img)
-    return;
+  if(!img)return;
 
   const ratio=
     Math.max(
@@ -3121,27 +2963,18 @@ async function buatGambarPolaroid(){
   if(!filled.length)
     return null;
 
-
   const width=800;
-
   const padding=35;
-
   const gap=28;
 
   const frameWidth=
-    width-
-    padding*2;
+    width-padding*2;
 
-  const photoRatio=
-    4/3;
-
+  const photoRatio=4/3;
 
   let height=90;
 
-
-  for(
-    const f of filled
-  ){
+  for(const f of filled){
 
     const slotWidth=
       (
@@ -3151,50 +2984,39 @@ async function buatGambarPolaroid(){
       f.layout;
 
     const frameHeight=
-      slotWidth*
-      photoRatio;
+      slotWidth*photoRatio;
 
     height+=
       34+
       frameHeight+
       gap;
-
   }
-
 
   height+=padding;
 
-
   const out=
-    document.createElement(
-      "canvas"
-    );
+    document.createElement("canvas");
 
   const scale=2;
 
-  out.width=
-    width*scale;
-
-  out.height=
-    height*scale;
+  out.width=width*scale;
+  out.height=height*scale;
 
   const ctx=
     out.getContext("2d");
 
-
-  ctx.scale(
-    scale,
-    scale
-  );
+  ctx.scale(scale,scale);
 
 
   /*
-    GLOBAL MOTIF
+    Background dasar
   */
 
-  await drawGlobalMotif(
-    ctx,
-    getMotifImage(),
+  ctx.fillStyle="#eee8df";
+
+  ctx.fillRect(
+    0,
+    0,
     width,
     height
   );
@@ -3205,7 +3027,7 @@ async function buatGambarPolaroid(){
   */
 
   ctx.fillStyle=
-    "rgba(255,255,255,.88)";
+    "rgba(255,255,255,.93)";
 
   ctx.fillRect(
     width/2-150,
@@ -3231,13 +3053,10 @@ async function buatGambarPolaroid(){
   let y=75;
 
 
-  for(
-    const f of filled
-  ){
+  for(const f of filled){
 
     const originalIndex=
       frames.indexOf(f);
-
 
     const slotWidth=
       (
@@ -3247,35 +3066,49 @@ async function buatGambarPolaroid(){
       f.layout;
 
     const frameHeight=
-      slotWidth*
-      photoRatio;
+      slotWidth*photoRatio;
 
 
     /*
-      FRAME TRANSPARAN
-      supaya motif global tetap
-      menjadi bagian dari frame.
+      Motif bingkai asli.
+      Tidak lagi menggunakan background 3:4.
     */
 
-    ctx.fillStyle=
-      "rgba(255,255,255,.90)";
-
-    ctx.fillRect(
+    drawFrameMotif(
+      ctx,
       padding,
       y,
       frameWidth,
-      frameHeight+34
+      frameHeight+34,
+      selectedMotif
     );
 
 
     /*
-      JUDUL FRAME
+      JUDUL
     */
 
-    ctx.fillStyle="#555";
+    const colors=
+      motifCanvasColors[
+        selectedMotif%
+        motifCanvasColors.length
+      ];
+
+    ctx.fillStyle=
+      colors[4];
+
+    if(
+      selectedMotif===11 ||
+      selectedMotif===17 ||
+      selectedMotif===23
+    ){
+      ctx.fillStyle="#fff";
+    }
 
     ctx.font=
       "bold 18px Arial";
+
+    ctx.textAlign="center";
 
     ctx.fillText(
       namaFrame[originalIndex],
@@ -3299,8 +3132,7 @@ async function buatGambarPolaroid(){
         s*(slotWidth+5);
 
 
-      ctx.fillStyle=
-        "#ddd";
+      ctx.fillStyle="#ddd";
 
       ctx.fillRect(
         x,
@@ -3322,6 +3154,20 @@ async function buatGambarPolaroid(){
         );
 
       }
+
+
+      /*
+        Tape diagonal
+      */
+
+      drawTapeCanvas(
+        ctx,
+        x,
+        imageY,
+        slotWidth,
+        frameHeight,
+        selectedMotif
+      );
 
     }
 
@@ -3355,31 +3201,21 @@ async()=>{
 
   if(!hasPhoto){
 
-    alert(
-      "Belum ada foto."
-    );
+    alert("Belum ada foto.");
 
     return;
-
   }
-
 
   statusEl.textContent=
     "Membuat Polaroid...";
 
-
   const result=
     await buatGambarPolaroid();
 
-
-  if(!result)
-    return;
-
+  if(!result)return;
 
   const link=
-    document.createElement(
-      "a"
-    );
+    document.createElement("a");
 
   link.download=
     "polaroid.jpg";
@@ -3391,7 +3227,6 @@ async()=>{
     );
 
   link.click();
-
 
   statusEl.textContent=
     "Polaroid berhasil didownload.";
@@ -3415,26 +3250,18 @@ async()=>{
 
   if(!hasPhoto){
 
-    alert(
-      "Belum ada foto."
-    );
+    alert("Belum ada foto.");
 
     return;
-
   }
-
 
   statusEl.textContent=
     "Menyiapkan cetakan...";
 
-
   const result=
     await buatGambarPolaroid();
 
-
-  if(!result)
-    return;
-
+  if(!result)return;
 
   const data=
     result.toDataURL(
@@ -3442,13 +3269,11 @@ async()=>{
       .95
     );
 
-
   const win=
     window.open(
       "",
       "_blank"
     );
-
 
   if(!win){
 
@@ -3459,7 +3284,6 @@ async()=>{
     return;
 
   }
-
 
   win.document.write(`
 
@@ -3548,8 +3372,6 @@ window.onload=function(){
 render();
 
 renderMotifs();
-
-applyMotif();
 
 startCamera();
 
